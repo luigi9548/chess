@@ -1,8 +1,8 @@
-package gameEnvironment;
+package model.gameEnvironment;
 
-import functionality.Position;
+import model.functionality.Position;
 import java.util.Optional;
-import pieces.Piece;
+import model.pieces.Piece;
 
 public class Square {
     private Position p;

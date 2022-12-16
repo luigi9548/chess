@@ -1,15 +1,16 @@
-package gameEnvironment;
+package model.gameEnvironment;
 
-import functionality.Position;
+import model.gameEnvironment.Chessboard;
+import model.functionality.Position;
 import java.util.ArrayList;
 import java.util.Timer;
-import pieces.Bishop;
-import pieces.King;
-import pieces.Knight;
-import pieces.Pawn;
-import pieces.Piece;
-import pieces.Queen;
-import pieces.Rook;
+import model.pieces.Bishop;
+import model.pieces.King;
+import model.pieces.Knight;
+import model.pieces.Pawn;
+import model.pieces.Piece;
+import model.pieces.Queen;
+import model.pieces.Rook;
 
 public class Player {
     private String name;

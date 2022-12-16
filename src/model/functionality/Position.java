@@ -1,4 +1,4 @@
-package functionality;
+package model.functionality;
 
 public class Position {
 

@@ -1,7 +1,7 @@
-package pieces;
+package model.pieces;
 
-import functionality.Position;
-import gameEnvironment.Chessboard;
+import model.functionality.Position;
+import model.gameEnvironment.Chessboard;
 import java.util.ArrayList;
 
 public class King extends Piece {

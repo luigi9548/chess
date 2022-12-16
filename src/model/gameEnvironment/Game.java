@@ -1,4 +1,6 @@
-package gameEnvironment;
+package model.gameEnvironment;
+
+import model.gameEnvironment.Chessboard;
 
 public class Game {
     private Chessboard chessboard;

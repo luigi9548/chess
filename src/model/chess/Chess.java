@@ -1,9 +1,9 @@
-package chess;
+package model.chess;
 
-import gameEnvironment.Chessboard;
-import gameEnvironment.Game;
-import gameEnvironment.Player;
-import pieces.Piece;
+import model.gameEnvironment.Chessboard;
+import model.gameEnvironment.Game;
+import model.gameEnvironment.Player;
+import model.pieces.Piece;
 
 public class Chess {
     public static void main(String[] args) {

@@ -1,6 +1,6 @@
-package pieces;
+package model.pieces;
 
-import functionality.Position;
+import model.functionality.Position;
 import java.util.List;
 
 public interface PieceInterface {
