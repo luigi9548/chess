@@ -30,52 +30,8 @@ public class Player {
     }
     
     /* Metodo volto alla creazione dei pezzi del giocatore */
-    public void createPieces(){
-        /* Creazione pedoni */
-        for(int i = 0; i < 8; i++){
-            this.pieces.add(new Pawn("Pedone_" + i, (new Position((this.color ? 1 : 6), i)), (this.color ? 1 : 0), new Chessboard()));
-        }
+    public void createPieces(Chessboard chessboard){
         
-        /* Creazione torri */
-        for(int i = 0; i < 2; i++){
-            if(this.color){
-                this.pieces.add(new Rook("Torre_" + i, new Position(0, i == 0 ? 0 : 7), 1, new Chessboard()));
-            }else{
-                this.pieces.add(new Rook("Torre_" + i, new Position(7, i == 0 ? 0 : 7), 0, new Chessboard()));
-            }
-        }
-        
-        /* Creazione cavalli */
-        for(int i = 0; i < 2; i++){
-            if(this.color){
-                this.pieces.add(new Knight("Cavallo_" + i, new Position(0, i == 0 ? 1 : 6), 1, new Chessboard()));
-            }else{
-                this.pieces.add(new Knight("Cavallo_" + i, new Position(7, i == 0 ? 1 : 6), 0, new Chessboard()));
-            }
-        }
-        
-        /* Creazione alfieri */
-        for(int i = 0; i < 2; i++){
-            if(this.color){
-                this.pieces.add(new Bishop("Alfiere_" + i, new Position(0, i == 0 ? 2 : 5), 1, new Chessboard()));
-            }else{
-                this.pieces.add(new Bishop("Alfiere_" + i, new Position(7, i == 0 ? 2 : 5), 0, new Chessboard()));
-            }
-        }
-        
-        /* Creazione regina */
-        if(this.color){
-            this.pieces.add(new Queen("Regina_0", new Position(0, 3), 1, new Chessboard()));
-        }else{
-            this.pieces.add(new Queen("Regina_0", new Position(7, 3), 0, new Chessboard()));
-        }
-        
-        /* Creazione re */
-        if(this.color){
-            this.pieces.add(new King("Re_0", new Position(0, 4), 1, new Chessboard()));
-        }else{
-            this.pieces.add(new King("Re_0", new Position(7, 4), 0, new Chessboard()));
-        }
     }
 
     public ArrayList<Piece> getPieces() {

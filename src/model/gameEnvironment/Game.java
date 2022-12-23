@@ -1,7 +1,5 @@
 package model.gameEnvironment;
 
-import model.gameEnvironment.Chessboard;
-
 public class Game {
     private Chessboard chessboard;
     private Player playerW;
@@ -19,5 +17,10 @@ public class Game {
         if(this.turn == false){
             this.turn = true;
         }
+    }
+    
+    private void initializePlayers(){
+        this.playerB.createPieces(chessboard);
+        this.playerW.createPieces(chessboard);
     }
 }
