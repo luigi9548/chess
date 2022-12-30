@@ -1,10 +1,12 @@
 package model.gameEnvironment;
 
+import java.util.ArrayList;
 import model.functionality.Position;
 import model.pieces.Bishop;
 import model.pieces.King;
 import model.pieces.Knight;
 import model.pieces.Pawn;
+import model.pieces.Piece;
 import model.pieces.Queen;
 import model.pieces.Rook;
 
@@ -78,6 +80,38 @@ public class Chessboard {
                 squares[i][j] =  new Square(new Position(i,j), null);
             }
         }
+    }
+    
+    public Square getSquare(int row, int col){
+        return this.squares[row][col];
+    }
+    
+    public ArrayList<Piece> getWPieces(){
+        ArrayList<Piece> wPieces = null;
+        
+        for(int i = 0; i < Chessboard.ROW_UPPER_LIMIT; i++){
+            for(int j = 0; j < Chessboard.COL_UPPER_LIMIT; j++){
+                if(this.squares[i][j].getPiece().isPresent() && this.squares[i][j].getPiece().get().getColor() == 0)
+                {
+                    wPieces.add(this.squares[i][j].getPiece().get());
+                }
+            }
+        }
+        return wPieces;
+    }
+    
+    public ArrayList<Piece> getBPieces(){
+        ArrayList<Piece> bPieces = null;
+        
+        for(int i = 0; i < Chessboard.ROW_UPPER_LIMIT; i++){
+            for(int j = 0; j < Chessboard.COL_UPPER_LIMIT; j++){
+                if(this.squares[i][j].getPiece().isPresent() && this.squares[i][j].getPiece().get().getColor() == 1)
+                {
+                    bPieces.add(this.squares[i][j].getPiece().get());
+                }
+            }
+        }
+        return bPieces;
     }
     
 }
