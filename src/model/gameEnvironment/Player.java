@@ -1,7 +1,5 @@
 package model.gameEnvironment;
 
-import model.gameEnvironment.Chessboard;
-import model.functionality.Position;
 import java.util.ArrayList;
 import java.util.Timer;
 import model.pieces.Piece;
@@ -25,21 +23,24 @@ public class Player {
     
     /* Metodo volto all' assegnazione dei pezzi del giocatore */
     public void createPieces(Chessboard chessboard){
+        /* I pezzi vengono assegnati a seconda del colore del Player */
         if(this.color){
-            
+            this.pieces = chessboard.getWPieces();
         }else{
-            
+            this.pieces = chessboard.getBPieces();
         }
     }
     
+    /* Metodo volto all'aggiunta di una mossa alla history delle mosse */
     private void addToHistory(String str){
         if(!str.equals("")){
             this.history.add(str);
         }
     }
     
+    /* Metodo volto all'aggiunta di un pezzo nel cimitero */
     private void addPieceCemetery(Piece piece){
-        
+        this.cementery.add(piece);
     }
 
     public ArrayList<Piece> getPieces() {
