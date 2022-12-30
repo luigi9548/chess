@@ -18,23 +18,21 @@ public class Chessboard {
     public static final int COL_LOWER_LIMIT = 0;
     
     public Chessboard(){
-        this.initializeChessboard();
-        
+        this.initializeChessboard();     
     }
     
     private void initializeChessboard(){
         this.squares = new Square[Chessboard.ROW_UPPER_LIMIT][Chessboard.COL_UPPER_LIMIT];
-        
-        
+          
         // prima riga bianca e nera
         for(int i = 0; i <= Chessboard.COL_UPPER_LIMIT; i++){
             Position pW = new Position(Chessboard.ROW_LOWER_LIMIT, Chessboard.COL_LOWER_LIMIT + i);
             Position pB = new Position(Chessboard.ROW_UPPER_LIMIT, Chessboard.COL_LOWER_LIMIT + i);
             if( i == 0 || i == 7){ // creo i 4 rook alle estremità della scacchiera
-                Rook roW = new Rook("ROOK_" + ((i==1)? 1 : 2), pW,0, this);
+                Rook roW = new Rook("ROOK_" + ((i==0)? 1 : 2), pW,0, this);
                 squares[pW.getRow()][pW.getCol()] = new Square(pW, roW);
                 
-                Rook roB = new Rook("ROOK_" + ((i==1)? 1 : 2), pW,1, this);
+                Rook roB = new Rook("ROOK_" + ((i==0)? 1 : 2), pW,1, this);
                 squares[pB.getRow()][pB.getCol()] = new Square(pB, roB);
             }else if(i == 1 || i == 6){ // creo i 4 knight
                 Knight knW = new Knight("KNIGHT_" + ((i==1)? 1 : 2), pW,0, this);
@@ -43,22 +41,22 @@ public class Chessboard {
                 Knight knB = new Knight("KNIGHT_" + ((i==1)? 1 : 2), pW,1, this);
                 squares[pB.getRow()][pB.getCol()] = new Square(pB, knB);     
             }else if(i == 2 || i == 5){ // creo i bishop 
-                Bishop biW = new Bishop("BISHOP_" + ((i==1)? 1 : 2), pW,0, this);
+                Bishop biW = new Bishop("BISHOP_" + ((i==2)? 1 : 2), pW,0, this);
                 squares[pW.getRow()][pW.getCol()] = new Square(pW, biW);
                 
-                Bishop biB = new Bishop("BISHOP_" + ((i==1)? 1 : 2), pW,1, this);
+                Bishop biB = new Bishop("BISHOP_" + ((i==2)? 1 : 2), pW,1, this);
                 squares[pB.getRow()][pB.getCol()] = new Square(pB, biB);     
             }else if(i == 3){ // creo casella con queen
-                Queen quW = new Queen("QUEEN", pW,0, this);
+                Queen quW = new Queen("QUEEN_WHITE", pW,0, this);
                 squares[pW.getRow()][pW.getCol()] = new Square(pW, quW);
                 
-                Queen quB = new Queen("QUEEN", pW,1, this);
+                Queen quB = new Queen("QUEEN_BLACK", pW,1, this);
                 squares[pB.getRow()][pB.getCol()] = new Square(pB, quB);   
             }else if( i== 4){ // creo casella con king
-                King kiW = new King("KING", pW,0, this);
+                King kiW = new King("KING_WHITE", pW,0, this);
                 squares[pW.getRow()][pW.getCol()] = new Square(pW, kiW);
                 
-                King kiB = new King("KING", pW,1, this);
+                King kiB = new King("KING_BLACK", pW,1, this);
                 squares[pB.getRow()][pB.getCol()] = new Square(pB, kiB); 
             }
         } // end for per creare prima e ultima row
