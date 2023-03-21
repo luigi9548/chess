@@ -25,4 +25,8 @@ public class Position {
         this.row = row;
         this.col = col;
     }
+    
+    public boolean compare(Position p){
+        return this.getRow() == p.getRow() && this.getCol() == p.getCol();
+    }
 }

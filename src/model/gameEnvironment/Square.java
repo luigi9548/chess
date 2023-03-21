@@ -12,4 +12,13 @@ public class Square {
         this.p = p;
         this.piece = Optional.ofNullable(piece);
     }
+    
+    public void setPosition(int row, int col)
+    {
+        this.p.setPosition(row, col);
+    }
+    
+    public Optional<Piece> getPiece(){
+        return this.piece;
+    }
 }
