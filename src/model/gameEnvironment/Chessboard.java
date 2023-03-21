@@ -25,7 +25,7 @@ public class Chessboard {
     }
     
     private void initializeChessboard(){
-        this.squares = new Square[Chessboard.ROW_UPPER_LIMIT][Chessboard.COL_UPPER_LIMIT];
+        this.squares = new Square[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
         
         
         // prima riga bianca e nera
@@ -77,8 +77,8 @@ public class Chessboard {
         }
         
         // rimanenti caselle vuote
-        for(int i = ROW_LOWER_LIMIT + 2; i < ROW_UPPER_LIMIT - 2; i++){ // il 2 sta per le righe già fatte
-            for(int j = COL_LOWER_LIMIT; j < COL_UPPER_LIMIT; i++){
+        for(int i = ROW_LOWER_LIMIT + 2; i <= ROW_UPPER_LIMIT - 2; i++){ // il 2 sta per le righe già fatte
+            for(int j = COL_LOWER_LIMIT; j <= COL_UPPER_LIMIT; j++){
                 squares[i][j] =  new Square(new Position(i,j), null);
             }
         }
@@ -89,10 +89,10 @@ public class Chessboard {
     }
     
     public ArrayList<Piece> getWPieces(){
-        ArrayList<Piece> wPieces = null;
+        ArrayList<Piece> wPieces = new ArrayList<>();
         
-        for(int i = 0; i < Chessboard.ROW_UPPER_LIMIT; i++){
-            for(int j = 0; j < Chessboard.COL_UPPER_LIMIT; j++){
+        for(int i = 0; i <= Chessboard.ROW_UPPER_LIMIT; i++){
+            for(int j = 0; j <= Chessboard.COL_UPPER_LIMIT; j++){
                 if(this.squares[i][j].getPiece().isPresent() && this.squares[i][j].getPiece().get().getColor() == 0)
                 {
                     wPieces.add(this.squares[i][j].getPiece().get());
@@ -103,10 +103,10 @@ public class Chessboard {
     }
     
     public ArrayList<Piece> getBPieces(){
-        ArrayList<Piece> bPieces = null;
+        ArrayList<Piece> bPieces = new ArrayList<>();
         
-        for(int i = 0; i < Chessboard.ROW_UPPER_LIMIT; i++){
-            for(int j = 0; j < Chessboard.COL_UPPER_LIMIT; j++){
+        for(int i = 0; i <= Chessboard.ROW_UPPER_LIMIT; i++){
+            for(int j = 0; j <= Chessboard.COL_UPPER_LIMIT; j++){
                 if(this.squares[i][j].getPiece().isPresent() && this.squares[i][j].getPiece().get().getColor() == 1)
                 {
                     bPieces.add(this.squares[i][j].getPiece().get());
