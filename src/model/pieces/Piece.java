@@ -20,8 +20,16 @@ public abstract class Piece implements PieceInterface {
         this.chessboard = chessboard;
     }
     
-    protected Position getPosition() {
+    public Position getPosition() {
         return this.position;
+    }
+    
+    protected Chessboard getChessboard(){
+        return this.chessboard;
+    }
+    
+    public int getColor(){
+        return this.color;
     }
     
     @Override
