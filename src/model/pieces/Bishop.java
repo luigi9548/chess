@@ -14,25 +14,25 @@ public class Bishop extends Piece {
         ArrayList<Position> possiblePositions = new ArrayList<>();
         int row = this.getPosition().getRow(), col = this.getPosition().getCol();
         
-        while(++row != Chessboard.ROW_UPPER_LIMIT  && ++col != Chessboard.COL_UPPER_LIMIT)
+        while(++row <= Chessboard.ROW_UPPER_LIMIT  && ++col <= Chessboard.COL_UPPER_LIMIT)
             possiblePositions.add(new Position(row, col));
         
         row = this.getPosition().getRow(); 
         col = this.getPosition().getCol();
         
-        while(--row != Chessboard.ROW_LOWER_LIMIT  && --col != Chessboard.COL_LOWER_LIMIT)
+        while(--row >= Chessboard.ROW_LOWER_LIMIT  && --col >= Chessboard.COL_LOWER_LIMIT)
             possiblePositions.add(new Position(row, col));
         
         row = this.getPosition().getRow(); 
         col = this.getPosition().getCol();
         
-        while(--row != Chessboard.ROW_LOWER_LIMIT  && ++col != Chessboard.COL_UPPER_LIMIT)
+        while(--row >= Chessboard.ROW_LOWER_LIMIT  && ++col <= Chessboard.COL_UPPER_LIMIT)
             possiblePositions.add(new Position(row, col));
 
         row = this.getPosition().getRow(); 
         col = this.getPosition().getCol();
         
-        while(++row != Chessboard.ROW_UPPER_LIMIT  && --col != Chessboard.COL_LOWER_LIMIT)
+        while(++row <= Chessboard.ROW_UPPER_LIMIT  && --col >= Chessboard.COL_LOWER_LIMIT)
             possiblePositions.add(new Position(row, col));
         
         return possiblePositions;

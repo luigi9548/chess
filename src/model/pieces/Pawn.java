@@ -30,9 +30,10 @@ public class Pawn extends Piece {
         if(col + 1 != Chessboard.COL_UPPER_LIMIT)
             possiblePositions.add(new Position(row, col + 1));
         
-        if(this.isFirstMove())
+        if(this.isFirstMove()){
             possiblePositions.add(new Position(row, col + 2));
-        
+            this.switchFirstMove();
+        }
         return possiblePositions;
     }
 }
