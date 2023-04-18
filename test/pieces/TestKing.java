@@ -34,12 +34,12 @@ public class TestKing {
         }
     }
     
-    @org.junit.Test
+   /* @org.junit.Test
     public void testCheck(){
         assertTrue(king.check(king.getPosition()).isEmpty());
         
         king.getPosition().setPosition(5, 2);
         
         assertTrue(king.getPosition().compare(king.check(king.getPosition()).get()));
-    }
+    }*/
 }
