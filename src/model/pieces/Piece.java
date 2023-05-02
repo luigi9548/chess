@@ -11,6 +11,8 @@ public abstract class Piece implements PieceInterface {
     private final int color;
     private ArrayList<Position> lastMovePath;
     private Chessboard chessboard;
+
+    private String icon;
     
     public Piece(final String name, Position position,final int color, Chessboard chessboard){
         this.name = name;
@@ -18,6 +20,14 @@ public abstract class Piece implements PieceInterface {
         this.color = color;
         this.isInPlay = true;
         this.chessboard = chessboard;
+    }
+    
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
     
     public Position getPosition() {
