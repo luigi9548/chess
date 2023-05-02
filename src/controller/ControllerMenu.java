@@ -4,7 +4,9 @@
  */
 package controller;
 
+import model.gameEnvironment.Chessboard;
 import model.gameEnvironment.Player;
+import view.GameView;
 import view.Menu;
 /**
  *
@@ -20,12 +22,21 @@ public class ControllerMenu {
     public ControllerMenu(final Menu menu){
         this.menu = menu;
     }
+    
     public void playActionPerformed(java.awt.event.ActionEvent evt) {                                               
         String nameW = menu.getjTextFieldW().getText();
         String nameB = menu.getjTextFieldB().getText();
         System.out.println(nameW);
         Player playerW = new Player(nameW, true);
         Player playerB = new Player(nameB, false);
+        
+        menu.setVisible(false);
+        
+        Chessboard chessboard = new Chessboard();
+        GameView gameView = new GameView();
+        gameView.initChessboard(chessboard);
+        
+        // a gameView gli passo la chessboard ma come gli passo i player?
     } 
     
     public void quitActionPerformed(java.awt.event.ActionEvent evt) {                                               

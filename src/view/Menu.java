@@ -4,6 +4,7 @@
  */
 package view;
 import controller.ControllerMenu;
+import java.awt.*;
 import javax.swing.*;
 /**
  *
@@ -11,6 +12,9 @@ import javax.swing.*;
  */
 public class Menu extends JFrame{
     private ControllerMenu controller = new ControllerMenu(this);
+    private JLabel title = new JLabel(new ImageIcon(".\\src\\images\\title1.png"));
+    private JLabel iconB = new JLabel(new ImageIcon(".\\src\\images\\blackIconPlayer1.png"));
+    private JLabel iconW = new JLabel(new ImageIcon(".\\src\\images\\whiteIconPlayer.png"));
     private JPanel jPanelW = new JPanel();
     private JLabel jLabelW = new JLabel("Inserisci il nome del giocatore bianco");
     private JTextField jTextFieldW = new JTextField("GuestW");
@@ -43,91 +47,96 @@ public class Menu extends JFrame{
     private void initComponents(){
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
-        jPanelW.setBackground(new java.awt.Color(102, 102, 255));
-        jPanelB.setBackground(new java.awt.Color(51, 51, 255));
-        jLabelW.setBackground(new java.awt.Color(153, 153, 255));
-        jLabelB.setBackground(new java.awt.Color(153, 153, 255));
+        jPanelW.setBackground(new Color(102, 102, 255));
+        jPanelB.setBackground(new Color(51, 51, 255));
+        jLabelW.setBackground(new Color(153, 153, 255));
+        jLabelB.setBackground(new Color(153, 153, 255));
         
-        play.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        quit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));        
+               
+        play.setCursor(new Cursor(java.awt.Cursor.HAND_CURSOR));
+        quit.setCursor(new Cursor(java.awt.Cursor.HAND_CURSOR));        
         
         GroupLayout jPanelWLayout = new GroupLayout(jPanelW);
         jPanelW.setLayout(jPanelWLayout);
         jPanelWLayout.setHorizontalGroup(
             jPanelWLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, jPanelWLayout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addComponent(jLabelW, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(jPanelWLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextFieldW, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelWLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldW, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelW))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanelWLayout.setVerticalGroup(
             jPanelWLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanelWLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabelW, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
+                .addComponent(jLabelW)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextFieldW, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        
+
         GroupLayout jPanelBLayout = new GroupLayout(jPanelB);
         jPanelB.setLayout(jPanelBLayout);
         jPanelBLayout.setHorizontalGroup(
             jPanelBLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, jPanelBLayout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addComponent(jLabelB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(jPanelBLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextFieldB, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelBLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldB, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelB))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         jPanelBLayout.setVerticalGroup(
             jPanelBLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabelB, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextFieldB, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );      
-               
+                .addGap(23, 23, 23)
+                .addComponent(jLabelB)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextFieldB, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
+
+
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jPanelW, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(jPanelB, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49))
-            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(quit, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(play, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(quit, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(play, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52))
+                    .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanelW, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanelB, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(title, GroupLayout.PREFERRED_SIZE, 504, GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(27, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(89, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(title, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanelW, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(76, 76, 76)
+                    .addComponent(jPanelB, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(play)
                     .addComponent(quit))
-                .addContainerGap())
+                .addGap(25, 25, 25))
         );
-        
+       
         play.addActionListener((java.awt.event.ActionEvent evt) -> {
             controller.playActionPerformed(evt);
         });
@@ -136,8 +145,9 @@ public class Menu extends JFrame{
             controller.quitActionPerformed(evt);
         });
 
-        
-
+        //getContentPane().setBackground(new Color(153, 255, 153));
+        getContentPane().setBackground(new Color(255,247,218));
+        setTitle("Home");
         pack();
     }
 }
