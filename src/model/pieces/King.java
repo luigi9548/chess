@@ -15,28 +15,28 @@ public class King extends Piece {
         ArrayList<Position> possiblePositions = new ArrayList<>();
         int row = this.getPosition().getRow(), col = this.getPosition().getCol();
         
-        if(row + 1 != Chessboard.ROW_UPPER_LIMIT)
+        if(row + 1 <= Chessboard.ROW_UPPER_LIMIT)
             possiblePositions.add(new Position(row + 1, col));
         
-        if(row - 1 != Chessboard.ROW_LOWER_LIMIT)
+        if(row - 1 >= Chessboard.ROW_LOWER_LIMIT)
             possiblePositions.add(new Position(row - 1, col));
         
-        if(col + 1 != Chessboard.COL_UPPER_LIMIT)
+        if(col + 1 <= Chessboard.COL_UPPER_LIMIT)
             possiblePositions.add(new Position(row, col + 1));
             
-        if(col  - 1 != Chessboard.COL_LOWER_LIMIT)
+        if(col - 1 >= Chessboard.COL_LOWER_LIMIT)
             possiblePositions.add(new Position(row, col - 1));
         
-        if(row + 1 != Chessboard.ROW_UPPER_LIMIT  && col + 1!= Chessboard.COL_UPPER_LIMIT)
+        if(row + 1 <= Chessboard.ROW_UPPER_LIMIT  && col + 1 <= Chessboard.COL_UPPER_LIMIT)
             possiblePositions.add(new Position(row + 1, col + 1));
               
-        if(row - 1 != Chessboard.ROW_LOWER_LIMIT  && col - 1 != Chessboard.COL_LOWER_LIMIT)
+        if(row - 1 >= Chessboard.ROW_LOWER_LIMIT  && col - 1 >= Chessboard.COL_LOWER_LIMIT)
             possiblePositions.add(new Position(row - 1, col - 1));
         
-        if(row - 1 != Chessboard.ROW_LOWER_LIMIT  && col + 1 != Chessboard.COL_UPPER_LIMIT)
+        if(row - 1 >= Chessboard.ROW_LOWER_LIMIT  && col + 1 <= Chessboard.COL_UPPER_LIMIT)
             possiblePositions.add(new Position(row - 1, col + 1));
         
-        if(row + 1 != Chessboard.ROW_UPPER_LIMIT  && col - 1 != Chessboard.COL_LOWER_LIMIT)
+        if(row + 1 <= Chessboard.ROW_UPPER_LIMIT  && col - 1 >= Chessboard.COL_LOWER_LIMIT)
             possiblePositions.add(new Position(row + 1, col - 1));
         
         return possiblePositions;

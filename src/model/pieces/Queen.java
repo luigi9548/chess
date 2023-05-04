@@ -1,6 +1,5 @@
 package model.pieces;
 
-import model.pieces.Piece;
 import model.functionality.Position;
 import model.gameEnvironment.Chessboard;
 import java.util.ArrayList;
@@ -14,43 +13,49 @@ public class Queen extends Piece {
     public ArrayList<Position> calculateMovement(Position position){
         ArrayList<Position> possiblePositions = new ArrayList<>();
         int row = this.getPosition().getRow(), col = this.getPosition().getCol();
+                
+        //riga
+        for(int i = Chessboard.ROW_LOWER_LIMIT; i <= Chessboard.ROW_UPPER_LIMIT; i++){
+            if(i != row)
+                possiblePositions.add(new Position(i,col));
+        }
         
-        while(++row != Chessboard.ROW_UPPER_LIMIT)
-            possiblePositions.add(new Position(row, col));
+        //colonna
+        for(int i = Chessboard.COL_LOWER_LIMIT; i <= Chessboard.COL_UPPER_LIMIT; i++){
+            if(i != col)
+                possiblePositions.add(new Position(row,i));
+        }
         
-        row = this.getPosition().getRow();
+        //diagonale colonne verso dx
+        int upRow = row;
+        int downRow = row;
+        for(int i = col; i <= Chessboard.COL_UPPER_LIMIT; i++){
+            if(i != col){
+                if(upRow <= Chessboard.ROW_UPPER_LIMIT)
+                    possiblePositions.add(new Position(upRow,i));
+                
+                if(downRow >= Chessboard.ROW_LOWER_LIMIT)
+                    possiblePositions.add(new Position(downRow,i));
+            }
+            upRow++;
+            downRow--;
+        }
         
-        while(--row != Chessboard.ROW_LOWER_LIMIT)
-            possiblePositions.add(new Position(row, col));
-        
-        while(++col != Chessboard.COL_UPPER_LIMIT)
-            possiblePositions.add(new Position(row, col));
-        
-        col = this.getPosition().getCol();
-        
-        while(--col != Chessboard.COL_LOWER_LIMIT)
-            possiblePositions.add(new Position(row, col));
-        
-        while(++row != Chessboard.ROW_UPPER_LIMIT  && ++col != Chessboard.COL_UPPER_LIMIT)
-            possiblePositions.add(new Position(row, col));
-        
-        row = this.getPosition().getRow(); 
-        col = this.getPosition().getCol();
-        
-        while(--row != Chessboard.ROW_LOWER_LIMIT  && --col != Chessboard.COL_LOWER_LIMIT)
-            possiblePositions.add(new Position(row, col));
-        
-        row = this.getPosition().getRow(); 
-        col = this.getPosition().getCol();
-        
-        while(--row != Chessboard.ROW_LOWER_LIMIT  && ++col != Chessboard.COL_UPPER_LIMIT)
-            possiblePositions.add(new Position(row, col));
-
-        row = this.getPosition().getRow(); 
-        col = this.getPosition().getCol();
-        
-        while(++row != Chessboard.ROW_UPPER_LIMIT  && --col != Chessboard.COL_LOWER_LIMIT)
-            possiblePositions.add(new Position(row, col));
+        //diagonale colonne verso sx
+        upRow = row;
+        downRow = row;
+        for(int i = col; i >= Chessboard.COL_LOWER_LIMIT; i--){
+            if(i != col){
+                if(upRow <= Chessboard.ROW_UPPER_LIMIT)
+                    possiblePositions.add(new Position(upRow,i));
+                
+                if(downRow >= Chessboard.ROW_LOWER_LIMIT)
+                    possiblePositions.add(new Position(downRow,i));
+            }
+            upRow++;
+            downRow--;
+        }
+         
         return possiblePositions;
     }
 }

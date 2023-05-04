@@ -14,18 +14,21 @@ import model.gameEnvironment.Chessboard;
  */
 public class GameView extends JFrame{
     
-    private JPanel pannello;
+    private JPanel scacchiera = new JPanel();
     private JButton[][] buttonGrid = new JButton[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
     private ControllerGameView controller = new ControllerGameView(this);
 
     public JButton getButtonGrid(int x, int y){
         return this.buttonGrid[x][y];
     }
-    public void initChessboard(Chessboard chessboard){
-        pannello = new JPanel(new GridLayout(8,8));
+
+    
+    public void initChessboard(Chessboard chessboard){               
+        scacchiera.setLayout(new GridLayout(8,8));
         for (int i=0; i<=7; i++)
             for (int j=0; j<=7; j++) {
                 JButton b = new JButton();
+                b.setSize(50, 50);
                 if ((i+j)%2==0)
                     b.setBackground(new Color(255, 250, 219));
                 else
@@ -37,11 +40,11 @@ public class GameView extends JFrame{
                 }
                 buttonGrid[i][j] = b;
                 b.addActionListener((java.awt.event.ActionEvent evt) -> {
-                    controller.showMovement(evt);
+                    controller.actions(evt, b.getBackground().getRGB());
                 });
-                pannello.add(b);
+                scacchiera.add(b);
             }
-        setContentPane(pannello);
+        setContentPane(scacchiera);
         setTitle("Scacchiera");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
@@ -49,5 +52,14 @@ public class GameView extends JFrame{
         setVisible(true); 
     }
     
-    
+    public void resetColors(){
+        for (int i=0; i<=7; i++){
+            for (int j=0; j<=7; j++) {
+                if ((i+j)%2==0)
+                    this.getButtonGrid(i, j).setBackground(new Color(255, 250, 219));
+                else
+                    this.getButtonGrid(i, j).setBackground(new Color(156, 92, 8));
+            }
+        }
+    }
 }

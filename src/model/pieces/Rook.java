@@ -15,21 +15,36 @@ public class Rook extends Piece {
         ArrayList<Position> possiblePositions = new ArrayList<>();
         int row = this.getPosition().getRow(), col = this.getPosition().getCol();
         
-        while(++row != Chessboard.ROW_UPPER_LIMIT)
+        // movimento torre è indifferente sia per nero sia per bianco, si muove lungo orizzontale e verticale
+        // riga
+        for(int i = Chessboard.ROW_LOWER_LIMIT; i <= Chessboard.ROW_UPPER_LIMIT; i++){
+            if(i != row)
+                possiblePositions.add(new Position(i,col));
+        }
+        
+        //colonna
+        for(int i = Chessboard.COL_LOWER_LIMIT; i <= Chessboard.COL_UPPER_LIMIT; i++){
+            if(i != col)
+                possiblePositions.add(new Position(row,i));
+        }
+                
+        /*while(++row <= Chessboard.ROW_UPPER_LIMIT)
             possiblePositions.add(new Position(row, col));
         
         row = this.getPosition().getRow();
         
-        while(--row != Chessboard.ROW_LOWER_LIMIT)
+        while(--row <= Chessboard.ROW_LOWER_LIMIT)
             possiblePositions.add(new Position(row, col));
         
-        while(++col != Chessboard.COL_UPPER_LIMIT)
+        row = this.getPosition().getRow();
+        
+        while(++col <= Chessboard.COL_UPPER_LIMIT)
             possiblePositions.add(new Position(row, col));
         
         col = this.getPosition().getCol();
         
-        while(--col != Chessboard.COL_LOWER_LIMIT)
-            possiblePositions.add(new Position(row, col));
+        while(--col <= Chessboard.COL_LOWER_LIMIT)
+            possiblePositions.add(new Position(row, col));*/
         
         return possiblePositions;
     }

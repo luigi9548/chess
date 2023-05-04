@@ -21,4 +21,8 @@ public class Square {
     public Optional<Piece> getPiece(){
         return this.piece;
     }
+    
+    public void setPiece(Piece piece){
+        this.piece = Optional.ofNullable(piece);
+    }
 }

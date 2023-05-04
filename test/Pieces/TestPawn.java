@@ -17,30 +17,27 @@ import static org.junit.Assert.assertTrue;
 public class TestPawn {
     
     private Chessboard chessboard = new Chessboard();
-    private Pawn pawn = new Pawn("White", new Position(2,2), 0, chessboard);
+    private Pawn pawn = new Pawn("White", new Position(2,6), 0, chessboard);
     
     @org.junit.Test
     public void testCalculateMovement(){
         int i = 0;
         
-        
         ArrayList<Position> possiblePositions = new ArrayList<>();
-        
         ArrayList<Position> realPositions = new ArrayList<>();
         
-        possiblePositions.add(new Position(2,3));
-        possiblePositions.add(new Position(2,4));
+        possiblePositions.add(new Position(3,6));
+        possiblePositions.add(new Position(4,6));
         
-        realPositions = pawn.calculateMovement(null);
-       
+        realPositions = pawn.calculateMovement(new Position(2,6));
+     
         
         for(Position a : possiblePositions){
-            System.out.println(realPositions.get(i));
             assertTrue(a.compare(realPositions.get(i)));
             i++;
         }
         
-         realPositions = pawn.calculateMovement(null);
+        realPositions = pawn.calculateMovement(null);
          if(realPositions.size()==1){
             assertTrue(possiblePositions.get(0).compare(realPositions.get(0)));
          }
