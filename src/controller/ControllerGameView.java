@@ -42,6 +42,10 @@ public class ControllerGameView {
         }
     } 
     
+    /* problema: se prima schiaccio un pezzo p1 per vedere le sue possibili mosse senza pero muoverlo
+       e poi schiaccio un altro pezzo p2 per muoverlo, si muoverà p1 
+       evidentemente se schiaccio senza muovere rimane il isInAction = true
+    */
     private void move(java.awt.event.ActionEvent evt){
         for (int row = 0; row <= Chessboard.ROW_UPPER_LIMIT; row++) {
             for (int col = 0; col <= Chessboard.COL_UPPER_LIMIT; col++) {

@@ -15,7 +15,32 @@ public class King extends Piece {
         ArrayList<Position> possiblePositions = new ArrayList<>();
         int row = this.getPosition().getRow(), col = this.getPosition().getCol();
         
-        if(row + 1 <= Chessboard.ROW_UPPER_LIMIT)
+        if(this.isPossiblePosition(row + 1,col))
+                possiblePositions.add(new Position(row + 1,col));
+        
+        if(this.isPossiblePosition(row - 1,col))
+                possiblePositions.add(new Position(row - 1,col));
+        
+        if(this.isPossiblePosition(row,col + 1))
+                possiblePositions.add(new Position(row,col + 1));
+        
+        if(this.isPossiblePosition(row,col - 1))
+                possiblePositions.add(new Position(row,col -1));
+        
+        if(this.isPossiblePosition(row + 1,col + 1))
+                possiblePositions.add(new Position(row + 1,col + 1));
+        
+        if(this.isPossiblePosition(row - 1, col + 1))
+                possiblePositions.add(new Position(row - 1,col + 1));
+        
+        if(this.isPossiblePosition(row + 1, col - 1))
+                possiblePositions.add(new Position(row +1,col - 1));
+        
+        if(this.isPossiblePosition(row - 1, col -1))
+                possiblePositions.add(new Position(row - 1,col - 1));
+        
+        
+        /*if(row + 1 <= Chessboard.ROW_UPPER_LIMIT)
             possiblePositions.add(new Position(row + 1, col));
         
         if(row - 1 >= Chessboard.ROW_LOWER_LIMIT)
@@ -37,8 +62,19 @@ public class King extends Piece {
             possiblePositions.add(new Position(row - 1, col + 1));
         
         if(row + 1 <= Chessboard.ROW_UPPER_LIMIT  && col - 1 >= Chessboard.COL_LOWER_LIMIT)
-            possiblePositions.add(new Position(row + 1, col - 1));
+            possiblePositions.add(new Position(row + 1, col - 1));*/
         
         return possiblePositions;
+    }
+    
+    private boolean isPossiblePosition(int row, int col){
+        boolean ret = false;
+        
+        if(this.getChessboard().isValidPosition(row, col)){
+            if(this.getChessboard().getSquare(row, col).getPiece().isEmpty()|| this.isEnemy(this.getChessboard().getSquare(row, col).getPiece().get())){
+                ret = true;
+            }
+        }
+        return ret;
     }
 }

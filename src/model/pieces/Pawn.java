@@ -27,22 +27,35 @@ public class Pawn extends Piece {
         ArrayList<Position> possiblePositions = new ArrayList<>();
         int row = this.getPosition().getRow(), col = this.getPosition().getCol();
         if(this.getColor() == 0){
-            if(col <= Chessboard.COL_UPPER_LIMIT)
+            if(this.isPossiblePosition(row + 1, col)){
                 possiblePositions.add(new Position(row + 1, col));
-
-            if(this.isFirstMove()){
-                possiblePositions.add(new Position(row + 2, col));
-                this.switchFirstMove();
-            }
+                if(this.isFirstMove() && this.isPossiblePosition(row + 2, col)){
+                    if(this.getChessboard().getSquare(row + 1, col).getPiece().isEmpty())  // -> questo serve perchè io posso andare avanti
+                        possiblePositions.add(new Position(row + 2, col));                 // di 2 caselle se nella prima casella avanti 
+                    this.switchFirstMove();                                                // a me non c'è nessuno
+                }
+            }    
         }else{
-            if(col <= Chessboard.COL_UPPER_LIMIT)
+            if(this.isPossiblePosition(row - 1, col)){
                 possiblePositions.add(new Position(row - 1, col));
-
-            if(this.isFirstMove()){
-                possiblePositions.add(new Position(row - 2, col));
-                this.switchFirstMove();
+                if(this.isFirstMove() && this.isPossiblePosition(row - 2, col)){
+                    if(this.getChessboard().getSquare(row - 1, col).getPiece().isEmpty())
+                        possiblePositions.add(new Position(row - 2, col));
+                    this.switchFirstMove();
+                }
             }
         }
         return possiblePositions;
+    }
+    
+    private boolean isPossiblePosition(int row, int col){
+        boolean ret = false;
+        
+        if(this.getChessboard().isValidPosition(row, col)){
+            if(this.getChessboard().getSquare(row, col).getPiece().isEmpty()|| this.isEnemy(this.getChessboard().getSquare(row, col).getPiece().get())){
+                ret = true;
+            }
+        }
+        return ret;
     }
 }

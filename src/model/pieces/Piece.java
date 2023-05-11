@@ -25,6 +25,10 @@ public abstract class Piece implements PieceInterface {
     public boolean isInAction() {
         return inAction;
     }
+    
+    public boolean isEnemy(Piece p){
+        return p.getColor() != this.color;
+    }
 
     public void setInAction(boolean inAction) {
         this.inAction = inAction;
