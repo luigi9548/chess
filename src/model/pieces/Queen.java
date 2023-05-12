@@ -15,7 +15,7 @@ public class Queen extends Piece {
         int row = this.getPosition().getRow(), col = this.getPosition().getCol();
                 
         //riga
-        for(int i = Chessboard.ROW_LOWER_LIMIT; i <= Chessboard.ROW_UPPER_LIMIT; i++){
+       /* for(int i = Chessboard.ROW_LOWER_LIMIT; i <= Chessboard.ROW_UPPER_LIMIT; i++){
             if(i != row)
                 possiblePositions.add(new Position(i,col));
         }
@@ -54,7 +54,52 @@ public class Queen extends Piece {
             }
             upRow++;
             downRow--;
+        } */
+       
+        while(++row <= Chessboard.ROW_UPPER_LIMIT  && ++col <= Chessboard.COL_UPPER_LIMIT && this.getChessboard().getSquare(row, col).getPiece().isEmpty())
+            possiblePositions.add(new Position(row, col));
+        
+        row = this.getPosition().getRow(); 
+        col = this.getPosition().getCol();
+        
+        while(--row >= Chessboard.ROW_LOWER_LIMIT  && --col >= Chessboard.COL_LOWER_LIMIT && this.getChessboard().getSquare(row, col).getPiece().isEmpty())
+            possiblePositions.add(new Position(row, col));
+        
+        row = this.getPosition().getRow(); 
+        col = this.getPosition().getCol();
+        
+        while(--row >= Chessboard.ROW_LOWER_LIMIT  && ++col <= Chessboard.COL_UPPER_LIMIT && this.getChessboard().getSquare(row, col).getPiece().isEmpty())
+            possiblePositions.add(new Position(row, col));
+
+        row = this.getPosition().getRow(); 
+        col = this.getPosition().getCol();
+        
+        while(++row <= Chessboard.ROW_UPPER_LIMIT  && --col >= Chessboard.COL_LOWER_LIMIT && this.getChessboard().getSquare(row, col).getPiece().isEmpty())
+            possiblePositions.add(new Position(row, col));
+        
+        row = this.getPosition().getRow(); 
+        col = this.getPosition().getCol();
+        
+        while(++row <= Chessboard.ROW_UPPER_LIMIT && this.getChessboard().getSquare(row, col).getPiece().isEmpty()){
+            possiblePositions.add(new Position(row, col));
+            System.out.println(row + " " + col);
         }
+            
+        
+        row = this.getPosition().getRow();
+        
+        while(--row >= Chessboard.ROW_LOWER_LIMIT && this.getChessboard().getSquare(row, col).getPiece().isEmpty())
+            possiblePositions.add(new Position(row, col));
+        
+        row = this.getPosition().getRow();
+        
+        while(++col <= Chessboard.COL_UPPER_LIMIT && this.getChessboard().getSquare(row, col).getPiece().isEmpty())
+            possiblePositions.add(new Position(row, col));
+        
+        col = this.getPosition().getCol();
+        
+        while(--col >= Chessboard.COL_LOWER_LIMIT && this.getChessboard().getSquare(row, col).getPiece().isEmpty())
+            possiblePositions.add(new Position(row, col));
          
         return possiblePositions;
     }

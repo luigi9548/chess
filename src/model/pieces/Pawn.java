@@ -27,20 +27,22 @@ public class Pawn extends Piece {
         ArrayList<Position> possiblePositions = new ArrayList<>();
         int row = this.getPosition().getRow(), col = this.getPosition().getCol();
         if(this.getColor() == 0){
-            if(col <= Chessboard.COL_UPPER_LIMIT)
+            if(col <= Chessboard.COL_UPPER_LIMIT && this.getChessboard().getSquare(row + 1, col).getPiece().isEmpty()){
                 possiblePositions.add(new Position(row + 1, col));
-
-            if(this.isFirstMove()){
-                possiblePositions.add(new Position(row + 2, col));
-                this.switchFirstMove();
+                if(this.isFirstMove() && this.getChessboard().getSquare(row + 2, col).getPiece().isEmpty()){
+                    possiblePositions.add(new Position(row + 2, col));
+                    this.switchFirstMove();
+                }
             }
-        }else{
-            if(col <= Chessboard.COL_UPPER_LIMIT)
-                possiblePositions.add(new Position(row - 1, col));
 
-            if(this.isFirstMove()){
-                possiblePositions.add(new Position(row - 2, col));
-                this.switchFirstMove();
+            
+        }else{
+            if(col <= Chessboard.COL_UPPER_LIMIT && this.getChessboard().getSquare(row - 1, col).getPiece().isEmpty()){
+                possiblePositions.add(new Position(row - 1, col));
+                if(this.isFirstMove() && this.getChessboard().getSquare(row - 2, col).getPiece().isEmpty()){
+                    possiblePositions.add(new Position(row - 2, col));
+                    this.switchFirstMove();
+                }
             }
         }
         return possiblePositions;
