@@ -127,4 +127,9 @@ public class Chessboard {
         return bPieces;
     }
     
+    public boolean isValidPosition(int row, int col){
+        return row >= Chessboard.ROW_LOWER_LIMIT && row <= Chessboard.ROW_UPPER_LIMIT
+                && col >= Chessboard.COL_LOWER_LIMIT && col <=Chessboard.ROW_UPPER_LIMIT;
+    }
+    
 }

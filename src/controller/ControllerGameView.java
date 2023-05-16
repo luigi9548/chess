@@ -35,6 +35,7 @@ public class ControllerGameView {
             for (int col = 0; col <= Chessboard.COL_UPPER_LIMIT; col++) {
                 if(gameView.getButtonGrid(row, col) == evt.getSource()){
                    gameView.resetColors();
+                   this.searchPiece();
                    chessboard.getSquare(row, col).getPiece().get().setInAction(true);
                    this.changeBottonColor(chessboard.getSquare(row, col).getPiece().get().calculateMovement(null));
                 }
@@ -42,6 +43,10 @@ public class ControllerGameView {
         }
     } 
     
+    /* problema: se prima schiaccio un pezzo p1 per vedere le sue possibili mosse senza pero muoverlo
+       e poi schiaccio un altro pezzo p2 per muoverlo, si muoverà p1 
+       evidentemente se schiaccio senza muovere rimane il isInAction = true
+    */
     private void move(java.awt.event.ActionEvent evt){
         for (int row = 0; row <= Chessboard.ROW_UPPER_LIMIT; row++) {
             for (int col = 0; col <= Chessboard.COL_UPPER_LIMIT; col++) {
