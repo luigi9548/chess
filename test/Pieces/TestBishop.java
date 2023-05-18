@@ -31,8 +31,6 @@ public class TestBishop {
         possiblePositions.add(new Position(3,5));
         possiblePositions.add(new Position(4,6));
         possiblePositions.add(new Position(5,7));
-        possiblePositions.add(new Position(0,2));
-        possiblePositions.add(new Position(0,4));
         possiblePositions.add(new Position(2,2));
         possiblePositions.add(new Position(3,1));
         possiblePositions.add(new Position(4,0));

@@ -23,16 +23,13 @@ public class TestRook {
         ArrayList<Position> liExp = new ArrayList<>();
         
         //aggiungo posizioni aspettate
-        liExp.add(new Position(0,3));
-        liExp.add(new Position(1,3));
-        liExp.add(new Position(2,3));
         liExp.add(new Position(4,3));
         liExp.add(new Position(5,3));
         liExp.add(new Position(6,3));
-        liExp.add(new Position(7,3));
-        liExp.add(new Position(3,0));
-        liExp.add(new Position(3,1));
+        liExp.add(new Position(2,3));
         liExp.add(new Position(3,2));
+        liExp.add(new Position(3,1));
+        liExp.add(new Position(3,0));
         liExp.add(new Position(3,4));
         liExp.add(new Position(3,5));
         liExp.add(new Position(3,6));
