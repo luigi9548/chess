@@ -13,14 +13,16 @@ import model.pieces.Rook;
 
 public class Chessboard {
     
-    private Square[][] squares;
+    private Square[][] squares; 
+    private boolean turn;
     public static final int ROW_UPPER_LIMIT = 7;
     public static final int ROW_LOWER_LIMIT = 0;
     public static final int COL_UPPER_LIMIT = 7;
     public static final int COL_LOWER_LIMIT = 0;
     
     public Chessboard(){
-        this.initializeChessboard();     
+        this.initializeChessboard();
+        this.turn = false; //si parte del bianco
     }
     
     private void initializeChessboard(){
@@ -99,6 +101,14 @@ public class Chessboard {
         return this.squares[row][col];
     }
     
+    public void switchTurn(){
+        turn = turn == false;
+    }
+    
+    public boolean getTurn(){
+        return this.turn;
+    }
+    
     public ArrayList<Piece> getWPieces(){
         ArrayList<Piece> wPieces = new ArrayList<>();
         
@@ -132,4 +142,30 @@ public class Chessboard {
                 && col >= Chessboard.COL_LOWER_LIMIT && col <=Chessboard.ROW_UPPER_LIMIT;
     }
     
+    public Position enPassant(Pawn p){
+        Position enPassant = null; 
+        int row = p.getPosition().getRow();
+        int col = p.getPosition().getCol();
+        
+        if(this.isValidPosition(row, col - 1)){
+            if(this.getSquare(row,col - 1).getPiece().isPresent()){
+                Piece pSx = this.getSquare(row, col - 1).getPiece().get();
+                if(pSx != null && pSx instanceof Pawn && pSx.isEnemy(p) && ((Pawn)pSx).getEnPassant()){
+                    enPassant = new Position(row, col - 1);
+                }
+            }
+        }
+        
+        if(this.isValidPosition(row, col + 1)){
+            if(this.getSquare(row,col + 1).getPiece().isPresent()){
+                Piece pSx = this.getSquare(row, col + 1).getPiece().get();
+                if(pSx != null && pSx instanceof Pawn && pSx.isEnemy(p) && ((Pawn)pSx).getEnPassant()){
+                    enPassant = new Position(row, col + 1);
+                }
+            }
+        }        
+        
+        return enPassant;
+    }
+        
 }
