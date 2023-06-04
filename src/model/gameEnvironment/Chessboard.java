@@ -167,5 +167,16 @@ public class Chessboard {
         
         return enPassant;
     }
+    
+    public boolean promotion(Pawn p){
+        boolean ret = false;
+        
+        if((p.getColor() == 0 && p.getPosition().getRow() == Chessboard.ROW_UPPER_LIMIT) ||
+           (p.getColor() == 1 && p.getPosition().getRow() == Chessboard.ROW_LOWER_LIMIT)){
+            ret = true;
+        }
+        
+        return ret;
+    }
         
 }

@@ -12,6 +12,7 @@ import model.gameEnvironment.Chessboard;
 import model.pieces.Pawn;
 import model.pieces.Piece;
 import view.GameView;
+import view.Promotion;
 /**
  *
  * @author luigi
@@ -19,6 +20,7 @@ import view.GameView;
 public class ControllerGameView {
     private GameView gameView;
     private Chessboard chessboard = new Chessboard();
+    private Promotion promotion;
     
     public ControllerGameView(GameView gameView){
         this.gameView = gameView;
@@ -44,7 +46,7 @@ public class ControllerGameView {
                        gameView.resetColors();
                        this.searchPiece();
                        p.setInAction(true);
-                        //System.out.println(row + " " + col);
+                       //System.out.println(row + " " + col);
                        this.changeBottonColor(p.calculateMovement(null));
                     }
                 }
@@ -52,6 +54,7 @@ public class ControllerGameView {
         }
     } 
     
+    @SuppressWarnings("empty-statement")
     private void move(java.awt.event.ActionEvent evt){
         //System.out.println("turn: " + turn);
         for (int row = 0; row <= Chessboard.ROW_UPPER_LIMIT; row++) {
@@ -71,9 +74,9 @@ public class ControllerGameView {
                         // devo verificarlo prima di cambiare la posizione di p 
                         if(p instanceof Pawn){
                             Position pos = chessboard.enPassant((Pawn) p);
-                            if(pos != null){
+                            if(pos != null && pos.getCol() == col){
                                 gameView.getButtonGrid(pos.getRow(), pos.getCol()).setIcon(null);
-                                System.out.println(pos.getRow() + " " + pos.getCol());
+                                //System.out.println(pos.getRow() + " " + pos.getCol());
                             }
                         }
                         chessboard.getSquare(row, col).getPiece().get().setPosition(new Position(row,col));
@@ -95,6 +98,12 @@ public class ControllerGameView {
                                     // questo if è perché durante la prima mossa si deve muovere di 2
                                     pawn.setEnPassant(true);
                                 }
+                            }
+                            
+                            // controllo se il pedone è arrivato a fine scacchiera
+                            if(chessboard.promotion(pawn)){
+                                promotion = new Promotion(pawn, gameView, chessboard);
+                                promotion.setVisible(true);
                             }
                         }
                         
@@ -121,9 +130,10 @@ public class ControllerGameView {
     }
     private void changeBottonColor(ArrayList<Position> positions){
         for(Position p : positions){
-          //  System.out.println(p.getRow() + " " + p.getCol());
+            System.out.println(p.getRow() + " " + p.getCol());
             gameView.getButtonGrid(p.getRow(), p.getCol()).setBackground(Color.red);
         }
+        System.out.println("");
     }
     
     private void changeEnPassant(ArrayList<Piece> p){
@@ -132,4 +142,7 @@ public class ControllerGameView {
                 pawn.setEnPassant(false);
         }
     }
+
+    
+    
 }

@@ -33,8 +33,7 @@ public class ControllerMenu {
         menu.setVisible(false);
         
         Chessboard chessboard = new Chessboard();
-        GameView gameView = new GameView();
-        gameView.initChessboard(chessboard);
+        GameView gameView = new GameView(chessboard);
         
         // a gameView gli passo la chessboard ma come gli passo i player?
     } 
