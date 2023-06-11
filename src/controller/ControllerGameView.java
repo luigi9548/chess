@@ -76,6 +76,7 @@ public class ControllerGameView {
                             Position pos = chessboard.enPassant((Pawn) p);
                             if(pos != null && pos.getCol() == col){
                                 gameView.getButtonGrid(pos.getRow(), pos.getCol()).setIcon(null);
+                                chessboard.getSquare(pos.getPosition().getRow(), pos.getPosition().getCol()).setPiece(null);
                                 //System.out.println(pos.getRow() + " " + pos.getCol());
                             }
                         }
