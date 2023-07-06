@@ -1,6 +1,7 @@
 package model.gameEnvironment;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import model.functionality.Position;
 import model.pieces.Bishop;
 import model.pieces.King;
@@ -132,4 +133,108 @@ public class Chessboard {
                 && col >= Chessboard.COL_LOWER_LIMIT && col <=Chessboard.ROW_UPPER_LIMIT;
     }
     
+    // ritorna la posizione della torre con cui può fare arrocco altrimenti null
+    public Position canCastling(int colour){
+        ArrayList<Piece> opposingPieces;
+        Piece king, rook1, rook2;
+        Position castling = null;
+        boolean canCastling = true;
+        if(colour == 0){
+            opposingPieces = this.getBPieces();
+            try{
+                king = this.getSquare(0,3).getPiece().get();
+                rook1 = this.getSquare(0, 0).getPiece().get();
+                rook2 = this.getSquare(0, 7).getPiece().get();
+                if(king instanceof King && king.getColor() == 0){
+                    if(this.getSquare(0, 2).getPiece().isEmpty() && this.getSquare(0, 1).getPiece().isEmpty()){
+                        if(rook1 instanceof Rook && rook1.getColor() == 0){
+                            for(Piece p : opposingPieces){
+                                if(this.attachedPosition(p, new Position(0,3)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(0,2)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(0,1)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(0,0)))
+                                    canCastling = false;
+                            }
+                            if(canCastling)
+                                castling = new Position(0,0);
+                        }
+                    }else if(this.getSquare(0, 4).getPiece().isEmpty() && this.getSquare(0, 5).getPiece().isEmpty() && this.getSquare(0, 6).getPiece().isEmpty()){
+                        if(rook2 instanceof Rook && rook2.getColor() == 0){
+                            for(Piece p : opposingPieces){
+                                if(this.attachedPosition(p, new Position(0,3)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(0,4)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(0,5)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(0,6)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(0,7)))
+                                    canCastling = false;
+                            }
+                            if(canCastling)
+                                castling = new Position(0,7);
+                        }
+                    }
+                }
+            }catch(NoSuchElementException e){}
+            return castling;
+        }else{
+            opposingPieces = this.getWPieces();
+            try{
+                king = this.getSquare(7,3).getPiece().get();
+                rook1 = this.getSquare(7, 0).getPiece().get();
+                rook2 = this.getSquare(7, 7).getPiece().get();
+                if(king instanceof King && king.getColor() == 1){
+                    if(this.getSquare(7, 2).getPiece().isEmpty() && this.getSquare(7, 1).getPiece().isEmpty()){
+                        if(rook1 instanceof Rook && rook1.getColor() == 1){
+                            for(Piece p : opposingPieces){
+                                if(this.attachedPosition(p, new Position(7,3)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(7,2)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(7,1)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(7,0)))
+                                    canCastling = false;
+                            }
+                            if(canCastling)
+                                castling = new Position(7,0);
+                        }
+                    }else if(this.getSquare(7, 4).getPiece().isEmpty() && this.getSquare(7, 5).getPiece().isEmpty() && this.getSquare(7, 6).getPiece().isEmpty()){
+                        if(rook2 instanceof Rook && rook2.getColor() == 1){
+                            for(Piece p : opposingPieces){
+                                if(this.attachedPosition(p, new Position(7,3)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(7,4)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(7,5)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(7,6)))
+                                    canCastling = false;
+                                if(this.attachedPosition(p, new Position(7,7)))
+                                    canCastling = false;
+                            }
+                            if(canCastling)
+                                castling = new Position(7,7);
+                        }
+                    }
+                }
+            }catch(NoSuchElementException e){}
+        }
+        return castling;
+    }
+    
+    private boolean attachedPosition(Piece piece, Position p){
+        ArrayList<Position> movements = piece.calculateMovement(null);
+        for(Position pos : movements){
+            if(pos.compare(p)){
+                return true;
+            }
+        }
+        return false;
+    } 
 }

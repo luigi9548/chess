@@ -9,7 +9,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import model.functionality.Position;
 import model.gameEnvironment.Chessboard;
+import model.pieces.King;
 import model.pieces.Piece;
+import model.pieces.Rook;
 import view.GameView;
 /**
  *
@@ -28,9 +30,15 @@ public class ControllerGameView {
             this.showMovement(evt);
         else if(color == -65536) //rosso
             this.move(evt);
+        else if(color == -16711936){ // verde
+            Rook rook = (Rook) this.getEvtPiece(evt);
+            if(rook != null)
+                this.castling(rook);
+        }
         
     }
     private void showMovement(java.awt.event.ActionEvent evt) { 
+        Position castling;
         for (int row = 0; row <= Chessboard.ROW_UPPER_LIMIT; row++) {
             for (int col = 0; col <= Chessboard.COL_UPPER_LIMIT; col++) {
                 if(gameView.getButtonGrid(row, col) == evt.getSource()){
@@ -38,15 +46,72 @@ public class ControllerGameView {
                    this.searchPiece();
                    chessboard.getSquare(row, col).getPiece().get().setInAction(true);
                    this.changeBottonColor(chessboard.getSquare(row, col).getPiece().get().calculateMovement(null));
+                   if(chessboard.getSquare(row, col).getPiece().get() instanceof King){
+                        castling = chessboard.canCastling(chessboard.getSquare(row, col).getPiece().get().getColor());
+                        if(castling != null)
+                            gameView.getButtonGrid(castling.getRow(), castling.getCol()).setBackground(Color.GREEN);
+                   }
                 }
             }
         }
     } 
     
-    /* problema: se prima schiaccio un pezzo p1 per vedere le sue possibili mosse senza pero muoverlo
-       e poi schiaccio un altro pezzo p2 per muoverlo, si muoverà p1 
-       evidentemente se schiaccio senza muovere rimane il isInAction = true
-    */
+    private void castling(Rook rook){
+        Icon rookIcon = new ImageIcon(chessboard.getSquare(rook.getPosition().getRow(), rook.getPosition().getCol()).getPiece().get().getIcon());
+        Icon kingIcon = null;
+        if(rook.getColor() == 0){
+            kingIcon = new ImageIcon(chessboard.getSquare(0, 3).getPiece().get().getIcon());
+            if(rook.getPosition().compare(new Position(0,0))){
+                gameView.getButtonGrid(0, 1).setIcon(kingIcon);
+                gameView.getButtonGrid(0, 3).setIcon(null);
+                chessboard.getSquare(0, 1).setPiece(chessboard.getSquare(0, 3).getPiece().get());
+                chessboard.getSquare(0, 1).getPiece().get().setPosition(new Position(0, 1));
+                chessboard.getSquare(0, 3).setPiece(null);
+                gameView.getButtonGrid(0, 2).setIcon(rookIcon);
+                gameView.getButtonGrid(0, 0).setIcon(null);
+                chessboard.getSquare(0, 2).setPiece(chessboard.getSquare(0, 0).getPiece().get());
+                chessboard.getSquare(0, 2).getPiece().get().setPosition(new Position(0, 2));
+                chessboard.getSquare(0, 0).setPiece(null);
+            }else{
+                gameView.getButtonGrid(0, 5).setIcon(kingIcon);
+                gameView.getButtonGrid(0, 3).setIcon(null);
+                chessboard.getSquare(0, 5).setPiece(chessboard.getSquare(0, 3).getPiece().get());
+                chessboard.getSquare(0, 5).getPiece().get().setPosition(new Position(0, 5));
+                chessboard.getSquare(0, 3).setPiece(null);
+                gameView.getButtonGrid(0, 4).setIcon(rookIcon);
+                gameView.getButtonGrid(0, 7).setIcon(null);
+                chessboard.getSquare(0, 4).setPiece(chessboard.getSquare(0, 7).getPiece().get());
+                chessboard.getSquare(0, 4).getPiece().get().setPosition(new Position(0, 4));
+                chessboard.getSquare(0, 7).setPiece(null);
+            }
+        }else{
+            kingIcon = new ImageIcon(chessboard.getSquare(7, 3).getPiece().get().getIcon());
+            if(rook.getPosition().compare(new Position(7,0))){
+                gameView.getButtonGrid(7, 1).setIcon(kingIcon);
+                gameView.getButtonGrid(7, 3).setIcon(null);
+                chessboard.getSquare(7, 1).setPiece(chessboard.getSquare(7, 3).getPiece().get());
+                chessboard.getSquare(7, 1).getPiece().get().setPosition(new Position(7, 1));
+                chessboard.getSquare(7, 3).setPiece(null);
+                gameView.getButtonGrid(7, 2).setIcon(rookIcon);
+                gameView.getButtonGrid(7, 0).setIcon(null);
+                chessboard.getSquare(7, 2).setPiece(chessboard.getSquare(7, 0).getPiece().get());
+                chessboard.getSquare(7, 2).getPiece().get().setPosition(new Position(7, 2));
+                chessboard.getSquare(7, 0).setPiece(null);
+            }else{
+                gameView.getButtonGrid(7, 5).setIcon(kingIcon);
+                gameView.getButtonGrid(7, 3).setIcon(null);
+                chessboard.getSquare(7, 5).setPiece(chessboard.getSquare(7, 3).getPiece().get());
+                chessboard.getSquare(7, 5).getPiece().get().setPosition(new Position(7, 5));
+                chessboard.getSquare(7, 3).setPiece(null);
+                gameView.getButtonGrid(7, 4).setIcon(rookIcon);
+                gameView.getButtonGrid(7, 7).setIcon(null);
+                chessboard.getSquare(7, 4).setPiece(chessboard.getSquare(7, 7).getPiece().get());
+                chessboard.getSquare(7, 4).getPiece().get().setPosition(new Position(7, 4));
+                chessboard.getSquare(7, 7).setPiece(null);
+            }
+        }
+        gameView.resetColors();
+    }
     private void move(java.awt.event.ActionEvent evt){
         for (int row = 0; row <= Chessboard.ROW_UPPER_LIMIT; row++) {
             for (int col = 0; col <= Chessboard.COL_UPPER_LIMIT; col++) {
@@ -64,6 +129,17 @@ public class ControllerGameView {
                 }
             }
         }
+    }
+    
+    private Piece getEvtPiece(java.awt.event.ActionEvent evt){
+        for (int row = 0; row <= Chessboard.ROW_UPPER_LIMIT; row++) {
+            for (int col = 0; col <= Chessboard.COL_UPPER_LIMIT; col++) {
+                if(gameView.getButtonGrid(row, col) == evt.getSource()){
+                    return chessboard.getSquare(row, col).getPiece().get();
+                }
+            }
+        }
+        return null;
     }
     
     private Piece searchPiece(){
