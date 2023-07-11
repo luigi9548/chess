@@ -18,11 +18,14 @@ public class GameView extends JFrame{
     private JButton[][] buttonGrid = new JButton[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
     private ControllerGameView controller = new ControllerGameView(this);
 
+    public GameView(Chessboard chessboard){
+        initChessboard(chessboard);
+    }
+    
     public JButton getButtonGrid(int x, int y){
         return this.buttonGrid[x][y];
     }
 
-    
     public void initChessboard(Chessboard chessboard){               
         scacchiera.setLayout(new GridLayout(8,8));
         for (int i=0; i<=7; i++)

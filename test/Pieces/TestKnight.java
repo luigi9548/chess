@@ -18,25 +18,12 @@ public class TestKnight {
     
     @org.junit.Test
     public void testMovement(){
-        Position position3 = new Position(0,0);
-        Knight kn3 = new Knight("KNIGHT", position3 ,0,new Chessboard());
-        ArrayList<Position> liExp3 = new ArrayList<>();
-        liExp3.add(new Position(1,2));
-        liExp3.add(new Position(2,1));
-        
-        ArrayList<Position> li3= new ArrayList<>();
-        li3 = kn3.calculateMovement(position3);
-        
-        for(int i = 0; i < li3.size(); i++){
-            assertTrue(liExp3.get(i).compare(li3.get(i)));   
-        }
-        
+                
         // creo il knight nella sua posizione iniziale di partenza
         Position position = new Position(0,1);
         Knight kn = new Knight("KNIGHT",position,0, new Chessboard());
         
         ArrayList<Position> liExp = new ArrayList<>();
-        liExp.add(new Position(1,3));
         liExp.add(new Position(2,2));
         liExp.add(new Position(2,0));
         

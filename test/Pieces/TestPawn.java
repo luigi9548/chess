@@ -40,9 +40,29 @@ public class TestPawn {
         realPositions = pawn.calculateMovement(null);
          if(realPositions.size()==1){
             assertTrue(possiblePositions.get(0).compare(realPositions.get(0)));
-         }
+         }        
+    }
+
+    @org.junit.Test
+    public void testEat(){
+        int i = 0;
+        Pawn pawn1 = new Pawn("White", new Position(5,6), 0, chessboard); 
+        
+        ArrayList<Position> possiblePositions = new ArrayList<>();
+        ArrayList<Position> realPositions = new ArrayList<>();
+        
+        possiblePositions.add(new Position(6,5));
+        possiblePositions.add(new Position(6,7));
+        
+        //realPositions = pawn
+     
+        
+        for(Position a : possiblePositions){
+            assertTrue(a.compare(realPositions.get(i)));
+            i++;
+        }
+
         
         
     }
-
 }

@@ -8,7 +8,7 @@ public class Queen extends Piece {
     public Queen(final String name, Position position,final int color, Chessboard chessboard){
         super(name, position, color, chessboard);
     }
-    
+
     @Override
     public ArrayList<Position> calculateMovement(Position position){
         ArrayList<Position> possiblePositions = new ArrayList<>();

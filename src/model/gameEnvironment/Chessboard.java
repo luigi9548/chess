@@ -14,14 +14,16 @@ import model.pieces.Rook;
 
 public class Chessboard {
     
-    private Square[][] squares;
+    private Square[][] squares; 
+    private boolean turn;
     public static final int ROW_UPPER_LIMIT = 7;
     public static final int ROW_LOWER_LIMIT = 0;
     public static final int COL_UPPER_LIMIT = 7;
     public static final int COL_LOWER_LIMIT = 0;
     
     public Chessboard(){
-        this.initializeChessboard();     
+        this.initializeChessboard();
+        this.turn = false; //si parte del bianco
     }
     
     private void initializeChessboard(){
@@ -98,6 +100,14 @@ public class Chessboard {
     
     public Square getSquare(int row, int col){
         return this.squares[row][col];
+    }
+    
+    public void switchTurn(){
+        turn = turn == false;
+    }
+    
+    public boolean getTurn(){
+        return this.turn;
     }
     
     public ArrayList<Piece> getWPieces(){
@@ -237,4 +247,126 @@ public class Chessboard {
         }
         return false;
     } 
+    
+    public Position enPassant(Pawn p){
+        Position enPassant = null; 
+        int row = p.getPosition().getRow();
+        int col = p.getPosition().getCol();
+        
+        if(this.isValidPosition(row, col - 1)){
+            if(this.getSquare(row,col - 1).getPiece().isPresent()){
+                Piece pSx = this.getSquare(row, col - 1).getPiece().get();
+                if(pSx != null && pSx instanceof Pawn && pSx.isEnemy(p) && ((Pawn)pSx).getEnPassant()){
+                    enPassant = new Position(row, col - 1);
+                }
+            }
+        }
+        
+        if(this.isValidPosition(row, col + 1)){
+            if(this.getSquare(row,col + 1).getPiece().isPresent()){
+                Piece pSx = this.getSquare(row, col + 1).getPiece().get();
+                if(pSx != null && pSx instanceof Pawn && pSx.isEnemy(p) && ((Pawn)pSx).getEnPassant()){
+                    enPassant = new Position(row, col + 1);
+                }
+            }
+        }        
+        
+        return enPassant;
+    }
+    
+    public boolean promotion(Pawn p){
+        boolean ret = false;
+        
+        if((p.getColor() == 0 && p.getPosition().getRow() == Chessboard.ROW_UPPER_LIMIT) ||
+           (p.getColor() == 1 && p.getPosition().getRow() == Chessboard.ROW_LOWER_LIMIT)){
+            ret = true;
+        }
+        
+        return ret;
+    }
+    
+    private Position kingPosition(int color){
+        for(int i = 0; i <= Chessboard.ROW_UPPER_LIMIT; i++){
+            for(int j = 0; j <= Chessboard.COL_UPPER_LIMIT; j++){
+                if(this.squares[i][j].getPiece().isPresent() && this.squares[i][j].getPiece().get().getColor() == color && this.squares[i][j].getPiece().get() instanceof King)
+                    return this.squares[i][j].getPiece().get().getPosition();
+            }
+        }
+        return null;
+    }
+    
+    public boolean isCheck(int color){
+        boolean check = false;
+        ArrayList<Piece> avvPieces;
+        Position king;
+        if(color == 0){
+            avvPieces = this.getBPieces();
+            king = this.kingPosition(0);
+        }else{
+            avvPieces = this.getWPieces();
+            king = this.kingPosition(1);
+        }
+        for(Piece piece: avvPieces){
+            if(this.attachedPosition(piece, king))
+                check = true;
+        }
+        return check;
+    }
+       
+    public ArrayList<Position> legalMovements(Piece p){
+        ArrayList<Position> possiblePositions = p.calculateMovement(null);
+        Piece piece;
+        ArrayList<Position> legalPositions = new ArrayList();
+        Position firstPosition = p.getPosition();
+        for(Position position : possiblePositions){
+            piece = null;
+            if(this.getSquare(position.getRow(), position.getCol()).getPiece().isPresent()){
+                piece = this.getSquare(position.getRow(), position.getCol()).getPiece().get();
+            }
+            
+            this.getSquare(position.getRow(), position.getCol()).setPiece(p);
+            p.setPosition(position);
+            this.getSquare(firstPosition.getRow(), firstPosition.getCol()).setPiece(null);
+            if(!this.isCheck(p.getColor())){
+                legalPositions.add(position);
+            }
+            this.getSquare(firstPosition.getRow(), firstPosition.getCol()).setPiece(p);
+            p.setPosition(firstPosition);
+            if(piece != null)
+                this.getSquare(position.getRow(), position.getCol()).setPiece(piece);
+            else
+                this.getSquare(position.getRow(), position.getCol()).setPiece(null);
+        }
+        return legalPositions;
+    }
+    
+    // metodo per verificare se è patta o scacco matto (Scacco matto = 0, patta = 1, ninente = 2;
+    public int isCheckmateOrFlap(int color){
+        ArrayList<Piece> myPieces;
+        ArrayList<Piece> avvPieces;
+        boolean checkmate = true;
+        boolean attachedKing = false;
+        if(color == 0){
+            myPieces = this.getWPieces();
+            avvPieces = this.getBPieces();
+        }
+        else{
+            myPieces = this.getBPieces();
+            avvPieces = this.getWPieces();
+        }
+        for(Piece p : myPieces){
+            if(this.legalMovements(p).size() != 0){
+                checkmate = false;
+            }
+        }
+        for(Piece p : avvPieces){
+            if(this.attachedPosition(p, this.kingPosition(color)))
+                attachedKing = true;
+        }
+        if(!checkmate)
+            return 2;
+        else if(checkmate && attachedKing)
+            return 0;
+        else return 1;
+    }
 }
