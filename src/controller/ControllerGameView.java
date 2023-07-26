@@ -223,10 +223,7 @@ public class ControllerGameView {
                             this.blackP.addToHistory(checkString);
                         }
                         // dopo un turno devo impostare enPassant a false perché è così la regola
-                        if(turnInt == 0)
-                            changeEnPassant(chessboard.getWPieces());
-                        else
-                            changeEnPassant(chessboard.getBPieces());
+                        changeEnPassant(chessboard.getPiecesByColor(turnInt));
                         
                         // se abbiamo pedone devo controllare se era la sua prima mossa, 
                         // in caso positivo devo mettere che ha già mosso (quindi da adesso in poi si muove di 1 casella) 

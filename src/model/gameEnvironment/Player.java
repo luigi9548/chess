@@ -26,9 +26,9 @@ public class Player {
     public void createPieces(Chessboard chessboard){
         /* I pezzi vengono assegnati a seconda del colore del Player */
         if(this.color == ColorM.BIANCO){
-            this.pieces = chessboard.getWPieces();
+            this.pieces = chessboard.getPiecesByColor(0);
         }else{
-            this.pieces = chessboard.getBPieces();
+            this.pieces = chessboard.getPiecesByColor(1);
         }
     }
     

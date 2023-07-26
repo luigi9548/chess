@@ -62,7 +62,7 @@ public class TestChessboard {
     @org.junit.Test
      public void testGetWPieces(){
         ArrayList<Piece> pieces = new ArrayList<>();
-        pieces = this.chessboard.getWPieces();
+        pieces = this.chessboard.getPiecesByColor(0);
         assertTrue(pieces.size() == 16);
         for(Piece piece : pieces)
             assertTrue(piece.getColor() == 0);
@@ -71,7 +71,7 @@ public class TestChessboard {
     @org.junit.Test
     public void testGetBPieces(){
         ArrayList<Piece> pieces = new ArrayList<>();
-        pieces = this.chessboard.getBPieces();
+        pieces = this.chessboard.getPiecesByColor(1);
         assertTrue(pieces.size() == 16);
         for(Piece piece : pieces)
             assertTrue(piece.getColor() == 1);

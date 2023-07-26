@@ -1,7 +1,9 @@
 package model.gameEnvironment;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import model.functionality.Position;
 import model.pieces.Bishop;
 import model.pieces.King;
@@ -98,6 +100,7 @@ public class Chessboard {
         }
     }
     
+    
     public Square getSquare(int row, int col){
         return this.squares[row][col];
     }
@@ -110,32 +113,25 @@ public class Chessboard {
         return this.turn;
     }
     
-    public ArrayList<Piece> getWPieces(){
-        ArrayList<Piece> wPieces = new ArrayList<>();
-        
-        for(int i = 0; i <= Chessboard.ROW_UPPER_LIMIT; i++){
-            for(int j = 0; j <= Chessboard.COL_UPPER_LIMIT; j++){
-                if(this.squares[i][j].getPiece().isPresent() && this.squares[i][j].getPiece().get().getColor() == 0)
-                {
-                    wPieces.add(this.squares[i][j].getPiece().get());
-                }
-            }
-        }
-        return wPieces;
+    public ArrayList<Piece> getWPieces() {
+        return this.getPiecesByColor(0);
     }
     
-    public ArrayList<Piece> getBPieces(){
-        ArrayList<Piece> bPieces = new ArrayList<>();
-        
-        for(int i = 0; i <= Chessboard.ROW_UPPER_LIMIT; i++){
-            for(int j = 0; j <= Chessboard.COL_UPPER_LIMIT; j++){
-                if(this.squares[i][j].getPiece().isPresent() && this.squares[i][j].getPiece().get().getColor() == 1)
-                {
-                    bPieces.add(this.squares[i][j].getPiece().get());
-                }
-            }
-        }
-        return bPieces;
+    public ArrayList<Piece> getBPieces() {
+        return this.getPiecesByColor(1);
+    }
+    
+    public ArrayList<Piece> getPiecesByColor(int color){
+        ArrayList<Piece> pieces = new ArrayList<>();
+
+        Arrays.stream(squares)
+                .flatMap(Arrays::stream)
+                .filter(square -> square.getPiece().isPresent())
+                .map(square -> square.getPiece().get())
+                .filter(piece -> piece.getColor() == color)
+                .forEach(pieces::add);
+
+        return pieces;
     }
     
     public boolean isValidPosition(int row, int col){
@@ -143,146 +139,79 @@ public class Chessboard {
                 && col >= Chessboard.COL_LOWER_LIMIT && col <=Chessboard.ROW_UPPER_LIMIT;
     }
     
-    // ritorna la posizione della torre con cui può fare arrocco altrimenti null
-    public Position canCastling(int colour){
-        ArrayList<Piece> opposingPieces;
-        Piece king, rook1, rook2;
+    // ritorna la posizione della torre con cui può fare arrocco altrimenti null    
+    public Position canCastling(int color) {
+        ArrayList<Piece> opposingPieces = getPiecesByColor((color == 0) ? 1 : 0);
+
+        int kingRow = (color == 0) ? 0 : 7;
+        int kingCol = 3;
+
         Position castling = null;
-        boolean canCastling = true;
-        if(colour == 0){
-            opposingPieces = this.getBPieces();
-            try{
-                king = this.getSquare(0,3).getPiece().get();
-                rook1 = this.getSquare(0, 0).getPiece().get();
-                rook2 = this.getSquare(0, 7).getPiece().get();
-                if(king instanceof King && king.getColor() == 0){
-                    if(this.getSquare(0, 2).getPiece().isEmpty() && this.getSquare(0, 1).getPiece().isEmpty()){
-                        if(rook1 instanceof Rook && rook1.getColor() == 0){
-                            for(Piece p : opposingPieces){
-                                if(this.attachedPosition(p, new Position(0,3)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(0,2)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(0,1)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(0,0)))
-                                    canCastling = false;
-                            }
-                            if(canCastling)
-                                castling = new Position(0,0);
-                        }
-                    }else if(this.getSquare(0, 4).getPiece().isEmpty() && this.getSquare(0, 5).getPiece().isEmpty() && this.getSquare(0, 6).getPiece().isEmpty()){
-                        if(rook2 instanceof Rook && rook2.getColor() == 0){
-                            for(Piece p : opposingPieces){
-                                if(this.attachedPosition(p, new Position(0,3)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(0,4)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(0,5)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(0,6)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(0,7)))
-                                    canCastling = false;
-                            }
-                            if(canCastling)
-                                castling = new Position(0,7);
-                        }
-                    }
+
+        try {
+            Piece king = this.getSquare(kingRow, kingCol).getPiece().orElse(null);
+            Piece rook1 = this.getSquare(kingRow, 0).getPiece().orElse(null);
+            Piece rook2 = this.getSquare(kingRow, 7).getPiece().orElse(null);
+
+            if (king instanceof King && king.getColor() == color) {
+                if (this.getSquare(kingRow, 2).getPiece().isEmpty() &&
+                    this.getSquare(kingRow, 1).getPiece().isEmpty() &&
+                    this.getSquare(kingRow, 0).getPiece().isPresent() &&
+                    rook1 instanceof Rook && rook1.getColor() == color &&
+                    opposingPieces.stream().noneMatch(p -> attachedPosition(p, new Position(kingRow, 3)))) {
+
+                    castling = new Position(kingRow, 0);
+                } else if (this.getSquare(kingRow, 4).getPiece().isEmpty() &&
+                           this.getSquare(kingRow, 5).getPiece().isEmpty() &&
+                           this.getSquare(kingRow, 6).getPiece().isEmpty() &&
+                           this.getSquare(kingRow, 7).getPiece().isPresent() &&
+                           rook2 instanceof Rook && rook2.getColor() == color &&
+                           opposingPieces.stream().noneMatch(p -> attachedPosition(p, new Position(kingRow, 3)))) {
+
+                    castling = new Position(kingRow, 7);
                 }
-            }catch(NoSuchElementException e){}
-            return castling;
-        }else{
-            opposingPieces = this.getWPieces();
-            try{
-                king = this.getSquare(7,3).getPiece().get();
-                rook1 = this.getSquare(7, 0).getPiece().get();
-                rook2 = this.getSquare(7, 7).getPiece().get();
-                if(king instanceof King && king.getColor() == 1){
-                    if(this.getSquare(7, 2).getPiece().isEmpty() && this.getSquare(7, 1).getPiece().isEmpty()){
-                        if(rook1 instanceof Rook && rook1.getColor() == 1){
-                            for(Piece p : opposingPieces){
-                                if(this.attachedPosition(p, new Position(7,3)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(7,2)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(7,1)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(7,0)))
-                                    canCastling = false;
-                            }
-                            if(canCastling)
-                                castling = new Position(7,0);
-                        }
-                    }else if(this.getSquare(7, 4).getPiece().isEmpty() && this.getSquare(7, 5).getPiece().isEmpty() && this.getSquare(7, 6).getPiece().isEmpty()){
-                        if(rook2 instanceof Rook && rook2.getColor() == 1){
-                            for(Piece p : opposingPieces){
-                                if(this.attachedPosition(p, new Position(7,3)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(7,4)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(7,5)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(7,6)))
-                                    canCastling = false;
-                                if(this.attachedPosition(p, new Position(7,7)))
-                                    canCastling = false;
-                            }
-                            if(canCastling)
-                                castling = new Position(7,7);
-                        }
-                    }
-                }
-            }catch(NoSuchElementException e){}
-        }
+            }
+        } catch (NoSuchElementException e) {}
+
         return castling;
     }
-    
-    private boolean attachedPosition(Piece piece, Position p){
+
+    // ottimizzato
+    private boolean attachedPosition(Piece piece, Position p) {
         ArrayList<Position> movements = piece.calculateMovement(null);
-        for(Position pos : movements){
-            if(pos.compare(p)){
-                return true;
-            }
-        }
-        return false;
-    } 
-    
-    public Position enPassant(Pawn p){
-        Position enPassant = null; 
-        int row = p.getPosition().getRow();
-        int col = p.getPosition().getCol();
+        return movements.stream().anyMatch(pos -> pos.compare(p));
+    }
         
-        if(this.isValidPosition(row, col - 1)){
-            if(this.getSquare(row,col - 1).getPiece().isPresent()){
-                Piece pSx = this.getSquare(row, col - 1).getPiece().get();
-                if(pSx != null && pSx instanceof Pawn && pSx.isEnemy(p) && ((Pawn)pSx).getEnPassant()){
-                    enPassant = new Position(row, col - 1);
-                }
-            }
-        }
-        
-        if(this.isValidPosition(row, col + 1)){
-            if(this.getSquare(row,col + 1).getPiece().isPresent()){
-                Piece pSx = this.getSquare(row, col + 1).getPiece().get();
-                if(pSx != null && pSx instanceof Pawn && pSx.isEnemy(p) && ((Pawn)pSx).getEnPassant()){
-                    enPassant = new Position(row, col + 1);
-                }
-            }
-        }        
-        
+    // versione ottimizzata
+    public Position enPassant(Pawn p) {
+        Position currentPosition = p.getPosition();
+        int row = currentPosition.getRow();
+        int col = currentPosition.getCol();
+
+        Position leftPosition = new Position(row, col - 1);
+        Position rightPosition = new Position(row, col + 1);
+
+        List<Position> adjacentPositions = Stream.of(leftPosition, rightPosition)
+                .filter(pos -> isValidPosition(pos.getRow(), pos.getCol()))
+                .collect(Collectors.toList());
+
+        Position enPassant = adjacentPositions.stream()
+                .map(pos -> this.getSquare(pos.getRow(), pos.getCol()))
+                .filter(square -> square.getPiece().isPresent())
+                .map(square -> square.getPiece().get())
+                .filter(piece -> piece instanceof Pawn && piece.isEnemy(p) && ((Pawn) piece).getEnPassant())
+                .map(Piece::getPosition)
+                .findFirst()
+                .orElse(null);
+
         return enPassant;
     }
     
-    public boolean promotion(Pawn p){
-        boolean ret = false;
-        
-        if((p.getColor() == 0 && p.getPosition().getRow() == Chessboard.ROW_UPPER_LIMIT) ||
-           (p.getColor() == 1 && p.getPosition().getRow() == Chessboard.ROW_LOWER_LIMIT)){
-            ret = true;
-        }
-        
-        return ret;
+    // ottimizzato
+    public boolean promotion(Pawn p) {
+    int row = p.getPosition().getRow();
+    return (p.getColor() == 0 && row == Chessboard.ROW_UPPER_LIMIT) ||
+           (p.getColor() == 1 && row == Chessboard.ROW_LOWER_LIMIT);
     }
     
     private Position kingPosition(int color){
@@ -295,22 +224,13 @@ public class Chessboard {
         return null;
     }
     
-    public boolean isCheck(int color){
-        boolean check = false;
-        ArrayList<Piece> avvPieces;
-        Position king;
-        if(color == 0){
-            avvPieces = this.getBPieces();
-            king = this.kingPosition(0);
-        }else{
-            avvPieces = this.getWPieces();
-            king = this.kingPosition(1);
-        }
-        for(Piece piece: avvPieces){
-            if(this.attachedPosition(piece, king))
-                check = true;
-        }
-        return check;
+    // ottimizzato
+    public boolean isCheck(int color) {
+        Position king = kingPosition(color);
+        //ArrayList<Piece> avvPieces = color == 0 ? getBPieces() : getWPieces();
+        ArrayList<Piece> avvPieces = getPiecesByColor(color == 0 ? 1 : 0);
+
+        return avvPieces.stream().anyMatch(piece -> attachedPosition(piece, king));
     }
        
     public ArrayList<Position> legalMovements(Piece p){
@@ -339,34 +259,25 @@ public class Chessboard {
         }
         return legalPositions;
     }
+
     
-    // metodo per verificare se è patta o scacco matto (Scacco matto = 0, patta = 1, ninente = 2;
-    public int isCheckmateOrFlap(int color){
-        ArrayList<Piece> myPieces;
-        ArrayList<Piece> avvPieces;
-        boolean checkmate = true;
-        boolean attachedKing = false;
-        if(color == 0){
-            myPieces = this.getWPieces();
-            avvPieces = this.getBPieces();
-        }
-        else{
-            myPieces = this.getBPieces();
-            avvPieces = this.getWPieces();
-        }
-        for(Piece p : myPieces){
-            if(this.legalMovements(p).size() != 0){
-                checkmate = false;
-            }
-        }
-        for(Piece p : avvPieces){
-            if(this.attachedPosition(p, this.kingPosition(color)))
-                attachedKing = true;
-        }
-        if(!checkmate)
+    // metodo per verificare se è patta o scacco matto (Scacco matto = 0, patta = 1, niente = 2;   
+    // versione ottimizzata dal metodo
+    public int isCheckmateOrFlap(int color) {
+        ArrayList<Piece> myPieces = getPiecesByColor(color);
+        ArrayList<Piece> avvPieces = getPiecesByColor((color == 0) ? 1 : 0);
+
+        boolean checkmate = myPieces.stream().allMatch(p -> this.legalMovements(p).isEmpty());
+
+        boolean attachedKing = avvPieces.stream().anyMatch(p -> this.attachedPosition(p, this.kingPosition(color)));
+
+        if (!checkmate) {
             return 2;
-        else if(checkmate && attachedKing)
+        } else if (attachedKing) {
             return 0;
-        else return 1;
+        } else {
+            return 1;
+        }
     }
+
 }

@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 public class TestKing {
     
     private Chessboard chessboard = new Chessboard();
-    private King king = new King("King", new Position(3,5),0,chessboard);
+    private King king = new King("King", new Position(3,5),0,chessboard, 'k');
     
     @org.junit.Test
     public void testCalculateMovement(){
