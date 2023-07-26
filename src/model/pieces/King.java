@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class King extends Piece {
     
-    public King(final String name, Position position,final int color, Chessboard chessboard){
-        super(name, position, color, chessboard);
+    public King(final String name, Position position,final int color, Chessboard chessboard, char pieceSign){
+        super(name, position, color, chessboard, pieceSign);
     }
     
     @Override

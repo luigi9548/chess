@@ -6,8 +6,8 @@ import model.gameEnvironment.Chessboard;
 import java.util.ArrayList;
 
 public class Rook extends Piece {
-    public Rook(final String name, Position position,final int color, Chessboard chessboard){
-        super(name, position, color, chessboard);
+    public Rook(final String name, Position position,final int color, Chessboard chessboard, char pieceSign){
+        super(name, position, color, chessboard, pieceSign);
     }
     
     @Override

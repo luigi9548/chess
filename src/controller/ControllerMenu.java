@@ -24,16 +24,13 @@ public class ControllerMenu {
     }
     
     public void playActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        String nameW = menu.getjTextFieldW().getText();
-        String nameB = menu.getjTextFieldB().getText();
-        System.out.println(nameW);
-        Player playerW = new Player(nameW, true);
-        Player playerB = new Player(nameB, false);
+        String whiteN = menu.getjTextFieldW().getText();
+        String blackN = menu.getjTextFieldB().getText();
         
         menu.setVisible(false);
         
         Chessboard chessboard = new Chessboard();
-        GameView gameView = new GameView(chessboard);
+        GameView gameView = new GameView(chessboard, whiteN, blackN);
         
         // a gameView gli passo la chessboard ma come gli passo i player?
     } 

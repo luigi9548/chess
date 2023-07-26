@@ -8,8 +8,8 @@ public class Pawn extends Piece {
     private boolean firstMove;
     private boolean enPassant;
     
-    public Pawn(final String name, Position position,final int color, Chessboard chessboard){
-        super(name, position, color, chessboard);
+    public Pawn(final String name, Position position,final int color, Chessboard chessboard, char pieceSign){
+        super(name, position, color, chessboard, pieceSign);
         this.firstMove = true;
     }
 

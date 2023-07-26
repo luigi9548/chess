@@ -13,7 +13,16 @@ public class Position {
     public int getRow() {
         return this.row;
     }
-
+    
+    public char numToLetterBySubstr() {
+        String LETTERS = "abcdefgh";
+        return LETTERS.charAt(this.col);
+    }
+    
+    public String getStringPosition(){
+        return this.numToLetterBySubstr() + Integer.toString(row);
+    }
+    
     public int getCol() {
         return this.col;
     }

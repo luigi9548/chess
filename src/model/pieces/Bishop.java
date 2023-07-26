@@ -5,8 +5,8 @@ import model.gameEnvironment.Chessboard;
 import java.util.*;
 
 public class Bishop extends Piece {
-    public Bishop(final String name, Position position,final int color, Chessboard chessboard){
-        super(name, position, color, chessboard);
+    public Bishop(final String name, Position position,final int color, Chessboard chessboard, char pieceSign){
+        super(name, position, color, chessboard, pieceSign);
     }
 
     @Override

@@ -2,17 +2,18 @@ package model.gameEnvironment;
 
 import java.util.ArrayList;
 import java.util.Timer;
+import model.functionality.ColorM;
 import model.pieces.Piece;
 
 public class Player {
     private String name;
-    private boolean color;  /* white = true, black = false */
+    private ColorM color;  /* white = true, black = false */
     private ArrayList<Piece> pieces;
     private ArrayList<Piece> cementery;
     private ArrayList<String> history;
     private Timer timer;
     
-    public Player(String name, boolean color){
+    public Player(String name, ColorM color){
         this.name = name;
         this.color = color;
         this.pieces = new ArrayList<>();
@@ -24,7 +25,7 @@ public class Player {
     /* Metodo volto all' assegnazione dei pezzi del giocatore */
     public void createPieces(Chessboard chessboard){
         /* I pezzi vengono assegnati a seconda del colore del Player */
-        if(this.color){
+        if(this.color == ColorM.BIANCO){
             this.pieces = chessboard.getWPieces();
         }else{
             this.pieces = chessboard.getBPieces();
@@ -32,15 +33,27 @@ public class Player {
     }
     
     /* Metodo volto all'aggiunta di una mossa alla history delle mosse */
-    private void addToHistory(String str){
+    public void addToHistory(String str){
         if(!str.equals("")){
             this.history.add(str);
         }
     }
     
+    public ArrayList<String> getHistory(){
+        return this.history;
+    }
+    
+    public void removeLastString(){
+        this.history.remove(this.history.size()-1);
+    }
+    
     /* Metodo volto all'aggiunta di un pezzo nel cimitero */
-    private void addPieceCemetery(Piece piece){
+    public void addPieceCemetery(Piece piece){
         this.cementery.add(piece);
+    }
+    
+    public ArrayList<Piece> getCemetery(){
+        return this.cementery;
     }
 
     public ArrayList<Piece> getPieces() {
@@ -55,7 +68,7 @@ public class Player {
         this.timer = timer;
     }
 
-    public boolean isColor() {
+    public ColorM isColor() {
         return color;
     }
 

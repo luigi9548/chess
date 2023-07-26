@@ -5,8 +5,8 @@ import model.gameEnvironment.Chessboard;
 import java.util.ArrayList;
 
 public class Knight extends Piece {
-    public Knight(final String name, Position position,final int color, Chessboard chessboard){
-        super(name, position, color, chessboard);
+    public Knight(final String name, Position position,final int color, Chessboard chessboard, char pieceSign){
+        super(name, position, color, chessboard, pieceSign);
     }
 
     @Override

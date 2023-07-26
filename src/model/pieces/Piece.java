@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public abstract class Piece implements PieceInterface {
     private final String name;
+    private char pieceSign;//p=peon,t=torre,c=caballo.....a,r=reina,k=king(rey) - mayusc:Negras
     private boolean isInPlay;
     private Position position;
     private final int color;
@@ -14,12 +15,13 @@ public abstract class Piece implements PieceInterface {
     private String icon;
     private boolean inAction = false;
     
-    public Piece(final String name, Position position,final int color, Chessboard chessboard){
+    public Piece(final String name, Position position,final int color, Chessboard chessboard, char pieceSign){
         this.name = name;
         this.position = position;
         this.color = color;
         this.isInPlay = true;
         this.chessboard = chessboard;
+        this.pieceSign = pieceSign;
     }
     
     public boolean isInAction() {
@@ -56,6 +58,14 @@ public abstract class Piece implements PieceInterface {
     
     public int getColor(){
         return this.color;
+    }
+    
+    public char getPieceSign() {
+        return pieceSign;
+    }
+
+    public void setPieceSign(char pieceSign) {
+        this.pieceSign = pieceSign;
     }
     
     @Override
