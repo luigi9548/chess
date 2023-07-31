@@ -1,8 +1,8 @@
 package model.pieces;
 
+import java.util.ArrayList;
 import model.functionality.Position;
-import java.util.List;
 
 public interface PieceInterface {
-    public List<Position> calculateMovement(Position p);
+    public ArrayList<Position> calculateMovement();
 }

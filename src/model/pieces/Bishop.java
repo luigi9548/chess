@@ -3,94 +3,41 @@ package model.pieces;
 import model.functionality.Position;
 import model.gameEnvironment.Chessboard;
 import java.util.*;
+import java.util.stream.IntStream;
+import model.gameEnvironment.Square;
 
 public class Bishop extends Piece {
-    public Bishop(final String name, Position position,final int color, Chessboard chessboard, char pieceSign){
-        super(name, position, color, chessboard, pieceSign);
+    public Bishop(Position position,final int color, Chessboard chessboard, char pieceSign){
+        super(position, color, chessboard, pieceSign);
     }
 
     @Override
-    public ArrayList<Position> calculateMovement(Position position){
+    public ArrayList<Position> calculateMovement() {
         ArrayList<Position> possiblePositions = new ArrayList<>();
         int row = this.getPosition().getRow(), col = this.getPosition().getCol();
+        Chessboard chessboard = this.getChessboard();
 
-        while(this.getChessboard().isValidPosition(++row,++col)){
-            if(this.getChessboard().getSquare(row, col).getPiece().isEmpty()){
-                possiblePositions.add(new Position(row,col));
-            }else if(this.isEnemy(this.getChessboard().getSquare(row, col).getPiece().get())){
-                possiblePositions.add(new Position(row,col));
-                break;
-            }else if(!this.isEnemy(this.getChessboard().getSquare(row, col).getPiece().get()))
-                break;
-        }
-        row = this.getPosition().getRow(); col = this.getPosition().getCol();
-        
-        while(this.getChessboard().isValidPosition(--row,++col)){
-            if(this.getChessboard().getSquare(row, col).getPiece().isEmpty()){
-                possiblePositions.add(new Position(row,col));
-            }else if(this.isEnemy(this.getChessboard().getSquare(row, col).getPiece().get())){
-                possiblePositions.add(new Position(row,col));
-                break;
-            }else if(!this.isEnemy(this.getChessboard().getSquare(row, col).getPiece().get()))
-                break;
-        }        
-        row = this.getPosition().getRow(); col = this.getPosition().getCol();
-        
-        while(this.getChessboard().isValidPosition(++row,--col)){
-            if(this.getChessboard().getSquare(row, col).getPiece().isEmpty()){
-                possiblePositions.add(new Position(row,col));
-            }else if(this.isEnemy(this.getChessboard().getSquare(row, col).getPiece().get())){
-                possiblePositions.add(new Position(row,col));
-                break;
-            }else if(!this.isEnemy(this.getChessboard().getSquare(row, col).getPiece().get()))
-                break;
-        }        
-        row = this.getPosition().getRow(); col = this.getPosition().getCol();
-        
-        while(this.getChessboard().isValidPosition(--row,--col)){
-            if(this.getChessboard().getSquare(row, col).getPiece().isEmpty()){
-                possiblePositions.add(new Position(row,col));
-            }else if(this.isEnemy(this.getChessboard().getSquare(row, col).getPiece().get())){
-                possiblePositions.add(new Position(row,col));
-                break;
-            }else if(!this.isEnemy(this.getChessboard().getSquare(row, col).getPiece().get()))
-                break;
-        }        
-  
-        /*while(++row <= Chessboard.ROW_UPPER_LIMIT  && ++col <= Chessboard.COL_UPPER_LIMIT){
-           // System.out.println(this.getChessboard().getSquare(0,0 ).getPiece().get().isEnemy(this));
-            if(this.getChessboard().getSquare(row, col).getPiece().isEmpty())
-                possiblePositions.add(new Position(row, col));
-            else if(this.getChessboard().getSquare(row, col).getPiece().get().isEnemy(this)){
-                possiblePositions.add(new Position(row, col));
+        // Definiamo un elenco di delta per ciascuna direzione in cui ci possiamo muovere
+         int[][] deltas = {{1, 1}, {-1, 1}, {1, -1}, {-1, -1}};
+
+        // Utilizziamo IntStream per iterare su tutte le possibili direzioni
+        IntStream.range(0, deltas.length).forEach(i -> {
+            int newRow = row;
+            int newCol = col;
+
+            while (chessboard.isValidPosition(newRow += deltas[i][0], newCol += deltas[i][1])) {
+                Square square = chessboard.getSquare(newRow, newCol);
+                if (square.getPiece().isEmpty()) {
+                    possiblePositions.add(new Position(newRow, newCol));
+                } else if (isEnemy(square.getPiece().get())) {
+                    possiblePositions.add(new Position(newRow, newCol));
+                    break;
+                } else {
+                    break;
+                }
             }
-        }
-        
-        row = this.getPosition().getRow(); 
-        col = this.getPosition().getCol();
-        
-        while(--row >= Chessboard.ROW_LOWER_LIMIT  && --col >= Chessboard.COL_LOWER_LIMIT && this.getChessboard().getSquare(row, col).getPiece().isEmpty()){
-            if(this.getChessboard().getSquare(row, col).getPiece().isEmpty() || this.getChessboard().getSquare(row, col).getPiece().get().isEnemy(this))
-                possiblePositions.add(new Position(row, col));
-        }
-        
-        row = this.getPosition().getRow(); 
-        col = this.getPosition().getCol();
-        
-        while(--row >= Chessboard.ROW_LOWER_LIMIT  && ++col <= Chessboard.COL_UPPER_LIMIT && this.getChessboard().getSquare(row, col).getPiece().isEmpty()){
-            if(this.getChessboard().getSquare(row, col).getPiece().isEmpty() || this.getChessboard().getSquare(row, col).getPiece().get().isEnemy(this))
-                possiblePositions.add(new Position(row, col));
-        }
+        });
 
-        row = this.getPosition().getRow(); 
-        col = this.getPosition().getCol();
-        
-        while(++row <= Chessboard.ROW_UPPER_LIMIT  && --col >= Chessboard.COL_LOWER_LIMIT && this.getChessboard().getSquare(row, col).getPiece().isEmpty()){
-            if(this.getChessboard().getSquare(row, col).getPiece().isEmpty() || this.getChessboard().getSquare(row, col).getPiece().get().isEnemy(this))
-                possiblePositions.add(new Position(row, col));
-        }*/
-
-        
         return possiblePositions;
     }
 } 

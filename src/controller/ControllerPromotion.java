@@ -72,13 +72,13 @@ public class ControllerPromotion {
         
         // posiziono il pezzo a livello model
         if(promotion.getPawn().getColor() == 0){
-            Queen queenW = new Queen("Queen",position,0,chessboard, 'q');
+            Queen queenW = new Queen(position,0,chessboard, 'q');
             chessboard.getSquare(position.getRow(), position.getCol()).setPiece(queenW);
             queenW.setIcon(".\\src\\images\\whiteQueen.png");
             this.gameView.getController().getWhiteP().removeLastString();
             this.gameView.getController().getWhiteP().addToHistory(position.getStringPosition() + Character.toUpperCase(queenW.getPieceSign()));
         }else{
-            Queen queenB = new Queen("Queen",position,1,chessboard, 'Q');
+            Queen queenB = new Queen(position,1,chessboard, 'Q');
             chessboard.getSquare(position.getRow(), position.getCol()).setPiece(queenB);
             queenB.setIcon(".\\src\\images\\blakcQueen.png");
             this.gameView.getController().getBlackP().removeLastString();
@@ -92,13 +92,13 @@ public class ControllerPromotion {
         init("ROOK");
         gameView.getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
         if(promotion.getPawn().getColor() == 0){
-            Rook rookW = new Rook("Rook",position,0,chessboard, 'r');
+            Rook rookW = new Rook(position,0,chessboard, 'r');
             chessboard.getSquare(position.getRow(), position.getCol()).setPiece(rookW);
             rookW.setIcon(".\\src\\images\\whiteRook.png");
             this.gameView.getController().getWhiteP().removeLastString();
             this.gameView.getController().getWhiteP().addToHistory(position.getStringPosition() + Character.toUpperCase(rookW.getPieceSign()));
         }else{
-            Rook rookB = new Rook("Rook",position,1,chessboard, 'R');
+            Rook rookB = new Rook(position,1,chessboard, 'R');
             chessboard.getSquare(position.getRow(), position.getCol()).setPiece(rookB);
             rookB.setIcon(".\\src\\images\\blackRook.png");
             this.gameView.getController().getBlackP().removeLastString();
@@ -112,13 +112,13 @@ public class ControllerPromotion {
         init("BISHOP");
         gameView.getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
         if(promotion.getPawn().getColor() == 0){
-            Bishop bishopW = new Bishop("Bishop",position,0,chessboard, 'b');
+            Bishop bishopW = new Bishop(position,0,chessboard, 'b');
             chessboard.getSquare(position.getRow(), position.getCol()).setPiece(bishopW);
             bishopW.setIcon(".\\src\\images\\whiteBishop.png");
             this.gameView.getController().getWhiteP().removeLastString();
             this.gameView.getController().getWhiteP().addToHistory(position.getStringPosition() + Character.toUpperCase(bishopW.getPieceSign()));
         }else{
-            Bishop bishopB = new Bishop("ishop",position,1,chessboard, 'B');
+            Bishop bishopB = new Bishop(position,1,chessboard, 'B');
             chessboard.getSquare(position.getRow(), position.getCol()).setPiece(bishopB);
             bishopB.setIcon(".\\src\\images\\blackBishop.png");
             this.gameView.getController().getBlackP().removeLastString();
@@ -132,13 +132,13 @@ public class ControllerPromotion {
         init("KNIGHT");
         gameView.getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
         if(promotion.getPawn().getColor() == 0){
-            Knight knightW = new Knight("Knight",position,0,chessboard, 'h');
+            Knight knightW = new Knight(position,0,chessboard, 'h');
             chessboard.getSquare(position.getRow(), position.getCol()).setPiece(knightW);
             knightW.setIcon(".\\src\\images\\whiteKnight.png");
             this.gameView.getController().getWhiteP().removeLastString();
             this.gameView.getController().getWhiteP().addToHistory(position.getStringPosition() + Character.toUpperCase(knightW.getPieceSign()));
         }else{
-            Knight knightB = new Knight("Knight",position,1,chessboard, 'H');
+            Knight knightB = new Knight(position,1,chessboard, 'H');
             chessboard.getSquare(position.getRow(), position.getCol()).setPiece(knightB);
             knightB.setIcon(".\\src\\images\\blackKnight.png");
             this.gameView.getController().getBlackP().removeLastString();

@@ -5,8 +5,10 @@
 package controller;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.TimerTask;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import model.functionality.ChessTimer;
 import model.functionality.Position;
 import model.gameEnvironment.Chessboard;
 import model.gameEnvironment.Player;
@@ -29,8 +31,11 @@ public class ControllerGameView {
     private GameConclusion gameConclusion;
     private Player whiteP;
     private Player blackP;
+    private ChessTimer timer;
     
     public ControllerGameView(GameView gameView){
+        this.timer = new ChessTimer(600 * 1000);
+        this.startTimer();
         this.gameView = gameView;
         this.whiteP = new Player("Whitep", ColorM.BIANCO);
         this.blackP = new Player("Blackp", ColorM.NERO);
@@ -156,6 +161,7 @@ public class ControllerGameView {
         }
         this.updateHistory();
         chessboard.switchTurn();
+        timer.switchTurn();
         gameView.resetColors();
     }
     
@@ -250,6 +256,7 @@ public class ControllerGameView {
                         // cambio turno
                         this.updateHistory();
                         chessboard.switchTurn();
+                        timer.switchTurn();
                     }
                     int color;
                     if(p.getColor() == 0)
@@ -377,4 +384,33 @@ public class ControllerGameView {
             it++;
         }
     }
+    
+    private void startTimer() {
+        this.timer.getTimer().scheduleAtFixedRate(new TimerTask() {
+        @Override
+        public void run() {
+            if (timer.getIsPlayer1Turn()) {
+                timer.setPlayer1RemainingTime(timer.getPlayer1RemainingTime() - 1000); //viene sottratto un secondo dal totale
+                if (timer.getPlayer1RemainingTime() < 0) {
+                    //se il tempo termina allora viene invocato il metodo che termina il timer
+                    timer.stopTimer();
+                    gameConclusion = new GameConclusion("Il giocatore nero vince per fine del tempo");
+                    gameConclusion.setVisible(true);
+                } else {
+                    //aggiornamento del timer
+                    gameView.getTimerPlayerW().setText(timer.formatTime(timer.getPlayer1RemainingTime()));
+                }
+            } else {
+                timer.setPlayer2RemainingTime(timer.getPlayer2RemainingTime() - 1000); // Subtract one second
+                if (timer.getPlayer2RemainingTime() < 0) {
+                    timer.stopTimer();
+                    gameConclusion = new GameConclusion("Il giocatore bianco vince vinto per fine del tempo");
+                    gameConclusion.setVisible(true);
+                } else {
+                    gameView.getTimerPlayerB().setText(timer.formatTime(timer.getPlayer2RemainingTime()));
+                }
+            }
+        }
+    }, 1000, 1000);
+}
 }

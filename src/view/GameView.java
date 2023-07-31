@@ -23,6 +23,8 @@ public class GameView extends JFrame{
     private JLabel jLabelCemeteryWhite = new JLabel();
     private JLabel jLabelWhiteN = new JLabel();
     private JLabel jLabelBlackN = new JLabel();
+    private JLabel timerPlayerW = new JLabel();
+    private JLabel timerPlayerB = new JLabel();
     private JScrollPane jScrollPane1 = new JScrollPane();
     private JTextArea history = new JTextArea();
 
@@ -47,6 +49,13 @@ public class GameView extends JFrame{
         return this.jLabelCemeteryBlack;
     }
     
+    public JLabel getTimerPlayerW(){
+        return this.timerPlayerW;
+    }
+    
+    public JLabel getTimerPlayerB(){
+        return this.timerPlayerB;
+    }
     public ControllerGameView getController(){
         return this.controller;
     }
@@ -56,8 +65,12 @@ public class GameView extends JFrame{
         this.jLabelCemeteryWhite.setFont(new Font("SansSerif", 0, 40));
         this.jLabelWhiteN.setFont(new Font("SansSerif", 1, 25));
         this.jLabelBlackN.setFont(new Font("SansSerif", 1, 25));
+        this.timerPlayerW.setFont(new Font("SansSerif", 1, 25));
+        this.timerPlayerB.setFont(new Font("SansSerif", 1, 25));
         this.jLabelWhiteN.setText(whiteN);
         this.jLabelBlackN.setText(blackN);
+        this.timerPlayerW.setText("10:00");
+        this.timerPlayerB.setText("10:00");
         history.setEditable(false);
         history.setColumns(20);
         history.setText("");
@@ -84,12 +97,18 @@ public class GameView extends JFrame{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelBlackN, GroupLayout.PREFERRED_SIZE, 346, GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelBlackN, GroupLayout.PREFERRED_SIZE, 346, GroupLayout.PREFERRED_SIZE)
+                                .addGap(160, 160, 160)
+                                .addComponent(timerPlayerB, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabelCemeteryBlack, GroupLayout.DEFAULT_SIZE, 977, Short.MAX_VALUE)
                                 .addComponent(jLabelCemeteryWhite, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jLabelWhiteN, GroupLayout.PREFERRED_SIZE, 346, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelWhiteN, GroupLayout.PREFERRED_SIZE, 346, GroupLayout.PREFERRED_SIZE)
+                                .addGap(160, 160, 160)
+                                .addComponent(timerPlayerW, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(scacchiera, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
@@ -100,7 +119,9 @@ public class GameView extends JFrame{
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabelWhiteN, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelWhiteN, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(timerPlayerW, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelCemeteryBlack, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -110,8 +131,10 @@ public class GameView extends JFrame{
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelCemeteryWhite, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelBlackN, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelBlackN, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(timerPlayerB, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
         );
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
