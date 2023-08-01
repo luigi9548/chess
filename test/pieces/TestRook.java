@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class TestRook {
     private Chessboard chessboard = new Chessboard();
-    private Rook rook = new Rook("Rook", new Position(3,3),0,chessboard, 'r');
+    private Rook rook = new Rook(new Position(3,3),0,chessboard, 'r');
     
     @org.junit.Test
     public void testCalculateMovement(){
@@ -37,7 +37,7 @@ public class TestRook {
         
         // metodo calcuteMovemement
         ArrayList<Position> li = new ArrayList<>();
-        li = rook.calculateMovement(new Position(3,3));
+        li = rook.calculateMovement();
         
         //confronto
         for(int i = 0; i < li.size(); i++){

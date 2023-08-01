@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class TestQueen {
     private Chessboard chessboard = new Chessboard();
-    private Queen queen = new Queen("Queen", new Position(2,3),0,chessboard, 'q');
+    private Queen queen = new Queen(new Position(2,3),0,chessboard, 'q');
     
     @org.junit.Test
     public void testCalculateMovement(){
@@ -43,7 +43,7 @@ public class TestQueen {
         possiblePositions.add(new Position(2,6));
         possiblePositions.add(new Position(2,7));
         
-        realPositions = queen.calculateMovement(null);
+        realPositions = queen.calculateMovement();
         
         for(int i = 0; i < realPositions.size(); i++){
             assertTrue(possiblePositions.get(i).compare(realPositions.get(i)));  

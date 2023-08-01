@@ -21,14 +21,14 @@ public class TestKnight {
                 
         // creo il knight nella sua posizione iniziale di partenza
         Position position = new Position(0,1);
-        Knight kn = new Knight("KNIGHT",position,0, new Chessboard(), 'h');
+        Knight kn = new Knight(position,0, new Chessboard(), 'h');
         
         ArrayList<Position> liExp = new ArrayList<>();
         liExp.add(new Position(2,2));
         liExp.add(new Position(2,0));
         
         ArrayList<Position> li = new ArrayList<>();
-        li = kn.calculateMovement(position);
+        li = kn.calculateMovement();
         
         for(int i = 0; i < li.size(); i++){
             assertTrue(liExp.get(i).compare(li.get(i)));   
@@ -36,7 +36,7 @@ public class TestKnight {
             
         // creo knight in posizione generale nella scacchiera
         Position position2 = new Position(4,3);
-        Knight kn2 = new Knight("KNIGHT",position2,0, new Chessboard(), 'h');
+        Knight kn2 = new Knight(position2,0, new Chessboard(), 'h');
         
         ArrayList<Position> liExp2 = new ArrayList<>();
         liExp2.add(new Position(5,5));
@@ -49,7 +49,7 @@ public class TestKnight {
         liExp2.add(new Position(3,5));
                 
         ArrayList<Position> li2 = new ArrayList<>();
-        li2 = kn2.calculateMovement(position2);
+        li2 = kn2.calculateMovement();
         
         for(int i = 0; i < li2.size(); i++){
             assertTrue(liExp2.get(i).compare(li2.get(i)));

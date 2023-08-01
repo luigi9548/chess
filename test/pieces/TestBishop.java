@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 public class TestBishop {
 
     private Chessboard chessboard = new Chessboard();
-    private Bishop bishop = new Bishop("White", new Position(1,3), 0, chessboard, 'b');
+    private Bishop bishop = new Bishop(new Position(1,3), 0, chessboard, 'b');
     
     @org.junit.Test
     public void testCalculateMovement(){
@@ -36,7 +36,7 @@ public class TestBishop {
         possiblePositions.add(new Position(4,0));
         
         
-        realPositions = bishop.calculateMovement(null);
+        realPositions = bishop.calculateMovement();
         
         for(Position a : possiblePositions){
             assertTrue(a.compare(realPositions.get(i)));

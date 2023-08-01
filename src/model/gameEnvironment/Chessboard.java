@@ -36,43 +36,43 @@ public class Chessboard {
             Position pW = new Position(Chessboard.ROW_LOWER_LIMIT, Chessboard.COL_LOWER_LIMIT + i);
             Position pB = new Position(Chessboard.ROW_UPPER_LIMIT, Chessboard.COL_LOWER_LIMIT + i);
             if( i == 0 || i == 7){ // creo i 4 rook alle estremità della scacchiera
-                Rook roW = new Rook("ROOK_" + ((i==0)? 1 : 2), pW,0, this, 'r');
+                Rook roW = new Rook(pW,0, this, 'r');
                 roW.setIcon(".\\src\\images\\whiteRook.png");
                 squares[pW.getRow()][pW.getCol()] = new Square(pW, roW);
                 
-                Rook roB = new Rook("ROOK_" + ((i==0)? 1 : 2), pB,1, this, 'R');
+                Rook roB = new Rook(pB,1, this, 'R');
                 roB.setIcon(".\\src\\images\\blackRook.png");
                 squares[pB.getRow()][pB.getCol()] = new Square(pB, roB);
             }else if(i == 1 || i == 6){ // creo i 4 knight
-                Knight knW = new Knight("KNIGHT_" + ((i==1)? 1 : 2), pW,0, this, 'h');
+                Knight knW = new Knight(pW,0, this, 'h');
                 knW.setIcon(".\\src\\images\\whiteKnight.png");
                 squares[pW.getRow()][pW.getCol()] = new Square(pW, knW);
                 
-                Knight knB = new Knight("KNIGHT_" + ((i==1)? 1 : 2), pB,1, this, 'H');
+                Knight knB = new Knight(pB,1, this, 'H');
                 knB.setIcon(".\\src\\images\\blackKnight.png");
                 squares[pB.getRow()][pB.getCol()] = new Square(pB, knB);     
             }else if(i == 2 || i == 5){ // creo i bishop 
-                Bishop biW = new Bishop("BISHOP_" + ((i==2)? 1 : 2), pW,0, this, 'b');
+                Bishop biW = new Bishop(pW,0, this, 'b');
                 biW.setIcon(".\\src\\images\\whiteBishop.png");
                 squares[pW.getRow()][pW.getCol()] = new Square(pW, biW);
                 
-                Bishop biB = new Bishop("BISHOP_" + ((i==2)? 1 : 2), pB,1, this, 'B');
+                Bishop biB = new Bishop(pB,1, this, 'B');
                 biB.setIcon(".\\src\\images\\blackBishop.png");
                 squares[pB.getRow()][pB.getCol()] = new Square(pB, biB);     
             }else if(i == 4){ // creo casella con queen
-                Queen quW = new Queen("QUEEN_WHITE", pW,0, this, 'q');
+                Queen quW = new Queen(pW,0, this, 'q');
                 quW.setIcon(".\\src\\images\\whiteQueen.png");
                 squares[pW.getRow()][pW.getCol()] = new Square(pW, quW);
                 
-                Queen quB = new Queen("QUEEN_BLACK", pB,1, this, 'Q');
+                Queen quB = new Queen(pB,1, this, 'Q');
                 quB.setIcon(".\\src\\images\\blackQueen.png");
                 squares[pB.getRow()][pB.getCol()] = new Square(pB, quB);   
             }else if( i == 3){ // creo casella con king
-                King kiW = new King("KING_WHITE", pW,0, this, 'k');
+                King kiW = new King(pW,0, this, 'k');
                 kiW.setIcon(".\\src\\images\\whiteKing.png");
                 squares[pW.getRow()][pW.getCol()] = new Square(pW, kiW);
                 
-                King kiB = new King("KING_BLACK", pB,1, this, 'K');
+                King kiB = new King(pB,1, this, 'K');
                 kiB.setIcon(".\\src\\images\\blackKing.png");
                 squares[pB.getRow()][pB.getCol()] = new Square(pB, kiB); 
             }
@@ -82,12 +82,12 @@ public class Chessboard {
         for(int i = 0; i <= Chessboard.COL_UPPER_LIMIT; i++){ // <= perchè da 0 a 7 considero le 8 colonne
             Position pW = new Position(Chessboard.ROW_LOWER_LIMIT + 1,Chessboard.COL_LOWER_LIMIT + i);
             Position pB = new Position(Chessboard.ROW_UPPER_LIMIT - 1,Chessboard.COL_LOWER_LIMIT + i);
-            Pawn paW    = new Pawn("PAWN_"+(i+1),pW,0,this, 'p');
+            Pawn paW    = new Pawn(pW,0,this, 'p');
             paW.setIcon(".\\src\\images\\whitePawn.png");
             squares[pW.getRow()][pW.getCol()] = new Square(pW, paW);
             
             
-            Pawn paB    = new Pawn("PAWN_"+(i+1),pB,1,this, 'P');
+            Pawn paB    = new Pawn(pB,1,this, 'P');
             paB.setIcon(".\\src\\images\\blackPawn.png");
             squares[pB.getRow()][pB.getCol()] = new Square(pB,paB);
         }
@@ -175,13 +175,13 @@ public class Chessboard {
 
         return castling;
     }
-
+    
     // ottimizzato
     private boolean attachedPosition(Piece piece, Position p) {
-        ArrayList<Position> movements = piece.calculateMovement(null);
+        ArrayList<Position> movements = piece.calculateMovement();
         return movements.stream().anyMatch(pos -> pos.compare(p));
     }
-        
+            
     // versione ottimizzata
     public Position enPassant(Pawn p) {
         Position currentPosition = p.getPosition();
@@ -234,7 +234,7 @@ public class Chessboard {
     }
        
     public ArrayList<Position> legalMovements(Piece p){
-        ArrayList<Position> possiblePositions = p.calculateMovement(null);
+        ArrayList<Position> possiblePositions = p.calculateMovement();
         Piece piece;
         ArrayList<Position> legalPositions = new ArrayList();
         Position firstPosition = p.getPosition();

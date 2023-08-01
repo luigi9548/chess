@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 public class TestPawn {
     
     private Chessboard chessboard = new Chessboard();
-    private Pawn pawn = new Pawn("White", new Position(2,6), 0, chessboard, 'p');
+    private Pawn pawn = new Pawn(new Position(2,6), 0, chessboard, 'p');
     
     @org.junit.Test
     public void testCalculateMovement(){
@@ -29,7 +29,7 @@ public class TestPawn {
         possiblePositions.add(new Position(3,6));
         possiblePositions.add(new Position(4,6));
         
-        realPositions = pawn.calculateMovement(new Position(2,6));
+        realPositions = Pawn.calculateMovement();
      
         
         for(Position a : possiblePositions){
@@ -37,7 +37,7 @@ public class TestPawn {
             i++;
         }
         
-        realPositions = pawn.calculateMovement(null);
+        realPositions = pawn.calculateMovement();
          if(realPositions.size()==1){
             assertTrue(possiblePositions.get(0).compare(realPositions.get(0)));
          }        
@@ -46,7 +46,7 @@ public class TestPawn {
     @org.junit.Test
     public void testEat(){
         int i = 0;
-        Pawn pawn1 = new Pawn("White", new Position(5,6), 0, chessboard, 'p'); 
+        Pawn pawn1 = new Pawn(new Position(5,6), 0, chessboard, 'p'); 
         
         ArrayList<Position> possiblePositions = new ArrayList<>();
         ArrayList<Position> realPositions = new ArrayList<>();

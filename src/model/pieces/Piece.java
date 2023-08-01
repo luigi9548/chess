@@ -5,21 +5,16 @@ import model.gameEnvironment.Chessboard;
 import java.util.ArrayList;
 
 public abstract class Piece implements PieceInterface {
-    private final String name;
-    private char pieceSign;//p=peon,t=torre,c=caballo.....a,r=reina,k=king(rey) - mayusc:Negras
-    private boolean isInPlay;
+    private final char pieceSign;
     private Position position;
     private final int color;
-    private ArrayList<Position> lastMovePath;
-    private Chessboard chessboard;
+    private final Chessboard chessboard;
     private String icon;
     private boolean inAction = false;
     
-    public Piece(final String name, Position position,final int color, Chessboard chessboard, char pieceSign){
-        this.name = name;
+    public Piece(Position position,final int color,final Chessboard chessboard,final char pieceSign){
         this.position = position;
         this.color = color;
-        this.isInPlay = true;
         this.chessboard = chessboard;
         this.pieceSign = pieceSign;
     }
@@ -63,11 +58,6 @@ public abstract class Piece implements PieceInterface {
     public char getPieceSign() {
         return pieceSign;
     }
-
-    public void setPieceSign(char pieceSign) {
-        this.pieceSign = pieceSign;
-    }
-    
     @Override
-    public abstract ArrayList<Position> calculateMovement(Position position);
+    public abstract ArrayList<Position> calculateMovement();
 }
