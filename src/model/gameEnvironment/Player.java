@@ -2,34 +2,22 @@ package model.gameEnvironment;
 
 import java.util.ArrayList;
 import java.util.Timer;
-import model.functionality.ColorM;
+import model.functionality.ColorChessboard;
 import model.pieces.Piece;
 
 public class Player {
-    private String name;
-    private ColorM color;  /* white = true, black = false */
-    private ArrayList<Piece> pieces;
-    private ArrayList<Piece> cementery;
-    private ArrayList<String> history;
+    private final ColorChessboard color;  /* white = true, black = false */
+    private final ArrayList<Piece> pieces;
+    private final ArrayList<Piece> cementery;
+    private final ArrayList<String> history;
     private Timer timer;
     
-    public Player(String name, ColorM color){
-        this.name = name;
+    public Player(final ColorChessboard color){
         this.color = color;
         this.pieces = new ArrayList<>();
         this.cementery = new ArrayList<>();
         this.history = new ArrayList<>();
         this.timer = new Timer();
-    }
-    
-    /* Metodo volto all' assegnazione dei pezzi del giocatore */
-    public void createPieces(Chessboard chessboard){
-        /* I pezzi vengono assegnati a seconda del colore del Player */
-        if(this.color == ColorM.BIANCO){
-            this.pieces = chessboard.getPiecesByColor(0);
-        }else{
-            this.pieces = chessboard.getPiecesByColor(1);
-        }
     }
     
     /* Metodo volto all'aggiunta di una mossa alla history delle mosse */
@@ -68,11 +56,7 @@ public class Player {
         this.timer = timer;
     }
 
-    public ColorM isColor() {
+    public ColorChessboard getColor() {
         return color;
-    }
-
-    public String getName() {
-        return name;
     }
 }

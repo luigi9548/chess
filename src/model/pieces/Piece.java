@@ -3,16 +3,17 @@ package model.pieces;
 import model.functionality.Position;
 import model.gameEnvironment.Chessboard;
 import java.util.ArrayList;
+import model.functionality.ColorChessboard;
 
 public abstract class Piece implements PieceInterface {
     private final char pieceSign;
     private Position position;
-    private final int color;
+    private final ColorChessboard color;
     private final Chessboard chessboard;
     private String icon;
     private boolean inAction = false;
     
-    public Piece(Position position,final int color,final Chessboard chessboard,final char pieceSign){
+    public Piece(Position position,final ColorChessboard color,final Chessboard chessboard,final char pieceSign){
         this.position = position;
         this.color = color;
         this.chessboard = chessboard;
@@ -51,7 +52,7 @@ public abstract class Piece implements PieceInterface {
         return this.chessboard;
     }
     
-    public int getColor(){
+    public ColorChessboard getColor(){
         return this.color;
     }
     

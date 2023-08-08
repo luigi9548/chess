@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import model.functionality.ColorChessboard;
 import model.functionality.Position;
 import model.pieces.Bishop;
 import model.pieces.King;
@@ -17,7 +18,7 @@ import model.pieces.Rook;
 public class Chessboard {
     
     private Square[][] squares; 
-    private boolean turn;
+    private int turn; // 1 = turno giocatore nero, 0 = turno giocatore bianco
     public static final int ROW_UPPER_LIMIT = 7;
     public static final int ROW_LOWER_LIMIT = 0;
     public static final int COL_UPPER_LIMIT = 7;
@@ -25,7 +26,7 @@ public class Chessboard {
     
     public Chessboard(){
         this.initializeChessboard();
-        this.turn = false; //si parte del bianco
+        this.turn = 0; //si parte del bianco
     }
     
     private void initializeChessboard(){
@@ -35,46 +36,52 @@ public class Chessboard {
         for(int i = 0; i <= Chessboard.COL_UPPER_LIMIT; i++){
             Position pW = new Position(Chessboard.ROW_LOWER_LIMIT, Chessboard.COL_LOWER_LIMIT + i);
             Position pB = new Position(Chessboard.ROW_UPPER_LIMIT, Chessboard.COL_LOWER_LIMIT + i);
-            if( i == 0 || i == 7){ // creo i 4 rook alle estremità della scacchiera
-                Rook roW = new Rook(pW,0, this, 'r');
-                roW.setIcon(".\\src\\images\\whiteRook.png");
-                squares[pW.getRow()][pW.getCol()] = new Square(pW, roW);
-                
-                Rook roB = new Rook(pB,1, this, 'R');
-                roB.setIcon(".\\src\\images\\blackRook.png");
-                squares[pB.getRow()][pB.getCol()] = new Square(pB, roB);
-            }else if(i == 1 || i == 6){ // creo i 4 knight
-                Knight knW = new Knight(pW,0, this, 'h');
-                knW.setIcon(".\\src\\images\\whiteKnight.png");
-                squares[pW.getRow()][pW.getCol()] = new Square(pW, knW);
-                
-                Knight knB = new Knight(pB,1, this, 'H');
-                knB.setIcon(".\\src\\images\\blackKnight.png");
-                squares[pB.getRow()][pB.getCol()] = new Square(pB, knB);     
-            }else if(i == 2 || i == 5){ // creo i bishop 
-                Bishop biW = new Bishop(pW,0, this, 'b');
-                biW.setIcon(".\\src\\images\\whiteBishop.png");
-                squares[pW.getRow()][pW.getCol()] = new Square(pW, biW);
-                
-                Bishop biB = new Bishop(pB,1, this, 'B');
-                biB.setIcon(".\\src\\images\\blackBishop.png");
-                squares[pB.getRow()][pB.getCol()] = new Square(pB, biB);     
-            }else if(i == 4){ // creo casella con queen
-                Queen quW = new Queen(pW,0, this, 'q');
-                quW.setIcon(".\\src\\images\\whiteQueen.png");
-                squares[pW.getRow()][pW.getCol()] = new Square(pW, quW);
-                
-                Queen quB = new Queen(pB,1, this, 'Q');
-                quB.setIcon(".\\src\\images\\blackQueen.png");
-                squares[pB.getRow()][pB.getCol()] = new Square(pB, quB);   
-            }else if( i == 3){ // creo casella con king
-                King kiW = new King(pW,0, this, 'k');
-                kiW.setIcon(".\\src\\images\\whiteKing.png");
-                squares[pW.getRow()][pW.getCol()] = new Square(pW, kiW);
-                
-                King kiB = new King(pB,1, this, 'K');
-                kiB.setIcon(".\\src\\images\\blackKing.png");
-                squares[pB.getRow()][pB.getCol()] = new Square(pB, kiB); 
+            switch (i) {
+                case 0, 7 -> {
+                    // creo i 4 rook alle estremità della scacchiera
+                    Rook roW = new Rook(pW,ColorChessboard.BIANCO, this, 'r');
+                    roW.setIcon(".\\src\\images\\whiteRook.png");
+                    squares[pW.getRow()][pW.getCol()] = new Square(roW);
+                    Rook roB = new Rook(pB,ColorChessboard.NERO, this, 'R');
+                    roB.setIcon(".\\src\\images\\blackRook.png");
+                    squares[pB.getRow()][pB.getCol()] = new Square(roB);
+                }
+                case 1, 6 -> {
+                    // creo i 4 knight
+                    Knight knW = new Knight(pW,ColorChessboard.BIANCO, this, 'h');
+                    knW.setIcon(".\\src\\images\\whiteKnight.png");
+                    squares[pW.getRow()][pW.getCol()] = new Square(knW);
+                    Knight knB = new Knight(pB,ColorChessboard.NERO, this, 'H');
+                    knB.setIcon(".\\src\\images\\blackKnight.png");
+                    squares[pB.getRow()][pB.getCol()] = new Square(knB);
+                }
+                case 2, 5 -> {
+                    // creo i bishop
+                    Bishop biW = new Bishop(pW,ColorChessboard.BIANCO, this, 'b');
+                    biW.setIcon(".\\src\\images\\whiteBishop.png");
+                    squares[pW.getRow()][pW.getCol()] = new Square(biW);
+                    Bishop biB = new Bishop(pB,ColorChessboard.NERO, this, 'B');
+                    biB.setIcon(".\\src\\images\\blackBishop.png");
+                    squares[pB.getRow()][pB.getCol()] = new Square(biB);
+                }
+                case 4 -> {
+                    // creo casella con queen
+                    Queen quW = new Queen(pW,ColorChessboard.BIANCO, this, 'q');
+                    quW.setIcon(".\\src\\images\\whiteQueen.png");
+                    squares[pW.getRow()][pW.getCol()] = new Square(quW);
+                    Queen quB = new Queen(pB,ColorChessboard.NERO, this, 'Q');
+                    quB.setIcon(".\\src\\images\\blackQueen.png");
+                    squares[pB.getRow()][pB.getCol()] = new Square(quB);
+                }
+                case 3 -> {
+                    // creo casella con king
+                    King kiW = new King(pW,ColorChessboard.BIANCO, this, 'k');
+                    kiW.setIcon(".\\src\\images\\whiteKing.png");
+                    squares[pW.getRow()][pW.getCol()] = new Square(kiW);
+                    King kiB = new King(pB,ColorChessboard.NERO, this, 'K');
+                    kiB.setIcon(".\\src\\images\\blackKing.png");
+                    squares[pB.getRow()][pB.getCol()] = new Square(kiB);
+                }
             }
         } // end for per creare prima e ultima row
         
@@ -82,20 +89,20 @@ public class Chessboard {
         for(int i = 0; i <= Chessboard.COL_UPPER_LIMIT; i++){ // <= perchè da 0 a 7 considero le 8 colonne
             Position pW = new Position(Chessboard.ROW_LOWER_LIMIT + 1,Chessboard.COL_LOWER_LIMIT + i);
             Position pB = new Position(Chessboard.ROW_UPPER_LIMIT - 1,Chessboard.COL_LOWER_LIMIT + i);
-            Pawn paW    = new Pawn(pW,0,this, 'p');
+            Pawn paW    = new Pawn(pW,ColorChessboard.BIANCO,this, 'p');
             paW.setIcon(".\\src\\images\\whitePawn.png");
-            squares[pW.getRow()][pW.getCol()] = new Square(pW, paW);
+            squares[pW.getRow()][pW.getCol()] = new Square(paW);
             
             
-            Pawn paB    = new Pawn(pB,1,this, 'P');
+            Pawn paB    = new Pawn(pB,ColorChessboard.NERO,this, 'P');
             paB.setIcon(".\\src\\images\\blackPawn.png");
-            squares[pB.getRow()][pB.getCol()] = new Square(pB,paB);
+            squares[pB.getRow()][pB.getCol()] = new Square(paB);
         }
         
         // rimanenti caselle vuote
         for(int i = ROW_LOWER_LIMIT + 2; i <= ROW_UPPER_LIMIT - 2; i++){ // il 2 sta per le righe già fatte
             for(int j = COL_LOWER_LIMIT; j <= COL_UPPER_LIMIT; j++){
-                squares[i][j] =  new Square(new Position(i,j), null);
+                squares[i][j] =  new Square(null);
             }
         }
     }
@@ -106,22 +113,17 @@ public class Chessboard {
     }
     
     public void switchTurn(){
-        turn = turn == false;
+        if(this.turn == 0)
+            this.turn = 1;
+        else
+            this.turn = 0;
     }
     
-    public boolean getTurn(){
+    public int getTurn(){
         return this.turn;
     }
     
-    public ArrayList<Piece> getWPieces() {
-        return this.getPiecesByColor(0);
-    }
-    
-    public ArrayList<Piece> getBPieces() {
-        return this.getPiecesByColor(1);
-    }
-    
-    public ArrayList<Piece> getPiecesByColor(int color){
+    public ArrayList<Piece> getPiecesByColor(ColorChessboard color){
         ArrayList<Piece> pieces = new ArrayList<>();
 
         Arrays.stream(squares)
@@ -140,10 +142,11 @@ public class Chessboard {
     }
     
     // ritorna la posizione della torre con cui può fare arrocco altrimenti null    
-    public Position canCastling(int color) {
-        ArrayList<Piece> opposingPieces = getPiecesByColor((color == 0) ? 1 : 0);
+    public Position canCastling(ColorChessboard color) {
+        ArrayList<Piece> opposingPieces;
+        opposingPieces = getPiecesByColor((color == ColorChessboard.BIANCO) ? ColorChessboard.NERO : ColorChessboard.BIANCO);
 
-        int kingRow = (color == 0) ? 0 : 7;
+        int kingRow = (color == ColorChessboard.BIANCO) ? 0 : 7;
         int kingCol = 3;
 
         Position castling = null;
@@ -210,11 +213,11 @@ public class Chessboard {
     // ottimizzato
     public boolean promotion(Pawn p) {
     int row = p.getPosition().getRow();
-    return (p.getColor() == 0 && row == Chessboard.ROW_UPPER_LIMIT) ||
-           (p.getColor() == 1 && row == Chessboard.ROW_LOWER_LIMIT);
+    return (p.getColor() == ColorChessboard.BIANCO && row == Chessboard.ROW_UPPER_LIMIT) ||
+           (p.getColor() == ColorChessboard.NERO && row == Chessboard.ROW_LOWER_LIMIT);
     }
     
-    private Position kingPosition(int color){
+    private Position kingPosition(ColorChessboard color){
         for(int i = 0; i <= Chessboard.ROW_UPPER_LIMIT; i++){
             for(int j = 0; j <= Chessboard.COL_UPPER_LIMIT; j++){
                 if(this.squares[i][j].getPiece().isPresent() && this.squares[i][j].getPiece().get().getColor() == color && this.squares[i][j].getPiece().get() instanceof King)
@@ -225,10 +228,10 @@ public class Chessboard {
     }
     
     // ottimizzato
-    public boolean isCheck(int color) {
+    public boolean isCheck(ColorChessboard color) {
         Position king = kingPosition(color);
-        //ArrayList<Piece> avvPieces = color == 0 ? getBPieces() : getWPieces();
-        ArrayList<Piece> avvPieces = getPiecesByColor(color == 0 ? 1 : 0);
+        ArrayList<Piece> avvPieces;
+        avvPieces = getPiecesByColor((color == ColorChessboard.BIANCO) ? ColorChessboard.NERO : ColorChessboard.BIANCO);
 
         return avvPieces.stream().anyMatch(piece -> attachedPosition(piece, king));
     }
@@ -263,9 +266,10 @@ public class Chessboard {
     
     // metodo per verificare se è patta o scacco matto (Scacco matto = 0, patta = 1, niente = 2;   
     // versione ottimizzata dal metodo
-    public int isCheckmateOrFlap(int color) {
+    public int isCheckmateOrFlap(ColorChessboard color) {
         ArrayList<Piece> myPieces = getPiecesByColor(color);
-        ArrayList<Piece> avvPieces = getPiecesByColor((color == 0) ? 1 : 0);
+        ArrayList<Piece> avvPieces;
+        avvPieces = getPiecesByColor((color == ColorChessboard.BIANCO) ? ColorChessboard.NERO : ColorChessboard.BIANCO);
 
         boolean checkmate = myPieces.stream().allMatch(p -> this.legalMovements(p).isEmpty());
 

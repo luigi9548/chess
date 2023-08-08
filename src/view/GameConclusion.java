@@ -1,27 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package view;
 
-import controller.ControllerPromotion;
 import java.awt.Color;
-import java.awt.Cursor;
 import javax.swing.*;
-import javax.swing.border.Border;
-import model.gameEnvironment.Chessboard;
-import model.pieces.Pawn;
 
-/**
- *
- * @author Elena
- */
 public class GameConclusion extends JFrame {
-    private String message;
+    private final String message;
     private JLabel title;
     private JLabel text;
     
-    public GameConclusion(String message) {
+    public GameConclusion(final String message) {
         this.message = message;
         initComponents();
     }

@@ -8,7 +8,7 @@ import controller.ControllerPromotion;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.*;
-import javax.swing.border.Border;
+import model.functionality.ColorChessboard;
 import model.gameEnvironment.Chessboard;
 import model.pieces.Pawn;
 
@@ -19,9 +19,8 @@ import model.pieces.Pawn;
 public class Promotion extends JFrame {
     private final Pawn pawn;
     private final ControllerPromotion controller = new ControllerPromotion(this);
-    private GameView gameView;
-    private Chessboard chessboard;
-    private String choice;
+    private final GameView gameView;
+    private final Chessboard chessboard;
     
     private JButton jButtonQueen;
     private JButton jButtonRook;
@@ -38,7 +37,7 @@ public class Promotion extends JFrame {
     private Icon iconBishop;
     private Icon iconKnight;
     
-    public Promotion(Pawn pawn, GameView gameView, Chessboard chessboard) {
+    public Promotion(final Pawn pawn,final GameView gameView,final Chessboard chessboard) {
         this.pawn = pawn;
         this.gameView = gameView;
         this.chessboard = chessboard;
@@ -77,7 +76,7 @@ public class Promotion extends JFrame {
         title.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 14)); // NOI18N
         title.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         
-        if(pawn.getColor() == 0){
+        if(pawn.getColor() == ColorChessboard.BIANCO){
             iconQueen = new ImageIcon(".\\src\\images\\whiteQueen.png");
             iconRook = new ImageIcon(".\\src\\images\\whiteRook.png");
             iconBishop = new ImageIcon(".\\src\\images\\whiteBishop.png");

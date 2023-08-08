@@ -3,22 +3,28 @@ package model.pieces;
 import model.functionality.Position;
 import model.gameEnvironment.Chessboard;
 import java.util.ArrayList;
+import model.functionality.ColorChessboard;
+import model.gameEnvironment.Square;
 
 public class Rook extends Piece {
-    public Rook(Position position,final int color, Chessboard chessboard, char pieceSign){
+    public Rook(Position position,final ColorChessboard color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
     }
     
     @Override
     public ArrayList<Position> calculateMovement() {
         ArrayList<Position> possiblePositions = new ArrayList<>();
-        int row = getPosition().getRow();
-        int col = getPosition().getCol();
-
+        int row = this.getPosition().getRow();
+        int col = this.getPosition().getCol();
+        Chessboard chessboard = this.getChessboard();
         // Movimento verso l'alto
         for (int r = row + 1; r <= Chessboard.ROW_UPPER_LIMIT; r++) {
-            if (isPossiblePosition(r, col)) {
+            Square square = chessboard.getSquare(r, col);
+            if (square.getPiece().isEmpty()) {
                 possiblePositions.add(new Position(r, col));
+            } else if (isEnemy(square.getPiece().get())) {
+                possiblePositions.add(new Position(r, col));
+                break;
             } else {
                 break;
             }
@@ -26,8 +32,12 @@ public class Rook extends Piece {
 
         // Movimento verso il basso
         for (int r = row - 1; r >= Chessboard.ROW_LOWER_LIMIT; r--) {
-            if (isPossiblePosition(r, col)) {
+            Square square = chessboard.getSquare(r, col);
+            if (square.getPiece().isEmpty()) {
                 possiblePositions.add(new Position(r, col));
+            } else if (isEnemy(square.getPiece().get())) {
+                possiblePositions.add(new Position(r, col));
+                break;
             } else {
                 break;
             }
@@ -35,8 +45,12 @@ public class Rook extends Piece {
 
         // Movimento verso sinistra
         for (int c = col - 1; c >= Chessboard.COL_LOWER_LIMIT; c--) {
-            if (isPossiblePosition(row, c)) {
+            Square square = chessboard.getSquare(row, c);
+            if (square.getPiece().isEmpty()) {
                 possiblePositions.add(new Position(row, c));
+            } else if (isEnemy(square.getPiece().get())) {
+                possiblePositions.add(new Position(row, c));
+                break;
             } else {
                 break;
             }
@@ -44,21 +58,17 @@ public class Rook extends Piece {
 
         // Movimento verso destra
         for (int c = col + 1; c <= Chessboard.COL_UPPER_LIMIT; c++) {
-            if (isPossiblePosition(row, c)) {
+            Square square = chessboard.getSquare(row, c);
+            if (square.getPiece().isEmpty()) {
                 possiblePositions.add(new Position(row, c));
+            } else if (isEnemy(square.getPiece().get())) {
+                possiblePositions.add(new Position(row, c));
+                break;
             } else {
                 break;
             }
         }
 
         return possiblePositions;
-    }
-
-    private boolean isPossiblePosition(int row, int col) {
-        if (!getChessboard().isValidPosition(row, col)) {
-            return false;
-        }
-        return getChessboard().getSquare(row, col).getPiece().isEmpty()
-                || isEnemy(getChessboard().getSquare(row, col).getPiece().get());
     }
 }

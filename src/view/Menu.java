@@ -1,28 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package view;
 import controller.ControllerMenu;
 import java.awt.*;
 import javax.swing.*;
-/**
- *
- * @author luigi
- */
+
 public class Menu extends JFrame{
-    private ControllerMenu controller = new ControllerMenu(this);
-    private JLabel title = new JLabel(new ImageIcon(".\\src\\images\\title1.png"));
-    private JLabel iconB = new JLabel(new ImageIcon(".\\src\\images\\blackIconPlayer1.png"));
-    private JLabel iconW = new JLabel(new ImageIcon(".\\src\\images\\whiteIconPlayer.png"));
-    private JPanel jPanelW = new JPanel();
-    private JLabel jLabelW = new JLabel("Inserisci il nome del giocatore bianco");
-    private JTextField jTextFieldW = new JTextField("GuestW");
-    private JPanel jPanelB = new JPanel();
-    private JLabel jLabelB = new JLabel("Inserisci il nome del giocatore nero");
-    private JTextField jTextFieldB = new JTextField("GuestB");
-    private JToggleButton play = new JToggleButton("Play");
-    private JToggleButton quit = new JToggleButton("Quit");
+    private final ControllerMenu controller = new ControllerMenu(this);
+    private final JLabel title = new JLabel(new ImageIcon(".\\src\\images\\title1.png"));
+    private final JPanel jPanelW = new JPanel();
+    private final JLabel jLabelW = new JLabel("Inserisci il nome del giocatore bianco");
+    private final JTextField jTextFieldW = new JTextField("GuestW");
+    private final JPanel jPanelB = new JPanel();
+    private final JLabel jLabelB = new JLabel("Inserisci il nome del giocatore nero");
+    private final JTextField jTextFieldB = new JTextField("GuestB");
+    private final JToggleButton play = new JToggleButton("Play");
+    private final JToggleButton quit = new JToggleButton("Quit");
 
     public JTextField getjTextFieldW() {
         return jTextFieldW;
@@ -47,7 +38,7 @@ public class Menu extends JFrame{
     private void initComponents(){
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
-        jPanelW.setBackground(new Color(102, 102, 255));
+        jPanelW.setBackground(new Color(51, 51, 255));
         jPanelB.setBackground(new Color(51, 51, 255));
         jLabelW.setBackground(new Color(153, 153, 255));
         jLabelB.setBackground(new Color(153, 153, 255));
@@ -145,9 +136,13 @@ public class Menu extends JFrame{
             controller.quitActionPerformed(evt);
         });
 
-        //getContentPane().setBackground(new Color(153, 255, 153));
         getContentPane().setBackground(new Color(255,247,218));
         setTitle("Home");
         pack();
+    }
+    
+    public static void main(String[] args) {
+        Menu menu = new Menu();
+        menu.setVisible(true);
     }
 }

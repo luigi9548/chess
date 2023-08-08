@@ -1,34 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package view;
 import controller.ControllerGameView;
 import java.awt.*;
-import java.util.ArrayList;
 import javax.swing.*;
 import model.gameEnvironment.Chessboard;
-import model.gameEnvironment.Player;
 
-/**
- *
- * @author luigi
- */
-public class GameView extends JFrame{
+public final class GameView extends JFrame{
     
-    private JPanel scacchiera = new JPanel();
-    private JButton[][] buttonGrid = new JButton[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
-    private ControllerGameView controller = new ControllerGameView(this);
-    private JLabel jLabelCemeteryBlack = new JLabel();
-    private JLabel jLabelCemeteryWhite = new JLabel();
-    private JLabel jLabelWhiteN = new JLabel();
-    private JLabel jLabelBlackN = new JLabel();
-    private JLabel timerPlayerW = new JLabel();
-    private JLabel timerPlayerB = new JLabel();
-    private JScrollPane jScrollPane1 = new JScrollPane();
-    private JTextArea history = new JTextArea();
+    private final JPanel scacchiera = new JPanel();
+    private final JButton[][] buttonGrid = new JButton[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
+    private final ControllerGameView controller = new ControllerGameView(this);
+    private final JLabel jLabelCemeteryBlack = new JLabel();
+    private final JLabel jLabelCemeteryWhite = new JLabel();
+    private final JLabel jLabelWhiteN = new JLabel();
+    private final JLabel jLabelBlackN = new JLabel();
+    private final JLabel timerPlayerW = new JLabel();
+    private final JLabel timerPlayerB = new JLabel();
+    private final JScrollPane jScrollPane1 = new JScrollPane();
+    private final JTextArea history = new JTextArea();
 
-    public GameView(Chessboard chessboard, String whiteN, String blackN){
+    public GameView(final Chessboard chessboard,final String whiteN,final String blackN){
         init(whiteN, blackN);
         initChessboard(chessboard);
     }

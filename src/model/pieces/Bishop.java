@@ -4,10 +4,11 @@ import model.functionality.Position;
 import model.gameEnvironment.Chessboard;
 import java.util.*;
 import java.util.stream.IntStream;
+import model.functionality.ColorChessboard;
 import model.gameEnvironment.Square;
 
 public class Bishop extends Piece {
-    public Bishop(Position position,final int color, Chessboard chessboard, char pieceSign){
+    public Bishop(Position position,final ColorChessboard color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
     }
 

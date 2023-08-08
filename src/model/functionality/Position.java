@@ -1,7 +1,6 @@
 package model.functionality;
 
 public class Position {
-
     int row;
     int col;
     
@@ -26,6 +25,7 @@ public class Position {
     public int getCol() {
         return this.col;
     }
+    
     public Position getPosition() {
        return this;
     }

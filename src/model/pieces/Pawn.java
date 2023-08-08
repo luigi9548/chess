@@ -3,13 +3,14 @@ package model.pieces;
 import model.functionality.Position;
 import model.gameEnvironment.Chessboard;
 import java.util.ArrayList;
+import model.functionality.ColorChessboard;
 import model.gameEnvironment.Square;
 
 public class Pawn extends Piece {
     private boolean firstMove;
     private boolean enPassant;
     
-    public Pawn(Position position,final int color, Chessboard chessboard, char pieceSign){
+    public Pawn(Position position,final ColorChessboard color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
         this.firstMove = true;
     }
@@ -38,19 +39,20 @@ public class Pawn extends Piece {
         int row = this.getPosition().getRow();
         int col = this.getPosition().getCol();
 
-        int direction = (this.getColor() == 0) ? 1 : -1;
+        int direction = (this.getColor() == ColorChessboard.BIANCO) ? 1 : -1;
 
         // Movimento in avanti di una casella
         Position forwardOne = new Position(row + direction, col);
         if (isPossiblePosition(forwardOne)) {
             possiblePositions.add(forwardOne);
-        }
-
-        // Movimento in avanti di due caselle (primo movimento)
-        if (isFirstMove()) {
-            Position forwardTwo = new Position(row + 2 * direction, col);
-            if (isPossiblePosition(forwardTwo)) {
-                possiblePositions.add(forwardTwo);
+            // Movimento in avanti di due caselle (primo movimento)
+            if (isFirstMove()) {
+                Position forwardTwo = new Position(row + 2 * direction, col);
+                if(canForwardTwo(forwardTwo)){
+                    if (isPossiblePosition(forwardTwo)) {
+                        possiblePositions.add(forwardTwo);
+                    }
+                }
             }
         }
 
@@ -78,9 +80,15 @@ public class Pawn extends Piece {
     private boolean isPossiblePosition(Position position) {
         int row = position.getRow();
         int col = position.getCol();
-        if (!getChessboard().isValidPosition(row, col)) {
-            return false;
-        }
-        return getChessboard().getSquare(row, col).getPiece().isEmpty();
+        return getChessboard().isValidPosition(row, col) &&
+               (getChessboard().getSquare(row, col).getPiece().isEmpty() || isEnemy(getChessboard().getSquare(row, col).getPiece().get()));
+    }
+    
+    private boolean canForwardTwo(Position position){
+        int row = position.getRow();
+        int col = position.getCol();
+        int direction = (this.getColor() == ColorChessboard.BIANCO) ? -1 : 1;
+        
+        return getChessboard().getSquare(row + direction, col).getPiece().isEmpty();
     }
 }

@@ -5,10 +5,11 @@ import model.gameEnvironment.Chessboard;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import model.functionality.ColorChessboard;
 
 public class King extends Piece {
     
-    public King(Position position,final int color, Chessboard chessboard, char pieceSign){
+    public King(Position position,final ColorChessboard color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
     }
     

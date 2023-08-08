@@ -1,22 +1,15 @@
 package model.functionality;
 
 import java.util.Timer;
-import java.util.TimerTask;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ChessTimer{
-    private Timer timer;
-    private long timeLimit;             //tempo limite
+    private final Timer timer;
     private boolean isPlayer1Turn;      //boolean del turno del giocatore
     private long player1RemainingTime;  //tempo in minuti e secondi rimanenti del primo giocatore
     private long player2RemainingTime;  //tempo in minuti e secondi rimanenti del secondo giocatore
 
-    public ChessTimer(long timeLimit) {
+    public ChessTimer(final long timeLimit) {
         timer = new Timer();
-        this.timeLimit = timeLimit;
         this.isPlayer1Turn = true;
         this.player1RemainingTime = timeLimit;
         this.player2RemainingTime = timeLimit;

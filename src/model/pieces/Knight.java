@@ -5,9 +5,10 @@ import model.gameEnvironment.Chessboard;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import model.functionality.ColorChessboard;
 
 public class Knight extends Piece {
-    public Knight(Position position,final int color, Chessboard chessboard, char pieceSign){
+    public Knight(Position position,final ColorChessboard color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
     }
 
