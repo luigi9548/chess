@@ -1,10 +1,10 @@
-package model.pieces;
+package model.pieces.impl;
 
-import model.functionality.Position;
-import model.gameEnvironment.Chessboard;
+import model.functionality.impl.Position;
+import model.gameEnvironment.impl.Chessboard;
 import java.util.ArrayList;
-import model.functionality.ColorChessboard;
-import model.gameEnvironment.Square;
+import model.functionality.impl.ColorChessboard;
+import model.gameEnvironment.impl.Square;
 
 public class Pawn extends Piece {
     private boolean firstMove;
@@ -39,7 +39,7 @@ public class Pawn extends Piece {
         int row = this.getPosition().getRow();
         int col = this.getPosition().getCol();
 
-        int direction = (this.getColor() == ColorChessboard.BIANCO) ? 1 : -1;
+        int direction = (this.getColor() == ColorChessboard.WHITE) ? 1 : -1;
 
         // Movimento in avanti di una casella
         Position forwardOne = new Position(row + direction, col);
@@ -87,7 +87,7 @@ public class Pawn extends Piece {
     private boolean canForwardTwo(Position position){
         int row = position.getRow();
         int col = position.getCol();
-        int direction = (this.getColor() == ColorChessboard.BIANCO) ? -1 : 1;
+        int direction = (this.getColor() == ColorChessboard.WHITE) ? -1 : 1;
         
         return getChessboard().getSquare(row + direction, col).getPiece().isEmpty();
     }

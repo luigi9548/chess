@@ -4,13 +4,13 @@
  */
 package view;
 
-import controller.ControllerPromotion;
+import controller.impl.ControllerPromotion;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.*;
-import model.functionality.ColorChessboard;
-import model.gameEnvironment.Chessboard;
-import model.pieces.Pawn;
+import model.functionality.impl.ColorChessboard;
+import model.gameEnvironment.impl.Chessboard;
+import model.pieces.impl.Pawn;
 
 /**
  *
@@ -76,7 +76,7 @@ public class Promotion extends JFrame {
         title.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 14)); // NOI18N
         title.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         
-        if(pawn.getColor() == ColorChessboard.BIANCO){
+        if(pawn.getColor() == ColorChessboard.WHITE){
             iconQueen = new ImageIcon(".\\src\\images\\whiteQueen.png");
             iconRook = new ImageIcon(".\\src\\images\\whiteRook.png");
             iconBishop = new ImageIcon(".\\src\\images\\whiteBishop.png");

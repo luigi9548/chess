@@ -1,7 +1,7 @@
-package model.gameEnvironment;
+package model.gameEnvironment.impl;
 
 import java.util.Optional;
-import model.pieces.Piece;
+import model.pieces.impl.Piece;
 
 public class Square {
     private Optional<Piece> piece;

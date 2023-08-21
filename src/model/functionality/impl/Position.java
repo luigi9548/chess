@@ -1,6 +1,8 @@
-package model.functionality;
+package model.functionality.impl;
 
-public class Position {
+import model.functionality.api.PositionInt;
+
+public class Position implements PositionInt {
     int row;
     int col;
     
@@ -13,11 +15,13 @@ public class Position {
         return this.row;
     }
     
+    @Override
     public char numToLetterBySubstr() {
         String LETTERS = "abcdefgh";
         return LETTERS.charAt(this.col);
     }
     
+    @Override
     public String getStringPosition(){
         return this.numToLetterBySubstr() + Integer.toString(row);
     }
@@ -35,6 +39,7 @@ public class Position {
         this.col = col;
     }
     
+    @Override
     public boolean compare(Position p){
         return this.getRow() == p.getRow() && this.getCol() == p.getCol();
     }

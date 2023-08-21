@@ -4,14 +4,14 @@
  */
 package gameEnvironment;
 import java.util.ArrayList;
-import model.gameEnvironment.Chessboard;
-import model.pieces.Bishop;
-import model.pieces.King;
-import model.pieces.Knight;
-import model.pieces.Pawn;
-import model.pieces.Piece;
-import model.pieces.Queen;
-import model.pieces.Rook;
+import model.gameEnvironment.impl.Chessboard;
+import model.pieces.impl.Bishop;
+import model.pieces.impl.King;
+import model.pieces.impl.Knight;
+import model.pieces.impl.Pawn;
+import model.pieces.impl.Piece;
+import model.pieces.impl.Queen;
+import model.pieces.impl.Rook;
 import static org.junit.Assert.*;
 
 public class TestChessboard {

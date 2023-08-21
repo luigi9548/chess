@@ -1,11 +1,11 @@
-package model.pieces;
+package model.pieces.impl;
 
-import model.functionality.Position;
-import model.gameEnvironment.Chessboard;
+import model.functionality.impl.Position;
+import model.gameEnvironment.impl.Chessboard;
 import java.util.*;
 import java.util.stream.IntStream;
-import model.functionality.ColorChessboard;
-import model.gameEnvironment.Square;
+import model.functionality.impl.ColorChessboard;
+import model.gameEnvironment.impl.Square;
 
 public class Bishop extends Piece {
     public Bishop(Position position,final ColorChessboard color, Chessboard chessboard, char pieceSign){

@@ -5,9 +5,9 @@
 package pieces;
 
 import java.util.ArrayList;
-import model.functionality.Position;
-import model.gameEnvironment.Chessboard;
-import model.pieces.Knight;
+import model.functionality.impl.Position;
+import model.gameEnvironment.impl.Chessboard;
+import model.pieces.impl.Knight;
 import static org.junit.Assert.*;
 
 /**

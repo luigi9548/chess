@@ -1,8 +1,9 @@
-package model.functionality;
+package model.functionality.impl;
 
+import model.functionality.api.ChessTimerInt;
 import java.util.Timer;
 
-public class ChessTimer{
+public class ChessTimer implements ChessTimerInt{
     private final Timer timer;
     private boolean isPlayer1Turn;      //boolean del turno del giocatore
     private long player1RemainingTime;  //tempo in minuti e secondi rimanenti del primo giocatore
@@ -26,10 +27,11 @@ public class ChessTimer{
     public void setPlayer1RemainingTime(long player1RemainingTime){
         this.player1RemainingTime = player1RemainingTime;
     }
-    
+
     public void setPlayer2RemainingTime(long player2RemainingTime){
         this.player2RemainingTime = player2RemainingTime;
     }
+
     public Timer getTimer(){
         return this.timer;
     }
@@ -39,16 +41,19 @@ public class ChessTimer{
     }
     
     //metodo che termina il timer
+    @Override
     public void stopTimer() {
         timer.cancel();
     }
 
     //metodo che cambia il turno del giocatore
+    @Override
     public void switchTurn() {
         isPlayer1Turn = !isPlayer1Turn;
     }
 
     //metodo che formatta i millisecondi in minuti e secondi
+    @Override
     public String formatTime(long time) {
         long minutes = (time / 1000) / 60;
         long seconds = (time / 1000) % 60;

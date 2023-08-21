@@ -1,10 +1,10 @@
-package model.pieces;
+package model.pieces.impl;
 
-import model.functionality.Position;
-import model.gameEnvironment.Chessboard;
+import model.functionality.impl.Position;
+import model.gameEnvironment.impl.Chessboard;
 import java.util.ArrayList;
-import model.functionality.ColorChessboard;
-import model.gameEnvironment.Square;
+import model.functionality.impl.ColorChessboard;
+import model.gameEnvironment.impl.Square;
 
 public class Rook extends Piece {
     public Rook(Position position,final ColorChessboard color, Chessboard chessboard, char pieceSign){

@@ -1,22 +1,23 @@
-package model.pieces;
+package model.pieces.impl;
 
-import model.functionality.Position;
-import model.gameEnvironment.Chessboard;
+import model.functionality.impl.Position;
+import model.gameEnvironment.impl.Chessboard;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import model.functionality.ColorChessboard;
+import model.functionality.impl.ColorChessboard;
 
-public class Knight extends Piece {
-    public Knight(Position position,final ColorChessboard color, Chessboard chessboard, char pieceSign){
+public class King extends Piece {
+    
+    public King(Position position,final ColorChessboard color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
     }
-
+    
     @Override
     public ArrayList<Position> calculateMovement() {
-        int row = getPosition().getRow();
-        int col = getPosition().getCol();
-        int[][] deltas = {{1, 2}, {1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {-1, -2}, {-1, 2}};
+        int row = this.getPosition().getRow();
+        int col = this.getPosition().getCol();
+        int[][] deltas = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, 1}, {1, -1}, {-1, -1}};
 
         // Utilizza Stream per iterare su tutti i delta e calcolare le nuove posizioni
         ArrayList<Position> possiblePositions =
@@ -31,7 +32,7 @@ public class Knight extends Piece {
     private boolean isPossiblePosition(Position position) {
         int row = position.getRow();
         int col = position.getCol();
-        return getChessboard().isValidPosition(row, col) &&
-               (getChessboard().getSquare(row, col).getPiece().isEmpty() || isEnemy(getChessboard().getSquare(row, col).getPiece().get()));
+        return this.getChessboard().isValidPosition(row, col) &&
+               (this.getChessboard().getSquare(row, col).getPiece().isEmpty() || this.isEnemy(this.getChessboard().getSquare(row, col).getPiece().get()));
     }
 }

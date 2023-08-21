@@ -1,11 +1,11 @@
-package model.pieces;
+package model.pieces.impl;
 
-import model.functionality.Position;
-import model.gameEnvironment.Chessboard;
+import model.functionality.impl.Position;
+import model.gameEnvironment.impl.Chessboard;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import model.functionality.ColorChessboard;
+import model.functionality.impl.ColorChessboard;
 
 public class Queen extends Piece {
     public Queen(Position position,final ColorChessboard color, Chessboard chessboard, char pieceSign){

@@ -1,5 +1,5 @@
 package view;
-import controller.ControllerMenu;
+import controller.impl.ControllerMenu;
 import java.awt.*;
 import javax.swing.*;
 

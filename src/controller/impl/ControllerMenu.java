@@ -1,6 +1,6 @@
-package controller;
+package controller.impl;
 
-import model.gameEnvironment.Chessboard;
+import model.gameEnvironment.impl.Chessboard;
 import view.GameView;
 import view.Menu;
 

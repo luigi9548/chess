@@ -1,9 +1,10 @@
-package model.pieces;
+package model.pieces.impl;
 
-import model.functionality.Position;
-import model.gameEnvironment.Chessboard;
+import model.pieces.api.PieceInterface;
+import model.functionality.impl.Position;
+import model.gameEnvironment.impl.Chessboard;
 import java.util.ArrayList;
-import model.functionality.ColorChessboard;
+import model.functionality.impl.ColorChessboard;
 
 public abstract class Piece implements PieceInterface {
     private final char pieceSign;

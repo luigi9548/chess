@@ -1,8 +1,8 @@
 package view;
-import controller.ControllerGameView;
+import controller.impl.ControllerGameView;
 import java.awt.*;
 import javax.swing.*;
-import model.gameEnvironment.Chessboard;
+import model.gameEnvironment.impl.Chessboard;
 
 public final class GameView extends JFrame{
     
