@@ -1,5 +1,6 @@
 package model.functionality.impl;
 
+import java.util.Objects;
 import model.functionality.api.PositionInt;
 
 public class Position implements PositionInt {
@@ -40,7 +41,15 @@ public class Position implements PositionInt {
     }
     
     @Override
-    public boolean compare(Position p){
-        return this.getRow() == p.getRow() && this.getCol() == p.getCol();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return row == position.row && col == position.col;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, col);
     }
 }

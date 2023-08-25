@@ -98,7 +98,7 @@ public class ControllerGameView {
         String castling;
         if(rook.getColor() == ColorChessboard.WHITE){
             kingIcon = new ImageIcon(chessboard.getSquare(0, 3).getPiece().get().getIcon());
-            if(rook.getPosition().compare(new Position(0,0))){
+            if(rook.getPosition().equals(new Position(0,0))){
                 castling = "0 - 0";
                 gameView.getButtonGrid(0, 1).setIcon(kingIcon);
                 gameView.getButtonGrid(0, 3).setIcon(null);
@@ -126,7 +126,7 @@ public class ControllerGameView {
             this.whiteP.addToHistory(castling);
         }else{
             kingIcon = new ImageIcon(chessboard.getSquare(7, 3).getPiece().get().getIcon());
-            if(rook.getPosition().compare(new Position(7,0))){
+            if(rook.getPosition().equals(new Position(7,0))){
                 castling = "0 - 0";
                 gameView.getButtonGrid(7, 1).setIcon(kingIcon);
                 gameView.getButtonGrid(7, 3).setIcon(null);

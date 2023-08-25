@@ -30,6 +30,16 @@ public class Chessboard implements ChessboardInt {
         this.turn = 0; //si parte del bianco
     }
     
+    // costruttore utilizzato per i test
+    public Chessboard(Position p){
+        this.squares = new Square[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
+        for(int i = ROW_LOWER_LIMIT; i <= ROW_UPPER_LIMIT; i++){ 
+            for(int j = COL_LOWER_LIMIT; j <= COL_UPPER_LIMIT; j++){
+                squares[i][j] =  new Square(null);
+            }
+        }
+    }
+    
     private void initializeChessboard(){
         this.squares = new Square[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
         
@@ -187,7 +197,7 @@ public class Chessboard implements ChessboardInt {
     // ottimizzato
     private boolean attachedPosition(Piece piece, Position p) {
         ArrayList<Position> movements = piece.calculateMovement();
-        return movements.stream().anyMatch(pos -> pos.compare(p));
+        return movements.stream().anyMatch(pos -> pos.equals(p));
     }
             
     // versione ottimizzata
