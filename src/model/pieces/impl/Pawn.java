@@ -81,7 +81,7 @@ public class Pawn extends Piece {
         int row = position.getRow();
         int col = position.getCol();
         return getChessboard().isValidPosition(row, col) &&
-               (getChessboard().getSquare(row, col).getPiece().isEmpty() || isEnemy(getChessboard().getSquare(row, col).getPiece().get()));
+               (getChessboard().getSquare(row, col).getPiece().isEmpty());
     }
     
     private boolean canForwardTwo(Position position){
