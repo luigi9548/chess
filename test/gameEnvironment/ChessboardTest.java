@@ -113,7 +113,7 @@ public class ChessboardTest {
     }
     
     @Test
-    public void testCanCastlingInalid() {
+    public void testCanCastlingInvalid() {
         Position kingPosition = new Position(0, 3);
         Position rookPosition = new Position(0, 0);
         Position avvRookPosition = new Position(5,2);

@@ -219,7 +219,7 @@ public class Chessboard implements ChessboardInt {
         return movements.stream().anyMatch(pos -> pos.equals(p));
     }
             
-    // versione ottimizzata
+    // metodo per calcolare posizione del pedone che verrà mangiato con la mossa enPassant
     @Override
     public Position enPassant(Pawn p) {
         Position currentPosition = p.getPosition();
@@ -229,6 +229,7 @@ public class Chessboard implements ChessboardInt {
         Position leftPosition = new Position(row, col - 1);
         Position rightPosition = new Position(row, col + 1);
 
+        // viene creata una lista adjacentPositions filtrata per posizioni valide
         List<Position> adjacentPositions = Stream.of(leftPosition, rightPosition)
                 .filter(pos -> isValidPosition(pos.getRow(), pos.getCol()))
                 .collect(Collectors.toList());
