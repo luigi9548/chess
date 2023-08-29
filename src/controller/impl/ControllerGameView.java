@@ -160,6 +160,7 @@ public class ControllerGameView {
                         
                         // azioni che devo fare necessariamente dopo aver aggiornato posizione
                         // dopo aver cambiato posizione, devo controllare se la nuova posizione fa scacco al re
+                        // controllare se è stata fatta promotion
                         String checkString;
                         if(this.match.getChessboard().isCheck(ColorChessboard.BLACK)){
                             checkString = this.match.getWhiteP().getHistory().get(this.match.getWhiteP().getHistory().size() - 1).concat("+");
@@ -171,6 +172,12 @@ public class ControllerGameView {
                             this.match.getBlackP().addToHistory(checkString);
                         }
                          
+                        if(p instanceof Pawn pawn)
+                        if(this.match.getChessboard().promotion(pawn)){
+                            promotion = new Promotion(pawn, gameView, this.match.getChessboard());
+                            promotion.setVisible(true);
+                        }
+            
                         // cambio turno
                         this.updateHistory();
                         this.match.getChessboard().switchTurn();
@@ -241,10 +248,10 @@ public class ControllerGameView {
         }
         
         // 4)
-        if(this.match.getChessboard().promotion(pawn)){
+        /*if(this.match.getChessboard().promotion(pawn)){
             promotion = new Promotion(pawn, gameView, this.match.getChessboard());
             promotion.setVisible(true);
-        }
+        }*/
         
         return isEnPassant;
     }
