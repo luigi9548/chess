@@ -7,7 +7,8 @@ import model.functionality.impl.ColorChessboard;
 import model.pieces.impl.Piece;
 
 public class Player implements PlayerInt {
-    private final ColorChessboard color;  /* white = true, black = false */
+    
+    private final ColorChessboard color; 
     private final ArrayList<Piece> pieces;
     private final ArrayList<Piece> cemetery;
     private final ArrayList<String> history;

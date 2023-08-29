@@ -1,4 +1,5 @@
 package controller.impl;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.TimerTask;
@@ -231,8 +232,8 @@ public class ControllerGameView {
         String history;
         
         // prima controllo enPassant
-        if(p instanceof Pawn)
-            pos = chessboard.enPassant((Pawn) p);
+        if(p instanceof Pawn pawn)
+            pos = chessboard.enPassant(pawn);
         
         if(pos != null && pos.getCol() == col){
             hasEaten = true;
@@ -312,31 +313,12 @@ public class ControllerGameView {
                 pawn.setEnPassant(false);
         }
     }
-
-    private String pieceSwap(char piece){
-        String str=new String();
-        
-        char piecesLowerCase[]={'p','k','q','b','h','r'};
-        char swapLowerCase[]={'♙','♔','♕','♗','♘','♖'};
-        char swapUpperCase[]={'♟','♚','♛','♝','♞','♜'};
-        if(Character.isLowerCase(piece)){
-            for (int i = 0; i < 6; i++) {
-                if(piece==piecesLowerCase[i])str+=swapLowerCase[i];
-            }
-        }else{
-            char lowercased=Character.toLowerCase(piece);
-            for (int i = 0; i < 6; i++) {
-                if(lowercased==piecesLowerCase[i])str+=swapUpperCase[i];
-            }
-        }
-        return str;
-    }
     
     private void updateCemetery(Player p){
         ArrayList<Piece> pCemetery = p.getCemetery();
         String str=new String();
         for (int i = 0; i < pCemetery.size(); i++) {
-            str+=pieceSwap(pCemetery.get(i).getPieceSign());
+            str+=pCemetery.get(i).pieceSwap();
         }
         if(p.getColor() == ColorChessboard.WHITE)
             gameView.getjLabelCemeteryWhite().setText(str);
@@ -344,7 +326,7 @@ public class ControllerGameView {
             gameView.getjLabelCemeteryBlack().setText(str);
     }
     
-    private String moveString(Position initial, Position finalP,/* boolean isCheckmate,*/ boolean hasEaten, char type){
+    private String moveString(Position initial, Position finalP, boolean hasEaten, char type){
         String move;
         char typeUpper = Character.toUpperCase(type);
         if(typeUpper == 'P'){
@@ -358,8 +340,6 @@ public class ControllerGameView {
             else
                 move = typeUpper + initial.getStringPosition() + " - " + finalP.getStringPosition();
         }
-        /*if(isCheckmate)
-            move += '+';*/
         return move;
     }
     
@@ -391,27 +371,27 @@ public class ControllerGameView {
         @Override
         public void run() {
             if (timer.getIsPlayer1Turn()) {
-                timer.setPlayer1RemainingTime(timer.getPlayer1RemainingTime() - 1000); //viene sottratto un secondo dal totale
-                if (timer.getPlayer1RemainingTime() < 0) {
-                    //se il tempo termina allora viene invocato il metodo che termina il timer
-                    timer.stopTimer();
-                    gameConclusion = new GameConclusion("Il giocatore nero vince per fine del tempo", gameView);
-                    gameConclusion.setVisible(true);
+                    timer.setPlayer1RemainingTime(timer.getPlayer1RemainingTime() - 1000); //viene sottratto un secondo dal totale
+                    if (timer.getPlayer1RemainingTime() < 0) {
+                        //se il tempo termina allora viene invocato il metodo che termina il timer
+                        timer.stopTimer();
+                        gameConclusion = new GameConclusion("Il giocatore nero vince per fine del tempo", gameView);
+                        gameConclusion.setVisible(true);
+                    } else {
+                        //aggiornamento del timer
+                        gameView.getTimerPlayerW().setText(timer.formatTime(timer.getPlayer1RemainingTime()));
+                    }
                 } else {
-                    //aggiornamento del timer
-                    gameView.getTimerPlayerW().setText(timer.formatTime(timer.getPlayer1RemainingTime()));
-                }
-            } else {
-                timer.setPlayer2RemainingTime(timer.getPlayer2RemainingTime() - 1000); // Subtract one second
-                if (timer.getPlayer2RemainingTime() < 0) {
-                    timer.stopTimer();
-                    gameConclusion = new GameConclusion("Il giocatore bianco vince vinto per fine del tempo", gameView);
-                    gameConclusion.setVisible(true);
-                } else {
-                    gameView.getTimerPlayerB().setText(timer.formatTime(timer.getPlayer2RemainingTime()));
+                    timer.setPlayer2RemainingTime(timer.getPlayer2RemainingTime() - 1000); // Subtract one second
+                    if (timer.getPlayer2RemainingTime() < 0) {
+                        timer.stopTimer();
+                        gameConclusion = new GameConclusion("Il giocatore bianco vince vinto per fine del tempo", gameView);
+                        gameConclusion.setVisible(true);
+                    } else {
+                        gameView.getTimerPlayerB().setText(timer.formatTime(timer.getPlayer2RemainingTime()));
+                    }
                 }
             }
-        }
-    }, 1000, 1000);
-}
+        }, 1000, 1000);
+    }
 }
