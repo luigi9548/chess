@@ -244,7 +244,7 @@ public class ControllerGameView {
             if(chessboard.getSquare(row, col).getPiece().isPresent())
                 hasEaten = true;
                 
-            history = this.moveString(p.getPosition(), new Position(row, col), /*chessboard.isCheck(ColorChessboard.BLACK),*/ hasEaten, p.getPieceSign());
+            history = this.moveString(p.getPosition(), new Position(row, col), hasEaten, p.getPieceSign());
             
         }
         
