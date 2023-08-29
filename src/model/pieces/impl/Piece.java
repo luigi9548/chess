@@ -60,6 +60,26 @@ public abstract class Piece implements PieceInterface {
     public char getPieceSign() {
         return pieceSign;
     }
+    
+    public String pieceSwap(){
+        String str=new String();
+        
+        char piecesLowerCase[]={'p','k','q','b','h','r'};
+        char swapLowerCase[]={'♙','♔','♕','♗','♘','♖'};
+        char swapUpperCase[]={'♟','♚','♛','♝','♞','♜'};
+        if(Character.isLowerCase(pieceSign)){
+            for (int i = 0; i < 6; i++) {
+                if(pieceSign==piecesLowerCase[i])str+=swapLowerCase[i];
+            }
+        }else{
+            char lowercased=Character.toLowerCase(pieceSign);
+            for (int i = 0; i < 6; i++) {
+                if(lowercased==piecesLowerCase[i])str+=swapUpperCase[i];
+            }
+        }
+        return str;
+    }
+        
     @Override
     public abstract ArrayList<Position> calculateMovement();
 }

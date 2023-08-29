@@ -170,23 +170,42 @@ public class Chessboard implements ChessboardInt {
             Piece king = this.getSquare(kingRow, kingCol).getPiece().orElse(null);
             Piece rook1 = this.getSquare(kingRow, 0).getPiece().orElse(null);
             Piece rook2 = this.getSquare(kingRow, 7).getPiece().orElse(null);
-
+            
+            boolean isSafe = true;
             if (king instanceof King && king.getColor() == color) {
+                
+                for (int col = 0; col <= 3; col++) {
+                    final int colToCheck = col;
+                    if (opposingPieces.stream().anyMatch(p -> attachedPosition(p, new Position(kingRow, colToCheck)))) {
+                        isSafe = false;
+                        break;
+                    }
+                }
                 if (this.getSquare(kingRow, 2).getPiece().isEmpty() &&
                     this.getSquare(kingRow, 1).getPiece().isEmpty() &&
                     this.getSquare(kingRow, 0).getPiece().isPresent() &&
                     rook1 instanceof Rook && rook1.getColor() == color &&
-                    opposingPieces.stream().noneMatch(p -> attachedPosition(p, new Position(kingRow, 3)))) {
+                    isSafe){
 
                     castling = new Position(kingRow, 0);
-                } else if (this.getSquare(kingRow, 4).getPiece().isEmpty() &&
-                           this.getSquare(kingRow, 5).getPiece().isEmpty() &&
-                           this.getSquare(kingRow, 6).getPiece().isEmpty() &&
-                           this.getSquare(kingRow, 7).getPiece().isPresent() &&
-                           rook2 instanceof Rook && rook2.getColor() == color &&
-                           opposingPieces.stream().noneMatch(p -> attachedPosition(p, new Position(kingRow, 3)))) {
+                } else{ 
+                    isSafe = true;
+                    for (int col = 3; col <= 7; col++) {
+                        final int colToCheck = col;
+                        if (opposingPieces.stream().anyMatch(p -> attachedPosition(p, new Position(kingRow, colToCheck)))) {
+                            isSafe = false;
+                            break;
+                        }
+                    }
+                    if (this.getSquare(kingRow, 4).getPiece().isEmpty() &&
+                        this.getSquare(kingRow, 5).getPiece().isEmpty() &&
+                        this.getSquare(kingRow, 6).getPiece().isEmpty() &&
+                        this.getSquare(kingRow, 7).getPiece().isPresent() &&
+                        rook2 instanceof Rook && rook2.getColor() == color &&
+                        isSafe) {
 
-                    castling = new Position(kingRow, 7);
+                        castling = new Position(kingRow, 7);
+                    }
                 }
             }
         } catch (NoSuchElementException e) {}
