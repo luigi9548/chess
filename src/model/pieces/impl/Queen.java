@@ -35,7 +35,7 @@ public class Queen extends Piece {
     private ArrayList<Position> getPositionsInDirection(int row, int col, int rowIncrement, int colIncrement) {
         ArrayList<Position> positions = new ArrayList<>();
 
-        while (getChessboard().isValidPosition(row + rowIncrement, col + colIncrement)) {
+        while (getChessboard().isValidPosition(new Position(row + rowIncrement, col + colIncrement))) {
             row += rowIncrement;
             col += colIncrement;
             if (getChessboard().getSquare(row, col).getPiece().isEmpty()) {

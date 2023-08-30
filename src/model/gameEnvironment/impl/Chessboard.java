@@ -150,9 +150,9 @@ public class Chessboard implements ChessboardInt {
     }
     
     @Override
-    public boolean isValidPosition(int row, int col){
-        return row >= Chessboard.ROW_LOWER_LIMIT && row <= Chessboard.ROW_UPPER_LIMIT
-                && col >= Chessboard.COL_LOWER_LIMIT && col <=Chessboard.ROW_UPPER_LIMIT;
+    public boolean isValidPosition(Position p){
+        return p.getRow() >= Chessboard.ROW_LOWER_LIMIT && p.getRow() <= Chessboard.ROW_UPPER_LIMIT
+                && p.getCol() >= Chessboard.COL_LOWER_LIMIT && p.getCol() <=Chessboard.ROW_UPPER_LIMIT;
     }
     
     // ritorna la posizione della torre con cui può fare arrocco altrimenti null    
@@ -230,7 +230,7 @@ public class Chessboard implements ChessboardInt {
         Position rightPosition = new Position(row, col + 1);
 
         List<Position> adjacentPositions = Stream.of(leftPosition, rightPosition)
-                .filter(pos -> isValidPosition(pos.getRow(), pos.getCol()))
+                .filter(pos -> isValidPosition(pos))
                 .collect(Collectors.toList());
 
         Position enPassant = adjacentPositions.stream()

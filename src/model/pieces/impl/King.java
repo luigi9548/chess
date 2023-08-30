@@ -32,7 +32,7 @@ public class King extends Piece {
     private boolean isPossiblePosition(Position position) {
         int row = position.getRow();
         int col = position.getCol();
-        return this.getChessboard().isValidPosition(row, col) &&
+        return this.getChessboard().isValidPosition(new Position(row, col)) &&
                (this.getChessboard().getSquare(row, col).getPiece().isEmpty() || this.isEnemy(this.getChessboard().getSquare(row, col).getPiece().get()));
     }
 }

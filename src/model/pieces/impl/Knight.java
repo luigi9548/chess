@@ -31,7 +31,7 @@ public class Knight extends Piece {
     private boolean isPossiblePosition(Position position) {
         int row = position.getRow();
         int col = position.getCol();
-        return getChessboard().isValidPosition(row, col) &&
+        return getChessboard().isValidPosition(new Position(row, col)) &&
                (getChessboard().getSquare(row, col).getPiece().isEmpty() || isEnemy(getChessboard().getSquare(row, col).getPiece().get()));
     }
 }

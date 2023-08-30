@@ -26,7 +26,7 @@ public class Bishop extends Piece {
             int newRow = row;
             int newCol = col;
 
-            while (chessboard.isValidPosition(newRow += deltas[i][0], newCol += deltas[i][1])) {
+            while (chessboard.isValidPosition(new Position(newRow += deltas[i][0], newCol += deltas[i][1]))) {
                 Square square = chessboard.getSquare(newRow, newCol);
                 if (square.getPiece().isEmpty()) {
                     possiblePositions.add(new Position(newRow, newCol));

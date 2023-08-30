@@ -60,7 +60,7 @@ public class Pawn extends Piece {
         int[] colsToEat = { col - 1, col + 1 };
         for (int c : colsToEat) {
             Position eatPosition = new Position(row + direction, c);
-            if (getChessboard().isValidPosition(eatPosition.getRow(), eatPosition.getCol())) {
+            if (getChessboard().isValidPosition(eatPosition)) {
                 Square targetSquare = getChessboard().getSquare(eatPosition.getRow(), eatPosition.getCol());
                 if (!targetSquare.getPiece().isEmpty() && isEnemy(targetSquare.getPiece().get())) {
                     possiblePositions.add(eatPosition);
@@ -80,7 +80,7 @@ public class Pawn extends Piece {
     private boolean isPossiblePosition(Position position) {
         int row = position.getRow();
         int col = position.getCol();
-        return getChessboard().isValidPosition(row, col) &&
+        return getChessboard().isValidPosition(new Position(row, col)) &&
                (getChessboard().getSquare(row, col).getPiece().isEmpty());
     }
     

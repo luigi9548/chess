@@ -83,18 +83,18 @@ public class ChessboardTest {
     @Test
     public void testValidPosition() {
         chessboard = new Chessboard();
-        assertTrue(chessboard.isValidPosition(2, 3)); // Test a valid position
-        assertTrue(chessboard.isValidPosition(0, 0)); // Test a valid position at the lower limit
-        assertTrue(chessboard.isValidPosition(7, 7)); // Test a valid position at the upper limit
+        assertTrue(chessboard.isValidPosition(new Position(2, 3))); // Test a valid position
+        assertTrue(chessboard.isValidPosition(new Position(0, 0))); // Test a valid position at the lower limit
+        assertTrue(chessboard.isValidPosition(new Position(7, 7))); // Test a valid position at the upper limit
     }
 
     @Test
     public void testInvalidPosition() {
         chessboard = new Chessboard();
-        assertFalse(chessboard.isValidPosition(-1, 3)); // Test an invalid row
-        assertFalse(chessboard.isValidPosition(2, -1)); // Test an invalid column
-        assertFalse(chessboard.isValidPosition(8, 3)); // Test an invalid row beyond the upper limit
-        assertFalse(chessboard.isValidPosition(2, 8)); // Test an invalid column beyond the upper limit
+        assertFalse(chessboard.isValidPosition(new Position(-1, 3))); // Test an invalid row
+        assertFalse(chessboard.isValidPosition(new Position(2, -1))); // Test an invalid column
+        assertFalse(chessboard.isValidPosition(new Position(8, 3))); // Test an invalid row beyond the upper limit
+        assertFalse(chessboard.isValidPosition(new Position(2, 8))); // Test an invalid column beyond the upper limit
     }
     
     @Test

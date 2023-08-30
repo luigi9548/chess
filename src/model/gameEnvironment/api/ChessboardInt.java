@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package model.gameEnvironment.api;
 
 import java.util.ArrayList;
@@ -11,10 +7,6 @@ import model.gameEnvironment.impl.Square;
 import model.pieces.impl.Pawn;
 import model.pieces.impl.Piece;
 
-/**
- *
- * @author luigi
- */
 public interface ChessboardInt {
 
     // metodo per verificare se può avvenire arrocco
@@ -34,7 +26,7 @@ public interface ChessboardInt {
     int isCheckmateOrFlap(ColorChessboard color);
 
     // metodo per verificare se la posizione è contenuta nella scacchiera
-    boolean isValidPosition(int row, int col);
+    boolean isValidPosition(Position p);
 
     // metodo per filtrare i movimenti legali del pezzo passato come parametro
     // (in caso di scacco la posizione non può essere valida)
