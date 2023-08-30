@@ -6,7 +6,7 @@ import model.gameEnvironment.impl.Chessboard;
 
 public final class GameView extends JFrame{
     
-    private final JPanel scacchiera = new JPanel();
+    private final JPanel chessboard = new JPanel();
     private final JButton[][] buttonGrid = new JButton[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
     private final ControllerGameView controller = new ControllerGameView(this);
     private final JLabel jLabelCemeteryBlack = new JLabel();
@@ -18,9 +18,9 @@ public final class GameView extends JFrame{
     private final JScrollPane jScrollPane1 = new JScrollPane();
     private final JTextArea history = new JTextArea();
 
-    public GameView(final Chessboard chessboard,final String whiteN,final String blackN){
+    public GameView(final String whiteN,final String blackN){
         init(whiteN, blackN);
-        initChessboard(chessboard);
+        initChessboard();
     }
     
     public JButton getButtonGrid(int x, int y){
@@ -68,9 +68,9 @@ public final class GameView extends JFrame{
         history.setRows(5);
         jScrollPane1.setViewportView(history);
         
-        scacchiera.setPreferredSize(new java.awt.Dimension(600, 600));
-        GroupLayout scacchieraLayout = new GroupLayout(scacchiera);
-        scacchiera.setLayout(scacchieraLayout);
+        chessboard.setPreferredSize(new java.awt.Dimension(600, 600));
+        GroupLayout scacchieraLayout = new GroupLayout(chessboard);
+        chessboard.setLayout(scacchieraLayout);
         scacchieraLayout.setHorizontalGroup(
             scacchieraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 600, Short.MAX_VALUE)
@@ -82,8 +82,7 @@ public final class GameView extends JFrame{
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
@@ -100,13 +99,12 @@ public final class GameView extends JFrame{
                                 .addGap(160, 160, 160)
                                 .addComponent(timerPlayerW, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(scacchiera, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(chessboard, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
                         .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 359, GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -116,7 +114,7 @@ public final class GameView extends JFrame{
                 .addComponent(jLabelCemeteryBlack, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(scacchiera, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chessboard, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelCemeteryWhite, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
@@ -131,9 +129,9 @@ public final class GameView extends JFrame{
         pack();
     }
 
-    public void initChessboard(Chessboard chessboard){  
-        scacchiera.setLayout(new GridLayout(8,8));
-        scacchiera.setSize(600,600);
+    public void initChessboard(){  
+        this.chessboard.setLayout(new GridLayout(8,8));
+        this.chessboard.setSize(600,600);
         for (int i=0; i<=7; i++)
             for (int j=0; j<=7; j++) {
                 JButton b = new JButton();
@@ -144,14 +142,14 @@ public final class GameView extends JFrame{
                     b.setBackground(new Color(156, 92, 8));
         
                 if(i == 0 || i == 1 || i == 6 || i == 7){
-                    Icon icon = new ImageIcon(chessboard.getSquare(i, j).getPiece().get().getIcon());
+                    Icon icon = new ImageIcon(controller.getMatch().getChessboard().getSquare(i, j).getPiece().get().getIcon());
                     b.setIcon(icon);
                 }
                 buttonGrid[i][j] = b;
                 b.addActionListener((java.awt.event.ActionEvent evt) -> {
                     controller.actions(evt, b.getBackground().getRGB());
                 });
-                scacchiera.add(b);
+                this.chessboard.add(b);
             }
     }
     

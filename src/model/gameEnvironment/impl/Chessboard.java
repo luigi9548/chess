@@ -213,6 +213,33 @@ public class Chessboard implements ChessboardInt {
         return castling;
     }
     
+    @Override
+    public boolean configurePawn(Pawn pawn, int row, int col){
+        boolean isEnPassant = false;
+        
+        // con il pedone ci sono diverse azioni da eseguire
+        // 1) vedere se è avvenuto enPassant (per scriverlo nella cronologia)
+        // 2) verificare se è avvenuta la prima mossa del pezzo
+        // 3) impostare enPassant a true nel caso avesse eseguito mossa tale da rendere possibile enPassant nel turno successivo
+        
+        // 1)
+        Position pos = this.enPassant(pawn);
+        if(pos != null && pos.getCol() == col)
+            isEnPassant = true;
+        
+        // 2) - 3)
+        if (pawn.isFirstMove()){
+            pawn.switchFirstMove();
+            if((pawn.getColor() == ColorChessboard.WHITE && row == 3) ||
+               (pawn.getColor() == ColorChessboard.BLACK && row == 4) ){
+                // questo if è perché durante la prima mossa si deve muovere di 2
+                pawn.setEnPassant(true);
+            }
+        }
+        
+        return isEnPassant;
+    }
+    
     // ottimizzato
     private boolean attachedPosition(Piece piece, Position p) {
         ArrayList<Position> movements = piece.calculateMovement();

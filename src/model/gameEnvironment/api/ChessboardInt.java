@@ -31,6 +31,9 @@ public interface ChessboardInt {
     // metodo per filtrare i movimenti legali del pezzo passato come parametro
     // (in caso di scacco la posizione non può essere valida)
     ArrayList<Position> legalMovements(Piece p);
+    
+    // metodo per gestire le mosse del pedone (en passant, primo movimento)
+    boolean configurePawn(Pawn pawn, int row, int col);
 
     // metodo per verficare se il pedone è arrivato in fondo per effettuare la promozione
     boolean promotion(Pawn p);

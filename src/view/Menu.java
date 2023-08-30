@@ -2,7 +2,6 @@ package view;
 import controller.impl.ControllerMenu;
 import java.awt.*;
 import javax.swing.*;
-import model.gameEnvironment.impl.Chessboard;
 
 public class Menu extends JFrame{
     private final ControllerMenu controller = new ControllerMenu(this);

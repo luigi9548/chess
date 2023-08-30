@@ -9,7 +9,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.*;
 import model.functionality.impl.ColorChessboard;
-import model.gameEnvironment.impl.Chessboard;
+import model.gameEnvironment.impl.Match;
 import model.pieces.impl.Pawn;
 
 /**
@@ -20,7 +20,7 @@ public class Promotion extends JFrame {
     private final Pawn pawn;
     private final ControllerPromotion controller = new ControllerPromotion(this);
     private final GameView gameView;
-    private final Chessboard chessboard;
+    private final Match match;
     
     private JButton jButtonQueen;
     private JButton jButtonRook;
@@ -37,10 +37,10 @@ public class Promotion extends JFrame {
     private Icon iconBishop;
     private Icon iconKnight;
     
-    public Promotion(final Pawn pawn,final GameView gameView,final Chessboard chessboard) {
+    public Promotion(final Pawn pawn,final GameView gameView,final Match match) {
         this.pawn = pawn;
         this.gameView = gameView;
-        this.chessboard = chessboard;
+        this.match = match;
         initComponents();
     }
     
@@ -52,8 +52,8 @@ public class Promotion extends JFrame {
         return this.pawn;
     }
     
-    public Chessboard getChessboard(){
-        return this.chessboard;
+    public Match getMatch(){
+        return this.match;
     }
     
     private void initComponents() {

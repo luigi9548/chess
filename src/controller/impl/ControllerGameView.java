@@ -32,17 +32,8 @@ public class ControllerGameView {
         
     public ControllerGameView(final GameView gameView){
         this.match = new Match(new Chessboard(),new Player(ColorChessboard.WHITE),new Player(ColorChessboard.BLACK), new ChessTimer(600 * 1000));
-        //this.timer = new ChessTimer(600 * 1000);
         this.startTimer();
         this.gameView = gameView;
-    }
-    
-    public Player getPlayer(ColorChessboard color){
-        return (color == ColorChessboard.WHITE)? this.match.getWhiteP() : this.match.getBlackP();
-    }
-  
-    public Chessboard getChessboard(){
-        return this.match.getChessboard();
     }
     
     public void actions(java.awt.event.ActionEvent evt, int color){
@@ -56,6 +47,10 @@ public class ControllerGameView {
                     this.castling(rook);
             }
         }       
+    }
+    
+    public Match getMatch(){
+        return this.match;
     }
     
     private void showMovement(java.awt.event.ActionEvent evt) {
@@ -101,14 +96,14 @@ public class ControllerGameView {
            newColKing = (rook.getPosition().equals(new Position(0,0))) ? 1 : 5;
            newColRook = (rook.getPosition().equals(new Position(0,0))) ? 2 : 4;
            row = 0;
-           this.match.getWhiteP().addToHistory(castling);
+           this.match.getPlayer(ColorChessboard.WHITE).addToHistory(castling);
         }else{
             kingIcon = new ImageIcon(this.match.getChessboard().getSquare(7, 3).getPiece().get().getIcon());
             castling = (rook.getPosition().equals(new Position(7,0))) ? "0 - 0" : "0 - 0 - 0";
             newColKing = (rook.getPosition().equals(new Position(7,0))) ? 1 : 5;
             newColRook = (rook.getPosition().equals(new Position(7,0))) ? 2 : 4;
             row = 7;
-            this.match.getBlackP().addToHistory(castling);            
+            this.match.getPlayer(ColorChessboard.BLACK).addToHistory(castling);            
         }
         
         configureCastling(row, newColKing, newColRook, kingIcon, rookIcon);
@@ -142,16 +137,16 @@ public class ControllerGameView {
                                                 
                         // configuro pedone per: enPassant, prima mossa, promotion
                         if(p instanceof Pawn pawn)
-                            isEnPassant = configurePawn(pawn, row, col);
+                            isEnPassant = this.match.getChessboard().configurePawn(pawn, row, col);
                         
                         // determino cronologia
-                        String history = calculateHistory(isEnPassant, p, row, col);
+                        String history = this.match.calculateHistory(isEnPassant, p, row, col);
 
                         // aggiornamento cronologia e cimitero
                         if(p.getColor() == ColorChessboard.WHITE)
-                            updateHistory(p, row, col, history, this.match.getWhiteP(), this.match.getBlackP(), isEnPassant);
+                            updateHistory(p, row, col, history, this.match.getPlayer(ColorChessboard.WHITE), this.match.getPlayer(ColorChessboard.BLACK), isEnPassant);
                         else
-                            updateHistory(p, row, col, history, this.match.getBlackP(), this.match.getWhiteP(), isEnPassant);
+                            updateHistory(p, row, col, history, this.match.getPlayer(ColorChessboard.BLACK), this.match.getPlayer(ColorChessboard.WHITE), isEnPassant);
                             
                         // imposto la posizione
                         updatePosition(p.getPosition().getRow(), p.getPosition().getCol(), 
@@ -163,18 +158,18 @@ public class ControllerGameView {
                         // controllare se è stata fatta promotion
                         String checkString;
                         if(this.match.getChessboard().isCheck(ColorChessboard.BLACK)){
-                            checkString = this.match.getWhiteP().getHistory().get(this.match.getWhiteP().getHistory().size() - 1).concat("+");
-                            this.match.getWhiteP().removeLastString();
-                            this.match.getWhiteP().addToHistory(checkString);
+                            checkString = this.match.getPlayer(ColorChessboard.WHITE).getHistory().get(this.match.getPlayer(ColorChessboard.WHITE).getHistory().size() - 1).concat("+");
+                            this.match.getPlayer(ColorChessboard.WHITE).removeLastString();
+                            this.match.getPlayer(ColorChessboard.WHITE).addToHistory(checkString);
                         }else if(this.match.getChessboard().isCheck(ColorChessboard.WHITE)){
-                            checkString = this.match.getBlackP().getHistory().get(this.match.getBlackP().getHistory().size() - 1).concat("+");
-                            this.match.getBlackP().removeLastString();
-                            this.match.getBlackP().addToHistory(checkString);
+                            checkString = this.match.getPlayer(ColorChessboard.BLACK).getHistory().get(this.match.getPlayer(ColorChessboard.BLACK).getHistory().size() - 1).concat("+");
+                            this.match.getPlayer(ColorChessboard.BLACK).removeLastString();
+                            this.match.getPlayer(ColorChessboard.BLACK).addToHistory(checkString);
                         }
                          
                         if(p instanceof Pawn pawn)
                         if(this.match.getChessboard().promotion(pawn)){
-                            promotion = new Promotion(pawn, gameView, this.match.getChessboard());
+                            promotion = new Promotion(pawn, gameView, this.match);
                             promotion.setVisible(true);
                         }
             
@@ -198,13 +193,13 @@ public class ControllerGameView {
         int checkmateOrFlapResult = this.match.getChessboard().isCheckmateOrFlap(color);
         String message;
 
-        if (checkmateOrFlapResult == 0) {
-            message = (color == ColorChessboard.WHITE) ? "Il giocatore nero ha vinto per Scacco Matto" :
-                                                         "Il giocatore bianco ha vinto per Scacco Matto";
-        } else if (checkmateOrFlapResult == 1) {
-            message = "Patta";
-        } else {
-            return; // Nessun risultato significativo
+        switch (checkmateOrFlapResult) {
+            case 0 -> message = (color == ColorChessboard.WHITE) ? "Il giocatore nero ha vinto per Scacco Matto" :
+                                                                   "Il giocatore bianco ha vinto per Scacco Matto";
+            case 1 -> message = "Patta";
+            default -> {
+                return; // Nessun risultato significativo
+            }
         }
 
         this.match.getTimer().stopTimer();
@@ -221,59 +216,6 @@ public class ControllerGameView {
         this.match.getChessboard().getSquare(newRow, newCol).setPiece(this.match.getChessboard().getSquare(row, col).getPiece().get());
         this.match.getChessboard().getSquare(newRow, newCol).getPiece().get().setPosition(new Position(newRow, newCol));
         this.match.getChessboard().getSquare(row, col).setPiece(null);
-    }
-    
-    private boolean configurePawn(Pawn pawn, int row, int col){
-        boolean isEnPassant = false;
-        
-        // con il pedone ci sono diverse azioni da eseguire
-        // 1) vedere se è avvenuto enPassant (per scriverlo nella cronologia)
-        // 2) verificare se è avvenuta la prima mossa del pezzo
-        // 3) impostare enPassant a true nel caso avesse eseguito mossa tale da rendere possibile enPassant nel turno successivo
-        // 4) controllare se è arrivato a fine scacchiera per effettuare promotion
-        
-        // 1)
-        Position pos = this.match.getChessboard().enPassant(pawn);
-        if(pos != null && pos.getCol() == col)
-            isEnPassant = true;
-        
-        // 2) - 3)
-        if (pawn.isFirstMove()){
-            pawn.switchFirstMove();
-            if((pawn.getColor() == ColorChessboard.WHITE && row == 3) ||
-               (pawn.getColor() == ColorChessboard.BLACK && row == 4) ){
-                // questo if è perché durante la prima mossa si deve muovere di 2
-                pawn.setEnPassant(true);
-            }
-        }
-        
-        // 4)
-        /*if(this.match.getChessboard().promotion(pawn)){
-            promotion = new Promotion(pawn, gameView, this.match.getChessboard());
-            promotion.setVisible(true);
-        }*/
-        
-        return isEnPassant;
-    }
-    
-    private String calculateHistory(boolean isEnPassant, Piece p, int row, int col){
-        boolean hasEaten = false;
-        String history;
-        
-        // se è avvenuto enPassant aggiungo nella fine della stringa "e.p."
-        if(isEnPassant){
-            hasEaten = true;
-            if(p.getColor() == ColorChessboard.WHITE)
-                history = p.getPosition().numToLetterBySubstr() + "x" + new Position(row,col).getStringPosition() + " e. p.";
-            else
-                history = p.getPosition().numToLetterBySubstr() + "x" + this.match.getChessboard().enPassant((Pawn) p).getStringPosition() + " e. p."; 
-        }else{
-            if(this.match.getChessboard().getSquare(row, col).getPiece().isPresent())
-                hasEaten = true;
-                
-            history = this.moveString(p.getPosition(), new Position(row, col), hasEaten, p.getPieceSign());   
-        }
-        return history;
     }
     
     private void updateHistory(Piece p, int row, int col, String history, Player current, Player enemy, boolean isEnPassant){
@@ -347,40 +289,23 @@ public class ControllerGameView {
             gameView.getjLabelCemeteryBlack().setText(str);
     }
     
-    private String moveString(Position initial, Position finalP, boolean hasEaten, char type){
-        String move;
-        char typeUpper = Character.toUpperCase(type);
-        if(typeUpper == 'P'){ // se è un pedone non devo scrivere il segno P davanti alle coordinate
-            if(hasEaten)
-                move = initial.getStringPosition() + "x" + finalP.getStringPosition();
-            else
-                move = initial.getStringPosition() + " - " + finalP.getStringPosition();
-        }else{
-            if(hasEaten)
-                move = typeUpper + initial.getStringPosition() + "x" + finalP.getStringPosition();
-            else
-                move = typeUpper + initial.getStringPosition() + " - " + finalP.getStringPosition();
-        }
-        return move;
-    }
-    
     public void updateHistory() {
         this.gameView.getHistory().setText("");
         this.gameView.getHistory().append("                Bianco \t\tNero");
         int it = 0;
         while (true){
             this.gameView.getHistory().append("\n"+it+". ");
-            if(it < this.match.getWhiteP().getHistory().size())
-                this.gameView.getHistory().append(this.match.getWhiteP().getHistory().get(it)+"\t\t     ");
+            if(it < this.match.getPlayer(ColorChessboard.WHITE).getHistory().size())
+                this.gameView.getHistory().append(this.match.getPlayer(ColorChessboard.WHITE).getHistory().get(it)+"\t\t     ");
             else 
                 this.gameView.getHistory().append("        "+"\t");
             
-            if(it < this.match.getBlackP().getHistory().size())
-                this.gameView.getHistory().append(this.match.getBlackP().getHistory().get(it));
+            if(it < this.match.getPlayer(ColorChessboard.BLACK).getHistory().size())
+                this.gameView.getHistory().append(this.match.getPlayer(ColorChessboard.BLACK).getHistory().get(it));
             else 
                 this.gameView.getHistory().append("        ");
             
-            if(it >= this.match.getWhiteP().getHistory().size() && it >= this.match.getWhiteP().getHistory().size()){
+            if(it >= this.match.getPlayer(ColorChessboard.WHITE).getHistory().size() && it >= this.match.getPlayer(ColorChessboard.WHITE).getHistory().size()){
                 break;
             }
             it++;

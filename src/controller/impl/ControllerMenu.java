@@ -18,7 +18,7 @@ public class ControllerMenu {
         menu.setVisible(false);
         
         Chessboard chessboard = new Chessboard();
-        GameView gameView = new GameView(chessboard, whiteN, blackN);
+        GameView gameView = new GameView(whiteN, blackN);
     } 
     
     public void quitActionPerformed(java.awt.event.ActionEvent evt) {                                               
