@@ -1,7 +1,9 @@
 package view;
 import controller.impl.ControllerGameView;
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
+import model.functionality.impl.Position;
 import model.gameEnvironment.impl.Chessboard;
 
 public final class GameView extends JFrame{
@@ -162,5 +164,17 @@ public final class GameView extends JFrame{
                     this.getButtonGrid(i, j).setBackground(new Color(156, 92, 8));
             }
         }
+    }
+    
+    public void changeBottonColor(ArrayList<Position> positions){
+        for(Position p : positions){
+            this.getButtonGrid(p.getRow(), p.getCol()).setBackground(Color.red);
+        }
+    }
+    
+    public void updateIcon(int row, int col, int newRow, int newCol, Icon icon) {
+        // scambio icona
+        this.getButtonGrid(newRow, newCol).setIcon(icon);
+        this.getButtonGrid(row, col).setIcon(null);  
     }
 }

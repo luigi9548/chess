@@ -350,5 +350,21 @@ public class Chessboard implements ChessboardInt {
             return 1;
         }
     }
+    
+    // aggiorno la nuova posizione
+    public void updatePosition(int row, int col, int newRow, int newCol){     
+        // imposto pezzo e posizione
+        this.getSquare(newRow, newCol).setPiece(this.getSquare(row, col).getPiece().get());
+        this.getSquare(newRow, newCol).getPiece().get().setPosition(new Position(newRow, newCol));
+        this.getSquare(row, col).setPiece(null);
+    }
+    
+    public void changeEnPassant(ColorChessboard color){
+        ArrayList<Piece> p = this.getPiecesByColor(color);
+        for(Piece pa : p){
+            if(pa instanceof Pawn pawn)
+                pawn.setEnPassant(false);
+        }
+    }
 
 }

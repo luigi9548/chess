@@ -4,6 +4,7 @@
  */
 package view;
 
+import controller.impl.ControllerGameView;
 import controller.impl.ControllerPromotion;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -19,7 +20,7 @@ import model.pieces.impl.Pawn;
 public class Promotion extends JFrame {
     private final Pawn pawn;
     private final ControllerPromotion controller = new ControllerPromotion(this);
-    private final GameView gameView;
+    private final ControllerGameView gameView;
     private final Match match;
     
     private JButton jButtonQueen;
@@ -37,14 +38,14 @@ public class Promotion extends JFrame {
     private Icon iconBishop;
     private Icon iconKnight;
     
-    public Promotion(final Pawn pawn,final GameView gameView,final Match match) {
+    public Promotion(final Pawn pawn,final ControllerGameView gameView,final Match match) {
         this.pawn = pawn;
         this.gameView = gameView;
         this.match = match;
         initComponents();
     }
     
-    public GameView getGameView(){
+    public ControllerGameView getControllerGameView(){
         return this.gameView;
     }
     
@@ -82,7 +83,7 @@ public class Promotion extends JFrame {
             iconBishop = new ImageIcon(".\\src\\images\\whiteBishop.png");
             iconKnight = new ImageIcon(".\\src\\images\\whiteKnight.png");
             
-            Color color = gameView.getButtonGrid(pawn.getPosition().getRow(),pawn.getPosition().getCol()).getBackground();
+            Color color = gameView.getGameView().getButtonGrid(pawn.getPosition().getRow(),pawn.getPosition().getCol()).getBackground();
             initButton(color);
         }else{
             iconQueen = new ImageIcon(".\\src\\images\\blackQueen.png");
@@ -90,7 +91,7 @@ public class Promotion extends JFrame {
             iconBishop = new ImageIcon(".\\src\\images\\blackBishop.png");
             iconKnight = new ImageIcon(".\\src\\images\\blackKnight.png");
             
-            Color color = gameView.getButtonGrid(pawn.getPosition().getRow(),pawn.getPosition().getCol()).getBackground();
+            Color color = gameView.getGameView().getButtonGrid(pawn.getPosition().getRow(),pawn.getPosition().getCol()).getBackground();
             initButton(color);
         }
                 

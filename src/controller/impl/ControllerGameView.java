@@ -49,6 +49,10 @@ public class ControllerGameView {
         }       
     }
     
+    public GameView getGameView(){
+        return this.gameView;
+    }
+    
     public Match getMatch(){
         return this.match;
     }
@@ -67,7 +71,7 @@ public class ControllerGameView {
                         legalMovements = this.match.getChessboard().legalMovements(p);
                         if (!legalMovements.isEmpty()) {
                             p.setInAction(true);
-                            this.changeBottonColor(legalMovements);
+                            this.gameView.changeBottonColor(legalMovements);
                         }
                         if (p instanceof King) {
                             castling = this.match.getChessboard().canCastling(p.getColor());
@@ -108,15 +112,13 @@ public class ControllerGameView {
         
         configureCastling(row, newColKing, newColRook, kingIcon, rookIcon);
         
-        this.updateHistory();
-        this.match.getChessboard().switchTurn();
-        this.match.getTimer().switchTurn();
+        this.handlerSwitchTurn();
         gameView.resetColors();
     }
     
-    private void configureCastling(int row, int newColKing, int newColRook, Icon kingIcon, Icon rookIcon){                
-        updatePosition(row, 3, row, newColKing, kingIcon);
-        updatePosition(row, (newColRook == 2)? 0 : 7, row, newColRook, rookIcon);
+    private void configureCastling(int row, int newColKing, int newColRook, Icon kingIcon, Icon rookIcon){ 
+        this.updatePositionAndIcon(row, 3, row, newColKing, kingIcon);
+        this.updatePositionAndIcon(row, (newColRook == 2)? 0 : 7, row, newColRook, rookIcon);
     }
 
     private void move(java.awt.event.ActionEvent evt){
@@ -129,9 +131,9 @@ public class ControllerGameView {
                         // "pulisco" l'ambiente sistemando i colori della scacchiera e impostando gli enPassant a false nel nuovo turno
                         gameView.resetColors();
                         if(this.match.getChessboard().getTurn() == 0)
-                            changeEnPassant(this.match.getChessboard().getPiecesByColor(ColorChessboard.WHITE));
+                            this.match.getChessboard().changeEnPassant(ColorChessboard.WHITE);
                         else
-                            changeEnPassant(this.match.getChessboard().getPiecesByColor(ColorChessboard.BLACK));
+                            this.match.getChessboard().changeEnPassant(ColorChessboard.WHITE);
                         
                         boolean isEnPassant = false;
                                                 
@@ -149,9 +151,8 @@ public class ControllerGameView {
                             updateHistory(p, row, col, history, this.match.getPlayer(ColorChessboard.BLACK), this.match.getPlayer(ColorChessboard.WHITE), isEnPassant);
                             
                         // imposto la posizione
-                        updatePosition(p.getPosition().getRow(), p.getPosition().getCol(), 
+                        this.updatePositionAndIcon(p.getPosition().getRow(), p.getPosition().getCol(), 
                                        row, col, new ImageIcon(this.match.getChessboard().getSquare(p.getPosition().getRow(), p.getPosition().getCol()).getPiece().get().getIcon()));
-                        
                         
                         // azioni che devo fare necessariamente dopo aver aggiornato posizione
                         // dopo aver cambiato posizione, devo controllare se la nuova posizione fa scacco al re
@@ -169,24 +170,33 @@ public class ControllerGameView {
                          
                         if(p instanceof Pawn pawn)
                         if(this.match.getChessboard().promotion(pawn)){
-                            promotion = new Promotion(pawn, gameView, this.match);
+                            promotion = new Promotion(pawn, this, this.match);
                             promotion.setVisible(true);
+                            this.match.getTimer().switchTurn();
                         }
             
                         // cambio turno
-                        this.updateHistory();
-                        this.match.getChessboard().switchTurn();
-                        this.match.getTimer().switchTurn();
+                        this.handlerSwitchTurn();
                     }
                     
                     if(p.getColor() == ColorChessboard.WHITE)
                         handleVictoryOrDraw(ColorChessboard.BLACK);
                     else
-                        handleVictoryOrDraw(ColorChessboard.WHITE);
-                    
+                        handleVictoryOrDraw(ColorChessboard.WHITE);     
                 }
             }
         }
+    }
+    
+    private void handlerSwitchTurn(){
+        this.updateHistory();
+        this.match.getChessboard().switchTurn();
+        this.match.getTimer().switchTurn();
+    }
+    
+    private void updatePositionAndIcon(int row, int col, int newRow, int newCol, Icon icon){
+        this.gameView.updateIcon(row, col, newRow, newCol, icon);
+        this.match.getChessboard().updatePosition(row, col,newRow, newCol);
     }
     
     private void handleVictoryOrDraw(ColorChessboard color) {
@@ -205,17 +215,6 @@ public class ControllerGameView {
         this.match.getTimer().stopTimer();
         gameConclusion = new GameConclusion(message, gameView);
         gameConclusion.setVisible(true);        
-    }
-
-    // aggiorno la nuova posizione
-    private void updatePosition(int row, int col, int newRow, int newCol, Icon icon){
-        // scambio icona
-        gameView.getButtonGrid(newRow, newCol).setIcon(icon);
-        gameView.getButtonGrid(row, col).setIcon(null);       
-        // imposto pezzo e posizione
-        this.match.getChessboard().getSquare(newRow, newCol).setPiece(this.match.getChessboard().getSquare(row, col).getPiece().get());
-        this.match.getChessboard().getSquare(newRow, newCol).getPiece().get().setPosition(new Position(newRow, newCol));
-        this.match.getChessboard().getSquare(row, col).setPiece(null);
     }
     
     private void updateHistory(Piece p, int row, int col, String history, Player current, Player enemy, boolean isEnPassant){
@@ -262,19 +261,6 @@ public class ControllerGameView {
             }
         }
         return null;
-    }
-    
-    private void changeBottonColor(ArrayList<Position> positions){
-        for(Position p : positions){
-            gameView.getButtonGrid(p.getRow(), p.getCol()).setBackground(Color.red);
-        }
-    }
-    
-    private void changeEnPassant(ArrayList<Piece> p){
-        for(Piece pa : p){
-            if(pa instanceof Pawn pawn)
-                pawn.setEnPassant(false);
-        }
     }
     
     private void updateCemetery(Player p){
