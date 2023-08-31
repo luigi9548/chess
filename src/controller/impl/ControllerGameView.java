@@ -130,43 +130,22 @@ public class ControllerGameView {
                     if(p != null && p.getColor().ordinal() == this.match.getChessboard().getTurn()){
                         // "pulisco" l'ambiente sistemando i colori della scacchiera e impostando gli enPassant a false nel nuovo turno
                         gameView.resetColors();
-                        if(this.match.getChessboard().getTurn() == 0)
-                            this.match.getChessboard().changeEnPassant(ColorChessboard.WHITE);
-                        else
-                            this.match.getChessboard().changeEnPassant(ColorChessboard.WHITE);
                         
-                        boolean isEnPassant = false;
-                                                
-                        // configuro pedone per: enPassant, prima mossa, promotion
-                        if(p instanceof Pawn pawn)
-                            isEnPassant = this.match.getChessboard().configurePawn(pawn, row, col);
+                        Position positionEnPassant = this.match.turnHandler(p, row, col);
                         
-                        // determino cronologia
-                        String history = this.match.calculateHistory(isEnPassant, p, row, col);
-
-                        // aggiornamento cronologia e cimitero
-                        if(p.getColor() == ColorChessboard.WHITE)
-                            updateHistory(p, row, col, history, this.match.getPlayer(ColorChessboard.WHITE), this.match.getPlayer(ColorChessboard.BLACK), isEnPassant);
-                        else
-                            updateHistory(p, row, col, history, this.match.getPlayer(ColorChessboard.BLACK), this.match.getPlayer(ColorChessboard.WHITE), isEnPassant);
-                            
-                        // imposto la posizione
-                        this.updatePositionAndIcon(p.getPosition().getRow(), p.getPosition().getCol(), 
-                                       row, col, new ImageIcon(this.match.getChessboard().getSquare(p.getPosition().getRow(), p.getPosition().getCol()).getPiece().get().getIcon()));
-                        
+                        if(positionEnPassant != null){
+                            gameView.getButtonGrid(positionEnPassant.getRow(), positionEnPassant.getCol()).setIcon(null);
+                            this.updatePositionAndIcon(p.getPosition().getRow(), p.getPosition().getCol(), 
+                                       positionEnPassant.getRow(), positionEnPassant.getCol(), new ImageIcon(this.match.getChessboard().getSquare(p.getPosition().getRow(), p.getPosition().getCol()).getPiece().get().getIcon()));
+                        }else{
+                            // imposto la posizione
+                            this.updatePositionAndIcon(p.getPosition().getRow(), p.getPosition().getCol(), 
+                            row, col, new ImageIcon(this.match.getChessboard().getSquare(p.getPosition().getRow(), p.getPosition().getCol()).getPiece().get().getIcon()));
+                        }
                         // azioni che devo fare necessariamente dopo aver aggiornato posizione
                         // dopo aver cambiato posizione, devo controllare se la nuova posizione fa scacco al re
                         // controllare se è stata fatta promotion
-                        String checkString;
-                        if(this.match.getChessboard().isCheck(ColorChessboard.BLACK)){
-                            checkString = this.match.getPlayer(ColorChessboard.WHITE).getHistory().get(this.match.getPlayer(ColorChessboard.WHITE).getHistory().size() - 1).concat("+");
-                            this.match.getPlayer(ColorChessboard.WHITE).removeLastString();
-                            this.match.getPlayer(ColorChessboard.WHITE).addToHistory(checkString);
-                        }else if(this.match.getChessboard().isCheck(ColorChessboard.WHITE)){
-                            checkString = this.match.getPlayer(ColorChessboard.BLACK).getHistory().get(this.match.getPlayer(ColorChessboard.BLACK).getHistory().size() - 1).concat("+");
-                            this.match.getPlayer(ColorChessboard.BLACK).removeLastString();
-                            this.match.getPlayer(ColorChessboard.BLACK).addToHistory(checkString);
-                        }
+                        this.match.checkHandler();
                          
                         if(p instanceof Pawn pawn)
                         if(this.match.getChessboard().promotion(pawn)){
@@ -176,6 +155,7 @@ public class ControllerGameView {
                         }
             
                         // cambio turno
+                        this.updateCemetery((this.match.getChessboard().getTurn() == 0) ? this.match.getPlayer(ColorChessboard.BLACK) : this.match.getPlayer(ColorChessboard.WHITE));
                         this.handlerSwitchTurn();
                     }
                     
@@ -215,27 +195,6 @@ public class ControllerGameView {
         this.match.getTimer().stopTimer();
         gameConclusion = new GameConclusion(message, gameView);
         gameConclusion.setVisible(true);        
-    }
-    
-    private void updateHistory(Piece p, int row, int col, String history, Player current, Player enemy, boolean isEnPassant){
-        
-        current.addToHistory(history);
-        
-        // controllo se ha mangiato così modifico anche il cimitero
-        if(this.match.getChessboard().getSquare(row, col).getPiece().isPresent()){
-            enemy.addPieceCemetery(this.match.getChessboard().getSquare(row, col).getPiece().get());
-            this.updateCemetery(enemy);
-        }
-        
-        // controllo se ho mangiato con enPassant perchè la posizione del nemico mangiato sarà diversa
-        if(isEnPassant){
-            Position pos = this.match.getChessboard().enPassant((Pawn) p);
-            enemy.addPieceCemetery(this.match.getChessboard().getSquare(pos.getRow(), pos.getCol()).getPiece().get()); 
-            gameView.getButtonGrid(pos.getRow(), pos.getCol()).setIcon(null);
-            this.match.getChessboard().getSquare(pos.getPosition().getRow(), pos.getPosition().getCol()).setPiece(null);
-            this.updateCemetery(enemy);
-        }
-        
     }
     
     private Piece getEvtPiece(java.awt.event.ActionEvent evt){

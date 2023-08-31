@@ -10,7 +10,6 @@ import model.pieces.impl.Bishop;
 import model.pieces.impl.Knight;
 import model.pieces.impl.Queen;
 import model.pieces.impl.Rook;
-import view.GameView;
 import view.Promotion;
 
 public class ControllerPromotion {
