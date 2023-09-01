@@ -19,7 +19,6 @@ public class Player implements PlayerInt {
         this.history = new ArrayList<>();
     }
     
-    /* Metodo volto all'aggiunta di una mossa alla history delle mosse */
     @Override
     public void addToHistory(String str){
         if(!str.equals("")){
@@ -36,7 +35,6 @@ public class Player implements PlayerInt {
         this.history.remove(this.history.size()-1);
     }
     
-    /* Metodo volto all'aggiunta di un pezzo nel cimitero */
     @Override
     public void addPieceCemetery(Piece piece){
         this.cemetery.add(piece);

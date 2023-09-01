@@ -2,13 +2,22 @@ package model.functionality.api;
 
 public interface ChessTimerInt {
 
-    //metodo che formatta i millisecondi in minuti e secondi
+    /**
+     * Converts the given time in milliseconds to minutes and seconds.
+     *
+     * @param time The time in milliseconds to be converted.
+     * @return A string representation of the time in the format "minutes:seconds".
+     */
     String formatTime(long time);
 
-    //metodo che termina il timer
+    /**
+     * Stops the timer.
+     */
     void stopTimer();
 
-    //metodo che cambia il turno del giocatore
+    /**
+     * Changes the turn of the player.
+     */
     void switchTurn();
     
 }

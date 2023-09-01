@@ -17,7 +17,8 @@ public class Rook extends Piece {
         int row = this.getPosition().getRow();
         int col = this.getPosition().getCol();
         Chessboard chessboard = this.getChessboard();
-        // Movimento verso l'alto
+        
+        // Move upwards
         for (int r = row + 1; r <= Chessboard.ROW_UPPER_LIMIT; r++) {
             Square square = chessboard.getSquare(r, col);
             if (square.getPiece().isEmpty()) {
@@ -30,7 +31,7 @@ public class Rook extends Piece {
             }
         }
 
-        // Movimento verso il basso
+        // Move downwards
         for (int r = row - 1; r >= Chessboard.ROW_LOWER_LIMIT; r--) {
             Square square = chessboard.getSquare(r, col);
             if (square.getPiece().isEmpty()) {
@@ -43,7 +44,7 @@ public class Rook extends Piece {
             }
         }
 
-        // Movimento verso sinistra
+        // Move leftwards
         for (int c = col - 1; c >= Chessboard.COL_LOWER_LIMIT; c--) {
             Square square = chessboard.getSquare(row, c);
             if (square.getPiece().isEmpty()) {
@@ -56,7 +57,7 @@ public class Rook extends Piece {
             }
         }
 
-        // Movimento verso destra
+        // Move rightwards
         for (int c = col + 1; c <= Chessboard.COL_UPPER_LIMIT; c++) {
             Square square = chessboard.getSquare(row, c);
             if (square.getPiece().isEmpty()) {

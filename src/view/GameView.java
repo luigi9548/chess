@@ -127,10 +127,14 @@ public final class GameView extends JFrame{
                 .addGap(15, 15, 15))
         );
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Game");
         setVisible(true);
         pack();
     }
 
+    /**
+     * Initializes the chessboard UI, setting up buttons and their backgrounds.
+     */
     public void initChessboard(){  
         this.chessboard.setLayout(new GridLayout(8,8));
         this.chessboard.setSize(600,600);
@@ -155,6 +159,9 @@ public final class GameView extends JFrame{
             }
     }
     
+    /**
+    * Resets the background colors of all chessboard buttons to their original alternating colors.
+    */
     public void resetColors(){
         for (int i=0; i<=7; i++){
             for (int j=0; j<=7; j++) {
@@ -166,14 +173,27 @@ public final class GameView extends JFrame{
         }
     }
     
+    /**
+    * Changes the background color of buttons corresponding to the given positions to red.
+    * 
+    * @param positions The positions on the chessboard to change the button color for.
+    */    
     public void changeBottonColor(ArrayList<Position> positions){
         for(Position p : positions){
             this.getButtonGrid(p.getRow(), p.getCol()).setBackground(Color.red);
         }
     }
     
+    /**
+    * Updates the icon on the buttons at the given positions.
+    * 
+    * @param row The row of the button to update.
+    * @param col The column of the button to update.
+    * @param newRow The new row of the button to update.
+    * @param newCol The new column of the button to update.
+    * @param icon The new icon to set on the button.
+    */
     public void updateIcon(int row, int col, int newRow, int newCol, Icon icon) {
-        // scambio icona
         this.getButtonGrid(newRow, newCol).setIcon(icon);
         this.getButtonGrid(row, col).setIcon(null);  
     }

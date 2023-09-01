@@ -56,20 +56,26 @@ public class ControllerPromotion {
         }        
     }
 
+    /**
+     * Action handler for promoting to a Queen.
+     * 
+     * @param evt
+     */
     public void queenActionPerformed(ActionEvent evt) {
         init("QUEEN");
-        // imposto icona nella view
+    
+        // Set the icon in the view
         gameView.getGameView().getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
-        
-        // posiziono il pezzo a livello model
+
+        // Set the piece at the model level
         if(promotion.getPawn().getColor() == ColorChessboard.WHITE){
-            Queen queenW = new Queen(position,ColorChessboard.WHITE,match.getChessboard(), 'q');
+            Queen queenW = new Queen(position, ColorChessboard.WHITE, match.getChessboard(), 'q');
             match.getChessboard().getSquare(position.getRow(), position.getCol()).setPiece(queenW);
             queenW.setIcon(".\\src\\images\\whiteQueen.png");
             this.match.getPlayer(ColorChessboard.WHITE).removeLastString();
             this.match.getPlayer(ColorChessboard.WHITE).addToHistory(position.getStringPosition() + Character.toUpperCase(queenW.getPieceSign()));
         }else{
-            Queen queenB = new Queen(position,ColorChessboard.BLACK,match.getChessboard(), 'Q');
+            Queen queenB = new Queen(position, ColorChessboard.BLACK, match.getChessboard(), 'Q');
             match.getChessboard().getSquare(position.getRow(), position.getCol()).setPiece(queenB);
             queenB.setIcon(".\\src\\images\\blackQueen.png");
             this.match.getPlayer(ColorChessboard.BLACK).removeLastString();
@@ -80,17 +86,26 @@ public class ControllerPromotion {
         promotion.setVisible(false);
     }
 
+    /**
+     * Action handler for promoting to a Rook.
+     * 
+     * @param evt
+     */
     public void rookActionPerformed(ActionEvent evt) {
         init("ROOK");
+        
+        // Set the icon in the view
         gameView.getGameView().getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
+        
+        // Set the piece at the model level
         if(promotion.getPawn().getColor() == ColorChessboard.WHITE){
-            Rook rookW = new Rook(position,ColorChessboard.WHITE,match.getChessboard(), 'r');
+            Rook rookW = new Rook(position, ColorChessboard.WHITE, match.getChessboard(), 'r');
             match.getChessboard().getSquare(position.getRow(), position.getCol()).setPiece(rookW);
             rookW.setIcon(".\\src\\images\\whiteRook.png");
             this.match.getPlayer(ColorChessboard.WHITE).removeLastString();
             this.match.getPlayer(ColorChessboard.WHITE).addToHistory(position.getStringPosition() + Character.toUpperCase(rookW.getPieceSign()));
         }else{
-            Rook rookB = new Rook(position,ColorChessboard.BLACK,match.getChessboard(), 'R');
+            Rook rookB = new Rook(position, ColorChessboard.BLACK, match.getChessboard(), 'R');
             match.getChessboard().getSquare(position.getRow(), position.getCol()).setPiece(rookB);
             rookB.setIcon(".\\src\\images\\blackRook.png");
             this.match.getPlayer(ColorChessboard.BLACK).removeLastString();
@@ -101,17 +116,27 @@ public class ControllerPromotion {
         promotion.setVisible(false);
     }
 
-    public void bishopActionPerformed(ActionEvent evt) {
-        init("BISHOP");
+       
+    /**
+     * Action handler for promoting to a Bishop. 
+     * 
+     * @param evt
+     */
+       public void bishopActionPerformed(ActionEvent evt) {
+           init("BISHOP");
+        
+        // Set the icon in the view
         gameView.getGameView().getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
+           
+        // Set the piece at the model level
         if(promotion.getPawn().getColor() == ColorChessboard.WHITE){
-            Bishop bishopW = new Bishop(position,ColorChessboard.WHITE,match.getChessboard(), 'b');
+            Bishop bishopW = new Bishop(position, ColorChessboard.WHITE, match.getChessboard(), 'b');
             match.getChessboard().getSquare(position.getRow(), position.getCol()).setPiece(bishopW);
             bishopW.setIcon(".\\src\\images\\whiteBishop.png");
             this.match.getPlayer(ColorChessboard.WHITE).removeLastString();
             this.match.getPlayer(ColorChessboard.WHITE).addToHistory(position.getStringPosition() + Character.toUpperCase(bishopW.getPieceSign()));
         }else{
-            Bishop bishopB = new Bishop(position,ColorChessboard.BLACK,match.getChessboard(), 'B');
+            Bishop bishopB = new Bishop(position, ColorChessboard.BLACK, match.getChessboard(), 'B');
             match.getChessboard().getSquare(position.getRow(), position.getCol()).setPiece(bishopB);
             bishopB.setIcon(".\\src\\images\\blackBishop.png");
             this.match.getPlayer(ColorChessboard.BLACK).removeLastString();
@@ -121,18 +146,27 @@ public class ControllerPromotion {
         this.match.getTimer().switchTurn();
         promotion.setVisible(false);
     }
-
+    
+    /**
+     * Action handler for promoting to a Knight.
+     * 
+     * @param evt
+     */
     public void knightActionPerformed(ActionEvent evt) {
         init("KNIGHT");
+           
+        // Set the icon in the view
         gameView.getGameView().getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
+           
+        // Set the piece at the model level
         if(promotion.getPawn().getColor() == ColorChessboard.WHITE){
-            Knight knightW = new Knight(position,ColorChessboard.WHITE,match.getChessboard(), 'h');
+            Knight knightW = new Knight(position, ColorChessboard.WHITE, match.getChessboard(), 'h');
             match.getChessboard().getSquare(position.getRow(), position.getCol()).setPiece(knightW);
             knightW.setIcon(".\\src\\images\\whiteKnight.png");
             this.match.getPlayer(ColorChessboard.WHITE).removeLastString();
             this.match.getPlayer(ColorChessboard.WHITE).addToHistory(position.getStringPosition() + Character.toUpperCase(knightW.getPieceSign()));
         }else{
-            Knight knightB = new Knight(position,ColorChessboard.BLACK,match.getChessboard(), 'H');
+            Knight knightB = new Knight(position, ColorChessboard.BLACK, match.getChessboard(), 'H');
             match.getChessboard().getSquare(position.getRow(), position.getCol()).setPiece(knightB);
             knightB.setIcon(".\\src\\images\\blackKnight.png");
             this.match.getPlayer(ColorChessboard.BLACK).removeLastString();
@@ -141,5 +175,5 @@ public class ControllerPromotion {
         this.gameView.updateHistory();
         this.match.getTimer().switchTurn();
         promotion.setVisible(false);
-    }   
+    }
 }

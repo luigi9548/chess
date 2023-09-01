@@ -7,10 +7,10 @@ public class Menu extends JFrame{
     private final ControllerMenu controller = new ControllerMenu(this);
     private final JLabel title = new JLabel(new ImageIcon(".\\src\\images\\title1.png"));
     private final JPanel jPanelW = new JPanel();
-    private final JLabel jLabelW = new JLabel("Inserisci il nome del giocatore bianco");
+    private final JLabel jLabelW = new JLabel("Enter the name of the white player");
     private final JTextField jTextFieldW = new JTextField("GuestW");
     private final JPanel jPanelB = new JPanel();
-    private final JLabel jLabelB = new JLabel("Inserisci il nome del giocatore nero");
+    private final JLabel jLabelB = new JLabel("Enter the name of the black player");
     private final JTextField jTextFieldB = new JTextField("GuestB");
     private final JToggleButton play = new JToggleButton("Play");
     private final JToggleButton quit = new JToggleButton("Quit");

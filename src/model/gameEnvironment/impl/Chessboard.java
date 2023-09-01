@@ -19,7 +19,7 @@ import model.pieces.impl.Rook;
 public class Chessboard implements ChessboardInt {
     
     private Square[][] squares; 
-    private int turn; // 1 = turno giocatore nero, 0 = turno giocatore bianco
+    private int turn; // 0 represents the white player's turn and 1 represents the black player's turn.
     public static final int ROW_UPPER_LIMIT = 7;
     public static final int ROW_LOWER_LIMIT = 0;
     public static final int COL_UPPER_LIMIT = 7;
@@ -27,11 +27,12 @@ public class Chessboard implements ChessboardInt {
     
     public Chessboard(){
         this.initializeChessboard();
-        this.turn = 0; //si parte del bianco
+        this.turn = 0; // Start with the white player's turn    
     }
     
-    // costruttore utilizzato per i test
+    // Constructor used for testing purposes.
     public Chessboard(Position p){
+        // Create an empty chessboard with the appropriate dimensions.
         this.squares = new Square[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
         for(int i = ROW_LOWER_LIMIT; i <= ROW_UPPER_LIMIT; i++){ 
             for(int j = COL_LOWER_LIMIT; j <= COL_UPPER_LIMIT; j++){
@@ -40,77 +41,85 @@ public class Chessboard implements ChessboardInt {
         }
     }
     
+    /**
+     * Initializes the chessboard by placing chess pieces in their starting positions.
+     */
     private void initializeChessboard(){
         this.squares = new Square[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
         
-        // prima riga bianca e nera
+        // Place chess pieces in the first and last rows
         for(int i = 0; i <= Chessboard.COL_UPPER_LIMIT; i++){
             Position pW = new Position(Chessboard.ROW_LOWER_LIMIT, Chessboard.COL_LOWER_LIMIT + i);
             Position pB = new Position(Chessboard.ROW_UPPER_LIMIT, Chessboard.COL_LOWER_LIMIT + i);
             switch (i) {
                 case 0, 7 -> {
-                    // creo i 4 rook alle estremità della scacchiera
+                    // Create rooks at the corners of the chessboard.
                     Rook roW = new Rook(pW,ColorChessboard.WHITE, this, 'r');
                     roW.setIcon(".\\src\\images\\whiteRook.png");
                     squares[pW.getRow()][pW.getCol()] = new Square(roW);
+                    
                     Rook roB = new Rook(pB,ColorChessboard.BLACK, this, 'R');
                     roB.setIcon(".\\src\\images\\blackRook.png");
                     squares[pB.getRow()][pB.getCol()] = new Square(roB);
                 }
                 case 1, 6 -> {
-                    // creo i 4 knight
+                    // Create knights on the second and second-to-last columns.
                     Knight knW = new Knight(pW,ColorChessboard.WHITE, this, 'h');
                     knW.setIcon(".\\src\\images\\whiteKnight.png");
                     squares[pW.getRow()][pW.getCol()] = new Square(knW);
+                    
                     Knight knB = new Knight(pB,ColorChessboard.BLACK, this, 'H');
                     knB.setIcon(".\\src\\images\\blackKnight.png");
                     squares[pB.getRow()][pB.getCol()] = new Square(knB);
                 }
                 case 2, 5 -> {
-                    // creo i bishop
+                    // Create bishops on the third and third-to-last columns.
                     Bishop biW = new Bishop(pW,ColorChessboard.WHITE, this, 'b');
                     biW.setIcon(".\\src\\images\\whiteBishop.png");
+                    
                     squares[pW.getRow()][pW.getCol()] = new Square(biW);
                     Bishop biB = new Bishop(pB,ColorChessboard.BLACK, this, 'B');
                     biB.setIcon(".\\src\\images\\blackBishop.png");
                     squares[pB.getRow()][pB.getCol()] = new Square(biB);
                 }
                 case 4 -> {
-                    // creo casella con queen
+                    // Create queens in the center.
                     Queen quW = new Queen(pW,ColorChessboard.WHITE, this, 'q');
                     quW.setIcon(".\\src\\images\\whiteQueen.png");
                     squares[pW.getRow()][pW.getCol()] = new Square(quW);
+                    
                     Queen quB = new Queen(pB,ColorChessboard.BLACK, this, 'Q');
                     quB.setIcon(".\\src\\images\\blackQueen.png");
                     squares[pB.getRow()][pB.getCol()] = new Square(quB);
                 }
                 case 3 -> {
-                    // creo casella con king
+                    // Create kings.
                     King kiW = new King(pW,ColorChessboard.WHITE, this, 'k');
                     kiW.setIcon(".\\src\\images\\whiteKing.png");
+                    
                     squares[pW.getRow()][pW.getCol()] = new Square(kiW);
                     King kiB = new King(pB,ColorChessboard.BLACK, this, 'K');
                     kiB.setIcon(".\\src\\images\\blackKing.png");
                     squares[pB.getRow()][pB.getCol()] = new Square(kiB);
                 }
             }
-        } // end for per creare prima e ultima row
+        } 
         
-        // for pedoni
-        for(int i = 0; i <= Chessboard.COL_UPPER_LIMIT; i++){ // <= perchè da 0 a 7 considero le 8 colonne
-            Position pW = new Position(Chessboard.ROW_LOWER_LIMIT + 1,Chessboard.COL_LOWER_LIMIT + i);
-            Position pB = new Position(Chessboard.ROW_UPPER_LIMIT - 1,Chessboard.COL_LOWER_LIMIT + i);
-            Pawn paW    = new Pawn(pW,ColorChessboard.WHITE,this, 'p');
-            paW.setIcon(".\\src\\images\\whitePawn.png");
-            squares[pW.getRow()][pW.getCol()] = new Square(paW);
-            
-            
-            Pawn paB    = new Pawn(pB,ColorChessboard.BLACK,this, 'P');
-            paB.setIcon(".\\src\\images\\blackPawn.png");
-            squares[pB.getRow()][pB.getCol()] = new Square(paB);
+            // Place pawns in the second and second-to-last rows.
+            for(int i = 0; i <= Chessboard.COL_UPPER_LIMIT; i++){ 
+                Position pW = new Position(Chessboard.ROW_LOWER_LIMIT + 1,Chessboard.COL_LOWER_LIMIT + i);
+                Position pB = new Position(Chessboard.ROW_UPPER_LIMIT - 1,Chessboard.COL_LOWER_LIMIT + i);
+                
+                Pawn paW    = new Pawn(pW,ColorChessboard.WHITE,this, 'p');
+                paW.setIcon(".\\src\\images\\whitePawn.png");
+                squares[pW.getRow()][pW.getCol()] = new Square(paW);
+
+                Pawn paB    = new Pawn(pB,ColorChessboard.BLACK,this, 'P');
+                paB.setIcon(".\\src\\images\\blackPawn.png");
+                squares[pB.getRow()][pB.getCol()] = new Square(paB);
         }
         
-        // rimanenti caselle vuote
+        // Fill the remaining squares with null (no pieces).
         for(int i = ROW_LOWER_LIMIT + 2; i <= ROW_UPPER_LIMIT - 2; i++){ // il 2 sta per le righe già fatte
             for(int j = COL_LOWER_LIMIT; j <= COL_UPPER_LIMIT; j++){
                 squares[i][j] =  new Square(null);
@@ -126,16 +135,19 @@ public class Chessboard implements ChessboardInt {
     
     @Override
     public void switchTurn(){
-        if(this.turn == 0)
-            this.turn = 1;
-        else
-            this.turn = 0;
+        this.turn = (this.turn == 0)? 1 : 0;
     }
     
     public int getTurn(){
         return this.turn;
     }
     
+    /**
+    * Retrieves all pieces on the chessboard that match the specified color.
+    *
+    * @param color The color of pieces to retrieve.
+    * @return An ArrayList containing all pieces of the specified color.
+    */
     public ArrayList<Piece> getPiecesByColor(ColorChessboard color){
         ArrayList<Piece> pieces = new ArrayList<>();
 
@@ -155,12 +167,13 @@ public class Chessboard implements ChessboardInt {
                 && p.getCol() >= Chessboard.COL_LOWER_LIMIT && p.getCol() <=Chessboard.ROW_UPPER_LIMIT;
     }
     
-    // ritorna la posizione della torre con cui può fare arrocco altrimenti null    
     @Override
     public Position canCastling(ColorChessboard color) {
+        // Create a list to store opposing pieces.
         ArrayList<Piece> opposingPieces;
         opposingPieces = getPiecesByColor((color == ColorChessboard.WHITE) ? ColorChessboard.BLACK : ColorChessboard.WHITE);
 
+        // Initialize king's row and column.
         int kingRow = (color == ColorChessboard.WHITE) ? 0 : 7;
         int kingCol = 3;
 
@@ -173,7 +186,7 @@ public class Chessboard implements ChessboardInt {
             
             boolean isSafe = true;
             if (king instanceof King && king.getColor() == color) {
-                
+                // Check if the squares between the king and rook1 are empty and safe.
                 for (int col = 0; col <= 3; col++) {
                     final int colToCheck = col;
                     if (opposingPieces.stream().anyMatch(p -> attachedPosition(p, new Position(kingRow, colToCheck)))) {
@@ -181,6 +194,7 @@ public class Chessboard implements ChessboardInt {
                         break;
                     }
                 }
+                // If the squares are empty, and the rook1 is present, and the king is safe, set castling position to rook1.
                 if (this.getSquare(kingRow, 2).getPiece().isEmpty() &&
                     this.getSquare(kingRow, 1).getPiece().isEmpty() &&
                     this.getSquare(kingRow, 0).getPiece().isPresent() &&
@@ -188,8 +202,11 @@ public class Chessboard implements ChessboardInt {
                     isSafe){
 
                     castling = new Position(kingRow, 0);
-                } else{ 
+                }else{
+                    // reset the flag
                     isSafe = true;
+                    
+                    // Check if the squares between the king and rook2 are empty and safe.
                     for (int col = 3; col <= 7; col++) {
                         final int colToCheck = col;
                         if (opposingPieces.stream().anyMatch(p -> attachedPosition(p, new Position(kingRow, colToCheck)))) {
@@ -197,6 +214,7 @@ public class Chessboard implements ChessboardInt {
                             break;
                         }
                     }
+                    // If the squares are empty, and the rook2 is present, and the king is safe, set castling position to rook2.
                     if (this.getSquare(kingRow, 4).getPiece().isEmpty() &&
                         this.getSquare(kingRow, 5).getPiece().isEmpty() &&
                         this.getSquare(kingRow, 6).getPiece().isEmpty() &&
@@ -217,22 +235,16 @@ public class Chessboard implements ChessboardInt {
     public boolean configurePawn(Pawn pawn, int row, int col){
         boolean isEnPassant = false;
         
-        // con il pedone ci sono diverse azioni da eseguire
-        // 1) vedere se è avvenuto enPassant (per scriverlo nella cronologia)
-        // 2) verificare se è avvenuta la prima mossa del pezzo
-        // 3) impostare enPassant a true nel caso avesse eseguito mossa tale da rendere possibile enPassant nel turno successivo
-        
-        // 1)
+        // Handle en passat
         Position pos = this.enPassant(pawn);
         if(pos != null && pos.getCol() == col)
             isEnPassant = true;
         
-        // 2) - 3)
+        // Handle first move and en passant flag
         if (pawn.isFirstMove()){
             pawn.switchFirstMove();
             if((pawn.getColor() == ColorChessboard.WHITE && row == 3) ||
                (pawn.getColor() == ColorChessboard.BLACK && row == 4) ){
-                // questo if è perché durante la prima mossa si deve muovere di 2
                 pawn.setEnPassant(true);
             }
         }
@@ -240,13 +252,18 @@ public class Chessboard implements ChessboardInt {
         return isEnPassant;
     }
     
-    // ottimizzato
+    /**
+    * Checks if a given piece is attached to a specific position on the chessboard.
+    *
+    * @param piece The piece to check for attachment.
+    * @param p     The position to check if the piece is attached to.
+    * @return      True if the piece is attached to the given position, otherwise false.
+    */
     private boolean attachedPosition(Piece piece, Position p) {
         ArrayList<Position> movements = piece.calculateMovement();
         return movements.stream().anyMatch(pos -> pos.equals(p));
     }
             
-    // metodo per calcolare posizione del pedone che verrà mangiato con la mossa enPassant
     @Override
     public Position enPassant(Pawn p) {
         Position currentPosition = p.getPosition();
@@ -256,8 +273,8 @@ public class Chessboard implements ChessboardInt {
         Position leftPosition = new Position(row, col - 1);
         Position rightPosition = new Position(row, col + 1);
 
-        // viene creata una lista adjacentPositions filtrata per posizioni valide
-        List<Position> adjacentPositions = Stream.of(leftPosition, rightPosition)
+         // Create a list of adjacent positions filtered for valid positions
+         List<Position> adjacentPositions = Stream.of(leftPosition, rightPosition)
                 .filter(pos -> isValidPosition(pos))
                 .collect(Collectors.toList());
 
@@ -273,7 +290,6 @@ public class Chessboard implements ChessboardInt {
         return enPassant;
     }
     
-    // ottimizzato
     @Override
     public boolean promotion(Pawn p) {
     int row = p.getPosition().getRow();
@@ -281,6 +297,12 @@ public class Chessboard implements ChessboardInt {
            (p.getColor() == ColorChessboard.BLACK && row == Chessboard.ROW_LOWER_LIMIT);
     }
     
+    /**
+    * Retrieves the position of the king of the specified color on the chessboard.
+    *
+    * @param color The color of the king to locate.
+    * @return The position of the king if found, or null if not present.
+    */
     private Position kingPosition(ColorChessboard color){
         for(int i = 0; i <= Chessboard.ROW_UPPER_LIMIT; i++){
             for(int j = 0; j <= Chessboard.COL_UPPER_LIMIT; j++){
@@ -290,14 +312,17 @@ public class Chessboard implements ChessboardInt {
         }
         return null;
     }
-    
-    // ottimizzato
+   
     @Override
     public boolean isCheck(ColorChessboard color) {
+        // Get the position of the player's king
         Position king = kingPosition(color);
+        
+        // Get the pieces of the opposing player
         ArrayList<Piece> avvPieces;
         avvPieces = getPiecesByColor((color == ColorChessboard.WHITE) ? ColorChessboard.BLACK : ColorChessboard.WHITE);
 
+        // Check if any of the opposing player's pieces can attack the king
         return avvPieces.stream().anyMatch(piece -> attachedPosition(piece, king));
     }
        
@@ -313,14 +338,21 @@ public class Chessboard implements ChessboardInt {
                 piece = this.getSquare(position.getRow(), position.getCol()).getPiece().get();
             }
             
+            // Temporarily move the piece to the new position for validation
             this.getSquare(position.getRow(), position.getCol()).setPiece(p);
             p.setPosition(position);
             this.getSquare(firstPosition.getRow(), firstPosition.getCol()).setPiece(null);
+            
+            // Check if the move results in a check for the current player
             if(!this.isCheck(p.getColor())){
                 legalPositions.add(position);
             }
+            
+            // Reset the board to its original state after checking
             this.getSquare(firstPosition.getRow(), firstPosition.getCol()).setPiece(p);
             p.setPosition(firstPosition);
+            
+            // Restore any captured piece, if applicable
             if(piece != null)
                 this.getSquare(position.getRow(), position.getCol()).setPiece(piece);
             else
@@ -329,36 +361,46 @@ public class Chessboard implements ChessboardInt {
         return legalPositions;
     }
 
-    
-    // metodo per verificare se è patta o scacco matto (Scacco matto = 0, patta = 1, niente = 2;   
-    // versione ottimizzata dal metodo
     @Override
     public int isCheckmateOrFlap(ColorChessboard color) {
         ArrayList<Piece> myPieces = getPiecesByColor(color);
         ArrayList<Piece> avvPieces;
         avvPieces = getPiecesByColor((color == ColorChessboard.WHITE) ? ColorChessboard.BLACK : ColorChessboard.WHITE);
 
+        // Check if the current player is in checkmate (no legal moves for any piece)
         boolean checkmate = myPieces.stream().allMatch(p -> this.legalMovements(p).isEmpty());
 
+        // Check if the opposing player's pieces can attack the current player's king
         boolean attachedKing = avvPieces.stream().anyMatch(p -> this.attachedPosition(p, this.kingPosition(color)));
 
         if (!checkmate) {
-            return 2;
+            return 2; // Neither checkmate nor stalemate
         } else if (attachedKing) {
-            return 0;
+            return 0; // Checkmate
         } else {
-            return 1;
+            return 1; // Stalemate
         }
     }
     
-    // aggiorno la nuova posizione
+    /**
+    * Updates the position of a piece from its current location to a new location.
+    *
+    * @param row    The current row of the piece.
+    * @param col    The current column of the piece.
+    * @param newRow The new row where the piece will be placed.
+    * @param newCol The new column where the piece will be placed.
+    */
     public void updatePosition(int row, int col, int newRow, int newCol){     
-        // imposto pezzo e posizione
         this.getSquare(newRow, newCol).setPiece(this.getSquare(row, col).getPiece().get());
         this.getSquare(newRow, newCol).getPiece().get().setPosition(new Position(newRow, newCol));
         this.getSquare(row, col).setPiece(null);
     }
     
+    /**
+    * Changes the en passant state of all pawns of a given color to false.
+    *
+    * @param color The color of the pawns whose en passant state will be changed.
+    */
     public void changeEnPassant(ColorChessboard color){
         ArrayList<Piece> p = this.getPiecesByColor(color);
         for(Piece pa : p){

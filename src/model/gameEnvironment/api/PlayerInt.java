@@ -12,13 +12,23 @@ import model.pieces.impl.Piece;
  */
 public interface PlayerInt {
 
-    /* Metodo volto all'aggiunta di un pezzo nel cimitero */
+    /**
+     * Adds a piece to the player's cemetery (captured pieces collection).
+     *
+     * @param piece The piece to be added to the cemetery.
+     */
     void addPieceCemetery(Piece piece);
 
-    /* Metodo volto all'aggiunta di una mossa alla cronologia delle mosse */
+    /**
+     * Adds a move to the player's move history.
+     *
+     * @param str The move to be added to the history.
+     */
     void addToHistory(String str);
 
-    // metodo per rimuovere l'ultima stringa dalla cronologia
+    /**
+     * Removes the last string from the move history.
+     */
     void removeLastString();
     
 }

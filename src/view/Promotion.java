@@ -161,7 +161,8 @@ public class Promotion extends JFrame {
         jButtonKnight.addActionListener((java.awt.event.ActionEvent evt) -> {
             controller.knightActionPerformed(evt);
         });
-
+        
+        setTitle("Promotion");
         pack();
     }
     

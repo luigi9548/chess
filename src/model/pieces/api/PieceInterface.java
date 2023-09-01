@@ -5,6 +5,10 @@ import model.functionality.impl.Position;
 
 public interface PieceInterface {
     
-    // metodo per calcolare i movimenti del pezzo
+    /**
+    * Calculates the possible movements for the piece.
+    *
+    * @return An ArrayList of Position objects representing possible move destinations.
+    */
     public ArrayList<Position> calculateMovement();
 }

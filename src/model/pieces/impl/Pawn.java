@@ -41,11 +41,11 @@ public class Pawn extends Piece {
 
         int direction = (this.getColor() == ColorChessboard.WHITE) ? 1 : -1;
 
-        // Movimento in avanti di una casella
+        // Forward movement by one square
         Position forwardOne = new Position(row + direction, col);
         if (isPossiblePosition(forwardOne)) {
             possiblePositions.add(forwardOne);
-            // Movimento in avanti di due caselle (primo movimento)
+            // Forward movement by one square
             if (isFirstMove()) {
                 Position forwardTwo = new Position(row + 2 * direction, col);
                 if(canForwardTwo(forwardTwo)){
@@ -56,7 +56,7 @@ public class Pawn extends Piece {
             }
         }
 
-        // Movimento per mangiare una pedina
+        // Capturing an opponent's piece
         int[] colsToEat = { col - 1, col + 1 };
         for (int c : colsToEat) {
             Position eatPosition = new Position(row + direction, c);
@@ -68,7 +68,7 @@ public class Pawn extends Piece {
             }
         }
 
-        // Movimento en passant
+        // En passant movement
         Position enPassantPosition = this.getChessboard().enPassant(this);
         if (enPassantPosition != null) {
             possiblePositions.add(new Position(row + direction, enPassantPosition.getCol()));
@@ -76,7 +76,13 @@ public class Pawn extends Piece {
 
         return possiblePositions;
     }
-
+    
+    /**
+    * Checks if a given position is a valid and empty square.
+    *
+    * @param position The position to check.
+    * @return True if the position is valid and empty, false otherwise.
+    */
     private boolean isPossiblePosition(Position position) {
         int row = position.getRow();
         int col = position.getCol();
@@ -84,6 +90,12 @@ public class Pawn extends Piece {
                (getChessboard().getSquare(row, col).getPiece().isEmpty());
     }
     
+    /**
+    * Checks if the Pawn can move forward by two squares.
+    *
+    * @param position The position to check.
+    * @return True if the Pawn can move forward by two squares, false otherwise.
+    */
     private boolean canForwardTwo(Position position){
         int row = position.getRow();
         int col = position.getCol();

@@ -9,10 +9,18 @@ package model.functionality.api;
  * @author luigi
  */
 public interface PositionInt {
-    // metodo per convertire la posizione in una stringa
+    
+    /**
+     * Converts the position to a string representation in the format "column + row".
+     *
+     * @return A string representing the position, e.g., "a1".
+     */
     String getStringPosition();
 
-    // metodo per convertire il numero di colonna in lettere
+    /**
+     * Converts the column number to a corresponding letter using a substring.
+     *
+     * @return The letter corresponding to the column number.
+     */
     char numToLetterBySubstr();
-    
 }

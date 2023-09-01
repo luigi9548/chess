@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import model.functionality.impl.ColorChessboard;
 
 public abstract class Piece implements PieceInterface {
-    private final char pieceSign;
+    private final char pieceSign;        // The character representing the type of chess piece (e.g., 'K' for King, 'Q' for Queen).
     private Position position;
     private final ColorChessboard color;
     private final Chessboard chessboard;
@@ -18,7 +18,7 @@ public abstract class Piece implements PieceInterface {
         this.position = position;
         this.color = color;
         this.chessboard = chessboard;
-        this.pieceSign = pieceSign;
+        this.pieceSign = pieceSign;   
     }
     
     public boolean isInAction() {
@@ -61,21 +61,25 @@ public abstract class Piece implements PieceInterface {
         return pieceSign;
     }
     
+    /**
+    * Swaps the chess piece symbol with a corresponding Unicode chess piece character.
+    * This method is used to convert chess piece symbols for displaying on the cemetery.
+    *
+    * @return The Unicode character representing the chess piece.
+    */
     public String pieceSwap(){
-        String str=new String();
+        String str = new String();
         
         char piecesLowerCase[]={'p','k','q','b','h','r'};
         char swapLowerCase[]={'♙','♔','♕','♗','♘','♖'};
         char swapUpperCase[]={'♟','♚','♛','♝','♞','♜'};
         if(Character.isLowerCase(pieceSign)){
-            for (int i = 0; i < 6; i++) {
-                if(pieceSign==piecesLowerCase[i])str+=swapLowerCase[i];
-            }
+            for (int i = 0; i < 6; i++)
+                if(pieceSign == piecesLowerCase[i])str += swapLowerCase[i];
         }else{
-            char lowercased=Character.toLowerCase(pieceSign);
-            for (int i = 0; i < 6; i++) {
-                if(lowercased==piecesLowerCase[i])str+=swapUpperCase[i];
-            }
+            char lowercased = Character.toLowerCase(pieceSign);
+            for (int i = 0; i < 6; i++) 
+                if(lowercased == piecesLowerCase[i])str += swapUpperCase[i];
         }
         return str;
     }
