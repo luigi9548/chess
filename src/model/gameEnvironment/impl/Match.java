@@ -48,10 +48,7 @@ public class Match implements MatchInt {
         // Check if there is an en passant capture.
         if(isEnPassant){
             hasEaten = true;
-            if(p.getColor() == ColorChessboard.WHITE)
-                history = p.getPosition().numToLetterBySubstr() + "x" + new Position(row,col).getStringPosition() + " e. p.";
-            else
-                history = p.getPosition().numToLetterBySubstr() + "x" + this.chessboard.enPassant((Pawn) p).getStringPosition() + " e. p."; 
+            history = p.getPosition().numToLetterBySubstr() + "x" + new Position(row,col).getStringPosition() + " e. p.";
         }else{
             // Check if a regolar capture has occured.
             if(this.chessboard.getSquare(row, col).getPiece().isPresent())
@@ -112,16 +109,16 @@ public class Match implements MatchInt {
         if(p instanceof Pawn pawn)
             isEnPassant = this.chessboard.configurePawn(pawn, row, col);
         
+        // determino cronologia
+        String history = this.calculateHistory(isEnPassant, p, row, col);
+        
         if(isEnPassant){
             // If en passant occurred, update the target row and column.
             Position pos = this.chessboard.enPassant((Pawn) p);
             row = pos.getRow();
             col = pos.getCol();
         }
-        
-        // determino cronologia
-        String history = this.calculateHistory(isEnPassant, p, row, col);
-        
+                
         if(this.chessboard.getTurn() == 0){
             this.whiteP.addToHistory(history);
             if(this.chessboard.getSquare(row, col).getPiece().isPresent()){

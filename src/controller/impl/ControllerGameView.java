@@ -176,13 +176,11 @@ public class ControllerGameView {
                         if(positionEnPassant != null){
                             // Handle en passant capture.
                             gameView.getButtonGrid(positionEnPassant.getRow(), positionEnPassant.getCol()).setIcon(null);
-                            this.updatePositionAndIcon(p.getPosition().getRow(), p.getPosition().getCol(), 
-                                       positionEnPassant.getRow(), positionEnPassant.getCol(), new ImageIcon(this.match.getChessboard().getSquare(p.getPosition().getRow(), p.getPosition().getCol()).getPiece().get().getIcon()));
-                        }else{
-                            // Update the piece's position on the chessboard.
-                            this.updatePositionAndIcon(p.getPosition().getRow(), p.getPosition().getCol(), 
-                            row, col, new ImageIcon(this.match.getChessboard().getSquare(p.getPosition().getRow(), p.getPosition().getCol()).getPiece().get().getIcon()));
                         }
+                        
+                        // Update the piece's position on the chessboard.
+                        this.updatePositionAndIcon(p.getPosition().getRow(), p.getPosition().getCol(), 
+                    row, col, new ImageIcon(this.match.getChessboard().getSquare(p.getPosition().getRow(), p.getPosition().getCol()).getPiece().get().getIcon()));
                         
                         // Perform actions that must follow position updates, such as checking for check and promotions.
                         this.match.checkHandler();

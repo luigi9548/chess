@@ -81,6 +81,7 @@ public class ControllerPromotion {
             this.match.getPlayer(ColorChessboard.BLACK).removeLastString();
             this.match.getPlayer(ColorChessboard.BLACK).addToHistory(position.getStringPosition() + Character.toUpperCase(queenB.getPieceSign()));
         }
+        
         this.gameView.updateHistory();
         this.match.getTimer().switchTurn();
         promotion.setVisible(false);
@@ -111,6 +112,7 @@ public class ControllerPromotion {
             this.match.getPlayer(ColorChessboard.BLACK).removeLastString();
             this.match.getPlayer(ColorChessboard.BLACK).addToHistory(position.getStringPosition() + Character.toUpperCase(rookB.getPieceSign()));
         }
+        
         this.gameView.updateHistory();
         this.match.getTimer().switchTurn();
         promotion.setVisible(false);
@@ -142,6 +144,7 @@ public class ControllerPromotion {
             this.match.getPlayer(ColorChessboard.BLACK).removeLastString();
             this.match.getPlayer(ColorChessboard.BLACK).addToHistory(position.getStringPosition() + Character.toUpperCase(bishopB.getPieceSign()));
         }
+        
         this.gameView.updateHistory();
         this.match.getTimer().switchTurn();
         promotion.setVisible(false);
@@ -172,6 +175,7 @@ public class ControllerPromotion {
             this.match.getPlayer(ColorChessboard.BLACK).removeLastString();
             this.match.getPlayer(ColorChessboard.BLACK).addToHistory(position.getStringPosition() + Character.toUpperCase(knightB.getPieceSign()));
         }
+        
         this.gameView.updateHistory();
         this.match.getTimer().switchTurn();
         promotion.setVisible(false);
