@@ -1,4 +1,4 @@
-package view;
+package view.impl;
 import controller.impl.ControllerMenu;
 import java.awt.*;
 import javax.swing.*;

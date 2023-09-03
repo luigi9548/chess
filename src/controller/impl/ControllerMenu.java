@@ -1,7 +1,7 @@
 package controller.impl;
 
 import view.GameView;
-import view.Menu;
+import view.impl.Menu;
 
 public class ControllerMenu {
     private final Menu menu;

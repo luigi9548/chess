@@ -6,7 +6,7 @@ import javax.swing.*;
 import model.functionality.impl.Position;
 import model.gameEnvironment.impl.Chessboard;
 
-public final class GameView extends JFrame{
+public final class GameView extends JFrame {
     
     private final JPanel chessboard = new JPanel();
     private final JButton[][] buttonGrid = new JButton[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
@@ -154,10 +154,12 @@ public final class GameView extends JFrame{
                 buttonGrid[i][j] = b;
                 b.addActionListener((java.awt.event.ActionEvent evt) -> {
                     controller.actions(evt, b.getBackground().getRGB());
+                    System.out.println(b.getBackground().getRGB());
                 });
                 this.chessboard.add(b);
             }
     }
+    
     
     /**
     * Resets the background colors of all chessboard buttons to their original alternating colors.
@@ -172,12 +174,12 @@ public final class GameView extends JFrame{
             }
         }
     }
-    
+        
     /**
     * Changes the background color of buttons corresponding to the given positions to red.
     * 
     * @param positions The positions on the chessboard to change the button color for.
-    */    
+    */
     public void changeBottonColor(ArrayList<Position> positions){
         for(Position p : positions){
             this.getButtonGrid(p.getRow(), p.getCol()).setBackground(Color.red);

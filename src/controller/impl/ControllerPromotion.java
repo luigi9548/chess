@@ -10,7 +10,7 @@ import model.pieces.impl.Bishop;
 import model.pieces.impl.Knight;
 import model.pieces.impl.Queen;
 import model.pieces.impl.Rook;
-import view.Promotion;
+import view.impl.Promotion;
 
 public class ControllerPromotion {
     private final Promotion promotion;
