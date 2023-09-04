@@ -5,54 +5,51 @@ import java.util.Timer;
 
 public class ChessTimer implements ChessTimerInt{
     private final Timer timer;
-    private boolean isPlayer1Turn;      //boolean del turno del giocatore
-    private long player1RemainingTime;  //tempo in minuti e secondi rimanenti del primo giocatore
-    private long player2RemainingTime;  //tempo in minuti e secondi rimanenti del secondo giocatore
+    private boolean isPlayerWTurn;      // Boolean indicating the turn of the white player (true for player white's turn, false for player black's turn)
+    private long playerWRemainingTime;  // Remaining time in minutes and seconds for the white player
+    private long playerBRemainingTime;  // Remaining time in minutes and seconds for the black player
 
     public ChessTimer(final long timeLimit) {
         timer = new Timer();
-        this.isPlayer1Turn = true;
-        this.player1RemainingTime = timeLimit;
-        this.player2RemainingTime = timeLimit;
+        this.isPlayerWTurn = true;
+        this.playerWRemainingTime = timeLimit;
+        this.playerBRemainingTime = timeLimit;
     }
     
-    public long getPlayer1RemainingTime(){
-        return this.player1RemainingTime;
+    public long getPlayerWRemainingTime(){
+        return this.playerWRemainingTime;
     }
     
-    public long getPlayer2RemainingTime(){
-        return this.player2RemainingTime;
+    public long getPlayerBRemainingTime(){
+        return this.playerBRemainingTime;
     }
     
-    public void setPlayer1RemainingTime(long player1RemainingTime){
-        this.player1RemainingTime = player1RemainingTime;
+    public void setPlayerWRemainingTime(long playerWRemainingTime){
+        this.playerWRemainingTime = playerWRemainingTime;
     }
 
-    public void setPlayer2RemainingTime(long player2RemainingTime){
-        this.player2RemainingTime = player2RemainingTime;
+    public void setPlayerBRemainingTime(long playerBRemainingTime){
+        this.playerBRemainingTime = playerBRemainingTime;
     }
 
     public Timer getTimer(){
         return this.timer;
     }
     
-    public boolean getIsPlayer1Turn(){
-        return this.isPlayer1Turn;
+    public boolean getIsPlayerWTurn(){
+        return this.isPlayerWTurn;
     }
     
-    //metodo che termina il timer
     @Override
     public void stopTimer() {
         timer.cancel();
     }
 
-    //metodo che cambia il turno del giocatore
     @Override
     public void switchTurn() {
-        isPlayer1Turn = !isPlayer1Turn;
+        isPlayerWTurn = !isPlayerWTurn;
     }
 
-    //metodo che formatta i millisecondi in minuti e secondi
     @Override
     public String formatTime(long time) {
         long minutes = (time / 1000) / 60;

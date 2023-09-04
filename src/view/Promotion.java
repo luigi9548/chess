@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package view;
+package view.impl;
 
 import controller.impl.ControllerGameView;
 import controller.impl.ControllerPromotion;
@@ -161,7 +161,8 @@ public class Promotion extends JFrame {
         jButtonKnight.addActionListener((java.awt.event.ActionEvent evt) -> {
             controller.knightActionPerformed(evt);
         });
-
+        
+        setTitle("Promotion");
         pack();
     }
     

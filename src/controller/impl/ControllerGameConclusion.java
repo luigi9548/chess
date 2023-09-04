@@ -2,7 +2,7 @@ package controller.impl;
 
 import java.awt.event.ActionEvent;
 import view.GameConclusion;
-import view.Menu;
+import view.impl.Menu;
 
 public class ControllerGameConclusion {
     private final GameConclusion gameConclusion;

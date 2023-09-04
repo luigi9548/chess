@@ -45,14 +45,12 @@ public class Match implements MatchInt {
         boolean hasEaten = false;
         String history;
         
-        // se è avvenuto enPassant aggiungo nella fine della stringa "e.p."
+        // Check if there is an en passant capture.
         if(isEnPassant){
             hasEaten = true;
-            if(p.getColor() == ColorChessboard.WHITE)
-                history = p.getPosition().numToLetterBySubstr() + "x" + new Position(row,col).getStringPosition() + " e. p.";
-            else
-                history = p.getPosition().numToLetterBySubstr() + "x" + this.chessboard.enPassant((Pawn) p).getStringPosition() + " e. p."; 
+            history = p.getPosition().numToLetterBySubstr() + "x" + new Position(row,col).getStringPosition() + " e. p.";
         }else{
+            // Check if a regolar capture has occured.
             if(this.chessboard.getSquare(row, col).getPiece().isPresent())
                 hasEaten = true;
                 
@@ -61,10 +59,21 @@ public class Match implements MatchInt {
         return history;
     }
     
+    /**
+    * Creates a string representing a move in a chess game.
+    *
+    * @param initial    The initial position of the piece.
+    * @param finalP     The final position of the piece after the move.
+    * @param hasEaten   True if a capture occurred during the move, otherwise false.
+    * @param type       The type of piece making the move (e.g., 'P' for pawn, 'R' for rook, etc.).
+    * @return           A string representing the move (e.g., "e4 - e5", "Bf0 - c3").
+    */
     private String moveString(Position initial, Position finalP, boolean hasEaten, char type){
         String move;
         char typeUpper = Character.toUpperCase(type);
-        if(typeUpper == 'P'){ // se è un pedone non devo scrivere il segno P davanti alle coordinate
+        
+        // If it's a pawn, there's no need to include the piece type in the string. 
+        if(typeUpper == 'P'){ 
             if(hasEaten)
                 move = initial.getStringPosition() + "x" + finalP.getStringPosition();
             else
@@ -78,7 +87,17 @@ public class Match implements MatchInt {
         return move;
     }
     
+    /**
+    * Handles a player's turn, including updating the en passant status, configuring pawns,
+    * recording move history, and handling captures and promotions.
+    *
+    * @param p    The piece being moved.
+    * @param row  The target row for the piece's move.
+    * @param col  The target column for the piece's move.
+    * @return     The en passant position if en passant occurred, otherwise null.
+    */
     public Position turnHandler(Piece p, int row, int col){
+        // Update en passant status based on the current player's turn.
         if(this.chessboard.getTurn() == 0)
             this.chessboard.changeEnPassant(ColorChessboard.WHITE);
         else
@@ -86,19 +105,20 @@ public class Match implements MatchInt {
 
         boolean isEnPassant = false;
 
-        // configuro pedone per: enPassant, prima mossa, promotion
+        // Configure the pawn for en passant, first move, and promotion.
         if(p instanceof Pawn pawn)
             isEnPassant = this.chessboard.configurePawn(pawn, row, col);
-        
-        if(isEnPassant){
-            Position pos = this.chessboard.enPassant((Pawn) p);
-            row = pos.getRow();
-            col = pos.getCol();
-        }
         
         // determino cronologia
         String history = this.calculateHistory(isEnPassant, p, row, col);
         
+        if(isEnPassant){
+            // If en passant occurred, update the target row and column.
+            Position pos = this.chessboard.enPassant((Pawn) p);
+            row = pos.getRow();
+            col = pos.getCol();
+        }
+                
         if(this.chessboard.getTurn() == 0){
             this.whiteP.addToHistory(history);
             if(this.chessboard.getSquare(row, col).getPiece().isPresent()){
@@ -111,11 +131,15 @@ public class Match implements MatchInt {
         }
         
         if(isEnPassant){
+            // Return the en passant position if en passant occurred, otherwise return null.
             return new Position(row, col);
         }else
             return null;
     }
     
+    /**
+     * Handles the check condition and updates the move history with a '+' symbol if the current player's king is in check.
+     */
     public void checkHandler(){
         String checkString;
         if(this.chessboard.isCheck(ColorChessboard.BLACK)){

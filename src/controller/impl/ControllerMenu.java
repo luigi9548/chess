@@ -1,8 +1,7 @@
 package controller.impl;
 
-import model.gameEnvironment.impl.Chessboard;
 import view.GameView;
-import view.Menu;
+import view.impl.Menu;
 
 public class ControllerMenu {
     private final Menu menu;
@@ -17,7 +16,6 @@ public class ControllerMenu {
         
         menu.setVisible(false);
         
-        Chessboard chessboard = new Chessboard();
         GameView gameView = new GameView(whiteN, blackN);
     } 
     

@@ -18,10 +18,10 @@ public class Bishop extends Piece {
         int row = this.getPosition().getRow(), col = this.getPosition().getCol();
         Chessboard chessboard = this.getChessboard();
 
-        // Definiamo un elenco di delta per ciascuna direzione in cui ci possiamo muovere
-         int[][] deltas = {{1, 1}, {-1, 1}, {1, -1}, {-1, -1}};
+        // Define deltas for each direction the Bishop can move
+        int[][] deltas = {{1, 1}, {-1, 1}, {1, -1}, {-1, -1}};
 
-        // Utilizziamo IntStream per iterare su tutte le possibili direzioni
+        // Iterate through all possible directions using IntStream
         IntStream.range(0, deltas.length).forEach(i -> {
             int newRow = row;
             int newCol = col;
