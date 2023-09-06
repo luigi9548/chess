@@ -31,7 +31,7 @@ public class ControllerGameViewTest {
     @Before
     public void setUp() {
         gameView = new GameView("White","Black");
-        controller = new ControllerGameView(gameView);
+        controller = ControllerGameView.getInstance(gameView);
     }
     
     @Test

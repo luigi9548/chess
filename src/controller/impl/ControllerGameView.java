@@ -23,11 +23,12 @@ import model.gameEnvironment.impl.Match;
 import model.gameEnvironment.impl.Player;
 
 public class ControllerGameView {
-    
+
     public static final int WHITE_SQUARE = -1317;
     public static final int BLACK_SQUARE = -6530040;
     public static final int GREEN_SQUARE = -16711936;
     public static final int RED_SQUARE = -65536;
+    private static ControllerGameView controllerGameView;
     private final GameView gameView;
     private final Match match;
     private Promotion promotion;
@@ -36,13 +37,17 @@ public class ControllerGameView {
     private boolean showMovementCalled = false;
     private boolean moveCalled         = false;
     private boolean castlingCalled     = false;
-           
-    public ControllerGameView(final GameView gameView){
+
+    public static ControllerGameView getInstance(GameView gameView){
+        return controllerGameView == null ? controllerGameView = new ControllerGameView(gameView) : controllerGameView;
+    }
+
+    private ControllerGameView(final GameView gameView){
         this.match = new Match(new Chessboard(),new Player(ColorChessboard.WHITE),new Player(ColorChessboard.BLACK), new ChessTimer(600 * 1000));
         this.startTimer();
         this.gameView = gameView;
     }
-    
+
     /**
      * Handles actions based on the color of the square clicked.
      * 
@@ -69,15 +74,15 @@ public class ControllerGameView {
             }
         }
     }
-        
+
     public GameView getGameView(){
         return this.gameView;
     }
-    
+
     public Match getMatch(){
         return this.match;
     }
-    
+
     /**
      * Displays the legal movements of a selected piece and highlights squares for castling if applicable.
      * 
@@ -128,7 +133,7 @@ public class ControllerGameView {
         int newColKing;
         int newColRook;
         String castling;        
-        
+
         // Determine which player is performing castling (white or black).
         if(rook.getColor() == ColorChessboard.WHITE){
            kingIcon = new ImageIcon(this.match.getChessboard().getSquare(0, 3).getPiece().get().getIcon()); 
@@ -145,15 +150,15 @@ public class ControllerGameView {
             row = 7;
             this.match.getPlayer(ColorChessboard.BLACK).addToHistory(castling);            
         }
-        
+
         // Configure castling by moving the king and rook icons.
         configureCastling(row, newColKing, newColRook, kingIcon, rookIcon);
-        
+
         // Switch the turn, reset square colors.
         this.handlerSwitchTurn();
         gameView.resetColors();
     }
-    
+
     /**
      * Configures the castling move by updating the positions and icons of the King and Rook pieces.
      * 
@@ -180,25 +185,25 @@ public class ControllerGameView {
             for (int col = 0; col <= Chessboard.COL_UPPER_LIMIT; col++) {
                 if(gameView.getButtonGrid(row, col) == evt.getSource()){
                     Piece p = this.searchPiece();
-                  
+
                     if(p != null && p.getColor().ordinal() == this.match.getChessboard().getTurn()){
                         // Reset the chessboard colors and set enPassant to false for the new turn.
                         gameView.resetColors();
-                        
+
                         Position positionEnPassant = this.match.turnHandler(p, row, col);
-                        
+
                         if(positionEnPassant != null){
                             // Handle en passant capture.
                             gameView.getButtonGrid(positionEnPassant.getRow(), positionEnPassant.getCol()).setIcon(null);
                         }
-                        
+
                         // Update the piece's position on the chessboard.
                         this.updatePositionAndIcon(p.getPosition().getRow(), p.getPosition().getCol(), 
                     row, col, new ImageIcon(this.match.getChessboard().getSquare(p.getPosition().getRow(), p.getPosition().getCol()).getPiece().get().getIcon()));
-                        
+
                         // Perform actions that must follow position updates, such as checking for check and promotions.
                         this.match.checkHandler();
-                         
+
                         if(p instanceof Pawn pawn)
                         if(this.match.getChessboard().promotion(pawn)){
                             // Handle pawn promotion.
@@ -206,13 +211,13 @@ public class ControllerGameView {
                             promotion.setVisible(true);
                             this.match.getTimer().switchTurn();
                         }
-            
+
                         // Switch turns and update the cemetery.
                         this.updateCemetery((this.match.getChessboard().getTurn() == 0) ? this.match.getPlayer(ColorChessboard.BLACK) :
                                                                                           this.match.getPlayer(ColorChessboard.WHITE));
                         this.handlerSwitchTurn();
                     }
-                    
+
                     // Check for victory or draw conditions.
                     if(p.getColor() == ColorChessboard.WHITE)
                         handleVictoryOrDraw(ColorChessboard.BLACK);
@@ -222,7 +227,7 @@ public class ControllerGameView {
             }
         }
     }
-    
+
     /**
      * Handles switching the turn in the chess game. Updates the game history, switches the turn on the chessboard,
      * and updates the timer to indicate the new player's turn.
@@ -232,7 +237,7 @@ public class ControllerGameView {
         this.match.getChessboard().switchTurn();
         this.match.getTimer().switchTurn();
     }
-    
+
     /**
      * Updates the position and icon of a chess piece on both the game view and the chessboard model.
      *
@@ -246,7 +251,7 @@ public class ControllerGameView {
         this.gameView.updateIcon(row, col, newRow, newCol, icon);
         this.match.getChessboard().updatePosition(row, col,newRow, newCol);
     }
-    
+
     /**
      * Handles the end of the game by checking for checkmate or draw conditions. If either occurs,
      * it stops the timer, displays an appropriate message, and triggers the game conclusion dialog.
@@ -270,7 +275,7 @@ public class ControllerGameView {
         gameConclusion = new GameConclusion(message, gameView);
         gameConclusion.setVisible(true);        
     }
-    
+
     /**
      * Retrieves the chess piece associated with the ActionEvent's source button on the game view.
      *
@@ -290,7 +295,7 @@ public class ControllerGameView {
             .findFirst()
             .orElse(null);
     }
-  
+
     /**
      * Searches for a chess piece that is currently in action, resets its action state, and returns it.
      * Used to identify the piece that is being moved.
@@ -312,7 +317,7 @@ public class ControllerGameView {
             .orElse(null);
 
     }
-    
+
     /**
      * Updates the display of the player's cemetery (captured pieces) on the game view.
      *
@@ -330,7 +335,7 @@ public class ControllerGameView {
             gameView.getjLabelCemeteryBlack().setText(str);
         }
     }
-   
+
     /**
      * Updates the display of the game history on the game view.
      */
@@ -344,19 +349,19 @@ public class ControllerGameView {
                 this.gameView.getHistory().append(this.match.getPlayer(ColorChessboard.WHITE).getHistory().get(it)+"\t\t     ");
             else 
                 this.gameView.getHistory().append("        "+"\t");
-            
+
             if(it < this.match.getPlayer(ColorChessboard.BLACK).getHistory().size())
                 this.gameView.getHistory().append(this.match.getPlayer(ColorChessboard.BLACK).getHistory().get(it));
             else 
                 this.gameView.getHistory().append("        ");
-            
+
             if(it >= this.match.getPlayer(ColorChessboard.WHITE).getHistory().size() && it >= this.match.getPlayer(ColorChessboard.WHITE).getHistory().size()){
                 break;
             }
             it++;
         }
     }
-    
+
     /**
      * Starts the timer that tracks each player's remaining time for their moves.
      * If a player's time runs out, it triggers a game conclusion.
@@ -387,24 +392,24 @@ public class ControllerGameView {
             }
         }, 1000, 1000);
     }
-    
+
     // Test methods.
     public boolean isShowMovementCalled(){
         return this.showMovementCalled;        
     }
-    
+
     public boolean isMoveCalled(){
         return this.moveCalled;
     }
-    
+
     public boolean isCastlingCalled(){
         return this.castlingCalled;
     }     
-    
+
     public void resetFlags(){
         this.showMovementCalled = false;
         this.moveCalled = false;
         this.castlingCalled = false;
     }
-    
+
 }

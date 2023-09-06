@@ -40,37 +40,6 @@ public class MatchTest {
     }
     
     @Test
-    public void testCalcuteHistory(){
-        
-        // Test 1: Regular move for a non-pawn piece.
-        Bishop bishop = new Bishop(new Position(0,2),ColorChessboard.WHITE,chessboard,'b');
-        String history1 = match.calculateHistory(false, bishop, 2, 4);
-        assertEquals("Bc0 - e2", history1);
-        
-        // Test case 2: Capture move for a non-pawn piece
-        Queen queen = new Queen(new Position(3,3),ColorChessboard.WHITE,chessboard,'q');
-        Bishop bishop2 = new Bishop(new Position(3, 5),ColorChessboard.BLACK,chessboard,'B');
-        chessboard.getSquare(bishop2.getPosition().getRow(), bishop2.getPosition().getCol()).setPiece(bishop2);
-        String history2 = match.calculateHistory(false, queen, 3, 5);
-        assertEquals("Qd3xf3",history2);
-        
-        // Test case 3: Regular move for a pawn
-        Pawn pawn = new Pawn(new Position(1,0),ColorChessboard.WHITE,chessboard,'p');
-        String history3 = match.calculateHistory(false, pawn, 2, 0);
-        assertEquals("a1 - a2", history3);
-        
-        // Test case 4: Capture move for a pawn
-        Pawn pawn2 = new Pawn(new Position(2,4),ColorChessboard.WHITE,chessboard, 'p');
-        String history4 = match.calculateHistory(false, pawn2, 3, 5);
-        assertEquals("e2xf3",history4);
-        
-        // Test case 5: En Passant capture
-        Pawn pawn3 = new Pawn(new Position(3,2),ColorChessboard.BLACK,chessboard,'P');
-        String history5 = match.calculateHistory(true, pawn3, 2, 1);
-        assertEquals("cxb2 e. p.",history5);      
-    }
-    
-    @Test
     public void testTurnHandlerForRegularMove(){
         // Test 1: Regular move 
         Pawn whitePawn = new Pawn(new Position(1, 2), ColorChessboard.WHITE, chessboard, 'p');

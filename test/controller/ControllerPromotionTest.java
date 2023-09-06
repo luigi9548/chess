@@ -8,12 +8,8 @@ import controller.impl.ControllerGameView;
 import controller.impl.ControllerPromotion;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import model.functionality.impl.ChessTimer;
 import model.functionality.impl.ColorChessboard;
 import model.functionality.impl.Position;
-import model.gameEnvironment.impl.Chessboard;
-import model.gameEnvironment.impl.Match;
-import model.gameEnvironment.impl.Player;
 import model.pieces.impl.Bishop;
 import model.pieces.impl.Knight;
 import model.pieces.impl.Pawn;
@@ -41,7 +37,7 @@ public class ControllerPromotionTest {
     @Before
     public void setUp(){
         gameView = new GameView("White","Black");
-        controllerGameView = new ControllerGameView(gameView);
+        controllerGameView = ControllerGameView.getInstance(gameView);
         pawn = new Pawn(new Position(7,7), ColorChessboard.WHITE,controllerGameView.getMatch().getChessboard(), 'p');
         this.promotion = new Promotion(pawn, controllerGameView, controllerGameView.getMatch());
         this.controller = new ControllerPromotion(promotion);

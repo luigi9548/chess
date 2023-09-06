@@ -10,7 +10,7 @@ public final class GameView extends JFrame {
     
     private final JPanel chessboard = new JPanel();
     private final JButton[][] buttonGrid = new JButton[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
-    private final ControllerGameView controller = new ControllerGameView(this);
+    private final ControllerGameView controller = ControllerGameView.getInstance(this);
     private final JLabel jLabelCemeteryBlack = new JLabel();
     private final JLabel jLabelCemeteryWhite = new JLabel();
     private final JLabel jLabelWhiteN = new JLabel();

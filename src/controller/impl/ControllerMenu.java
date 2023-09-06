@@ -4,9 +4,14 @@ import view.GameView;
 import view.Menu;
 
 public class ControllerMenu {
+    private static ControllerMenu controllerMenu;
     private final Menu menu;
-
-    public ControllerMenu(final Menu menu){
+    
+    public static ControllerMenu getInstance(Menu menu){
+        return controllerMenu == null ? controllerMenu = new ControllerMenu(menu) : controllerMenu;
+    }
+    
+    private ControllerMenu(final Menu menu){
         this.menu = menu;
     }
     
@@ -15,7 +20,6 @@ public class ControllerMenu {
         String blackN = menu.getjTextFieldB().getText();
         
         menu.setVisible(false);
-        
         GameView gameView = new GameView(whiteN, blackN);
     } 
     
