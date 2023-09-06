@@ -4,11 +4,16 @@ import model.functionality.impl.Position;
 import model.gameEnvironment.impl.Chessboard;
 import java.util.ArrayList;
 import model.enumerations.ColorChessboardEnum;
+import model.enumerations.IconEnum;
 import model.gameEnvironment.impl.Square;
 
 public class Rook extends Piece {
     public Rook(Position position,final ColorChessboardEnum color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
+        if(color == ColorChessboardEnum.WHITE)
+            this.setIcon(IconEnum.WROOK_ICON.getIcon());
+        else
+            this.setIcon(IconEnum.BROOK_ICON.getIcon());
     }
     
     @Override

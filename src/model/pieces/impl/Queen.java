@@ -6,10 +6,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import model.enumerations.ColorChessboardEnum;
+import model.enumerations.IconEnum;
 
 public class Queen extends Piece {
     public Queen(Position position,final ColorChessboardEnum color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
+        if(color == ColorChessboardEnum.WHITE)
+            this.setIcon(IconEnum.WQUEEN_ICON.getIcon());
+        else
+            this.setIcon(IconEnum.BQUEEN_ICON.getIcon());
     }
 
     @Override

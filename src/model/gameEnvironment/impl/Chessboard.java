@@ -74,51 +74,41 @@ public class Chessboard implements ChessboardInt {
                 case 0, 7 -> {
                     // Create rooks at the corners of the chessboard.
                     Rook roW = (Rook) factory.getPiece(ROOK,pW,ColorChessboardEnum.WHITE, this, 'r');
-                    roW.setIcon(IconEnum.WROOK_ICON.getIcon());
                     squares[pW.getRow()][pW.getCol()] = new Square(roW);
                     
                     Rook roB = (Rook) factory.getPiece(ROOK,pB,ColorChessboardEnum.BLACK, this, 'R');
-                    roB.setIcon(IconEnum.BROOK_ICON.getIcon());
                     squares[pB.getRow()][pB.getCol()] = new Square(roB);
                 }
                 case 1, 6 -> {
                     // Create knights on the second and second-to-last columns.
                     Knight knW = (Knight) factory.getPiece(KNIGHT,pW,ColorChessboardEnum.WHITE, this, 'h');
-                    knW.setIcon(IconEnum.WKNIGHT_ICON.getIcon());
                     squares[pW.getRow()][pW.getCol()] = new Square(knW);
                     
                     Knight knB = (Knight) factory.getPiece(KNIGHT,pB,ColorChessboardEnum.BLACK, this, 'H');
-                    knB.setIcon(IconEnum.BKNIGHT_ICON.getIcon());
                     squares[pB.getRow()][pB.getCol()] = new Square(knB);
                 }
                 case 2, 5 -> {
                     // Create bishops on the third and third-to-last columns.
                     Bishop biW = (Bishop) factory.getPiece(BISHOP,pW,ColorChessboardEnum.WHITE, this, 'b');
-                    biW.setIcon(IconEnum.WBISHOP_ICON.getIcon());
-                    
                     squares[pW.getRow()][pW.getCol()] = new Square(biW);
+                    
                     Bishop biB = (Bishop) factory.getPiece(BISHOP,pB,ColorChessboardEnum.BLACK, this, 'B');
-                    biB.setIcon(IconEnum.BBISHOP_ICON.getIcon());
                     squares[pB.getRow()][pB.getCol()] = new Square(biB);
                 }
                 case 4 -> {
                     // Create queens in the center.
                     Queen quW = (Queen) factory.getPiece(QUEEN,pW,ColorChessboardEnum.WHITE, this, 'q');
-                    quW.setIcon(IconEnum.WQUEEN_ICON.getIcon());
                     squares[pW.getRow()][pW.getCol()] = new Square(quW);
                     
                     Queen quB = (Queen) factory.getPiece(QUEEN,pB,ColorChessboardEnum.BLACK, this, 'Q');
-                    quB.setIcon(IconEnum.BQUEEN_ICON.getIcon());
                     squares[pB.getRow()][pB.getCol()] = new Square(quB);
                 }
                 case 3 -> {
                     // Create kings.
-                    King kiW = (King) factory.getPiece(KING,pW,ColorChessboardEnum.WHITE, this, 'k');
-                    kiW.setIcon(IconEnum.WKING_ICON.getIcon());
-                    
+                    King kiW = (King) factory.getPiece(KING,pW,ColorChessboardEnum.WHITE, this, 'k');              
                     squares[pW.getRow()][pW.getCol()] = new Square(kiW);
+                    
                     King kiB = (King) factory.getPiece(KING,pB,ColorChessboardEnum.BLACK, this, 'K');
-                    kiB.setIcon(IconEnum.BKING_ICON.getIcon());
                     squares[pB.getRow()][pB.getCol()] = new Square(kiB);
                 }
 
@@ -131,11 +121,9 @@ public class Chessboard implements ChessboardInt {
                 Position pB = new Position(Chessboard.ROW_UPPER_LIMIT - 1,Chessboard.COL_LOWER_LIMIT + i);
                 
                 Pawn paW    = (Pawn) factory.getPiece(PAWN,pW,ColorChessboardEnum.WHITE,this, 'p');
-                paW.setIcon(IconEnum.WPAWN_ICON.getIcon());
                 squares[pW.getRow()][pW.getCol()] = new Square(paW);
 
                 Pawn paB    = (Pawn) factory.getPiece(PAWN,pB,ColorChessboardEnum.BLACK,this, 'P');
-                paB.setIcon(IconEnum.BPAWN_ICON.getIcon());
                 squares[pB.getRow()][pB.getCol()] = new Square(paB);
         }
         

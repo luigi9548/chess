@@ -4,6 +4,7 @@ import model.functionality.impl.Position;
 import model.gameEnvironment.impl.Chessboard;
 import java.util.ArrayList;
 import model.enumerations.ColorChessboardEnum;
+import model.enumerations.IconEnum;
 import model.gameEnvironment.impl.Square;
 
 public class Pawn extends Piece {
@@ -13,6 +14,10 @@ public class Pawn extends Piece {
     public Pawn(Position position,final ColorChessboardEnum color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
         this.firstMove = true;
+        if(color == ColorChessboardEnum.WHITE)
+            this.setIcon(IconEnum.WPAWN_ICON.getIcon());
+        else
+            this.setIcon(IconEnum.BPAWN_ICON.getIcon());
     }
 
     public boolean isFirstMove(){

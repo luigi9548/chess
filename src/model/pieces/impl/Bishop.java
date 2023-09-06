@@ -5,11 +5,16 @@ import model.gameEnvironment.impl.Chessboard;
 import java.util.*;
 import java.util.stream.IntStream;
 import model.enumerations.ColorChessboardEnum;
+import model.enumerations.IconEnum;
 import model.gameEnvironment.impl.Square;
 
 public class Bishop extends Piece {
     public Bishop(Position position,final ColorChessboardEnum color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
+        if(color == ColorChessboardEnum.WHITE)
+            this.setIcon(IconEnum.WBISHOP_ICON.getIcon());
+        else
+            this.setIcon(IconEnum.BBISHOP_ICON.getIcon());
     }
 
     @Override

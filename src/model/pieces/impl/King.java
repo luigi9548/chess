@@ -6,11 +6,16 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import model.enumerations.ColorChessboardEnum;
+import model.enumerations.IconEnum;
 
 public class King extends Piece {
     
     public King(Position position,final ColorChessboardEnum color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
+        if(color == ColorChessboardEnum.WHITE)
+            this.setIcon(IconEnum.WKING_ICON.getIcon());
+        else
+            this.setIcon(IconEnum.BKING_ICON.getIcon());
     }
     
     @Override
