@@ -263,4 +263,24 @@ public class ChessboardTest {
         
         assertEquals(0, chessboard.isCheckmateOrFlap(ColorChessboard.WHITE)); 
     }
+    
+    @Test
+    public void testUpdatePosition(){
+        Position kingPosition = new Position(0,4);
+        chessboard = new Chessboard(kingPosition);
+        King king = new King(kingPosition, ColorChessboard.WHITE, chessboard, 'k');
+        chessboard.getSquare(kingPosition.getRow(), kingPosition.getCol()).setPiece(king);
+        chessboard.updatePosition(kingPosition.getRow(), kingPosition.getCol(), 3, 5);
+        assertEquals(new Position(3,5), king.getPosition());
+    }
+    
+    @Test
+    public void testChangeEnPassant(){
+        chessboard = new Chessboard();
+        Pawn p = (Pawn) chessboard.getSquare(1, 2).getPiece().get();
+        p.setEnPassant(true);
+        chessboard.changeEnPassant(ColorChessboard.WHITE);
+        assertFalse(p.getEnPassant());
+    }
 }
+

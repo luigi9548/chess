@@ -8,13 +8,11 @@ import model.pieces.impl.Piece;
 public class Player implements PlayerInt {
     
     private final ColorChessboard color; 
-    private final ArrayList<Piece> pieces;
     private final ArrayList<Piece> cemetery;
     private final ArrayList<String> history;
     
     public Player(final ColorChessboard color){
         this.color = color;
-        this.pieces = new ArrayList<>();
         this.cemetery = new ArrayList<>();
         this.history = new ArrayList<>();
     }
@@ -42,10 +40,6 @@ public class Player implements PlayerInt {
     
     public ArrayList<Piece> getCemetery(){
         return this.cemetery;
-    }
-
-    public ArrayList<Piece> getPieces() {
-        return pieces;
     }
 
     public ColorChessboard getColor() {

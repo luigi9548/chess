@@ -183,5 +183,21 @@ public class Promotion extends JFrame {
         jButtonKnight.setCursor(new Cursor(java.awt.Cursor.HAND_CURSOR));
                         
     }
+
+    // Test methods.
+    public JButton getQueen(){
+        return this.jButtonQueen;
+    }
     
+    public JButton getRook(){
+        return this.jButtonRook;
+    }
+    
+    public JButton getBishop(){
+        return this.jButtonBishop;
+    }
+    
+    public JButton getKnight(){
+        return this.jButtonKnight;
+    }
 }
