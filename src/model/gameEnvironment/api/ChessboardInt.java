@@ -1,7 +1,7 @@
 package model.gameEnvironment.api;
 
 import java.util.ArrayList;
-import model.functionality.impl.ColorChessboard;
+import model.enumerations.ColorChessboardEnum;
 import model.functionality.impl.Position;
 import model.gameEnvironment.impl.Square;
 import model.pieces.impl.Pawn;
@@ -15,7 +15,7 @@ public interface ChessboardInt {
      * @param color The color of the player.
      * @return The position of the rook with which castling can occur, or null if not possible.
      */
-    Position canCastling(ColorChessboard color);
+    Position canCastling(ColorChessboardEnum color);
 
     /**
      * Calculates the position of the pawn that can be captured using the en passant move.
@@ -41,7 +41,7 @@ public interface ChessboardInt {
      * @param color The color of the player to check for.
      * @return True if the player is in check, otherwise false.
      */
-    boolean isCheck(ColorChessboard color);
+    boolean isCheck(ColorChessboardEnum color);
 
     /**
      * Checks if the game is in a checkmate or stalemate state.
@@ -49,7 +49,7 @@ public interface ChessboardInt {
      * @param color The color of the player to check for.
      * @return 0 if it's checkmate, 1 if it's stalemate, or 2 if neither.
      */
-    int isCheckmateOrFlap(ColorChessboard color);
+    int isCheckmateOrFlap(ColorChessboardEnum color);
 
     /**
      * Checks if a given position is within the bounds of the chessboard.

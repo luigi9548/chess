@@ -1,7 +1,7 @@
 package pieces;
 
 import java.util.ArrayList;
-import model.functionality.impl.ColorChessboard;
+import model.enumerations.ColorChessboardEnum;
 import model.functionality.impl.Position;
 import model.gameEnvironment.impl.Chessboard;
 import model.pieces.impl.Pawn;
@@ -17,8 +17,8 @@ public class PawnTest {
     @Before
     public void setUp() {
         Position p = new Position(4,4);
-        chessboard = new Chessboard(p);
-        pawn = new Pawn(p, ColorChessboard.WHITE, chessboard, 'p');
+        chessboard = Chessboard.getIstanceForTest();
+        pawn = new Pawn(p, ColorChessboardEnum.WHITE, chessboard, 'p');
         chessboard.getSquare(p.getRow(), p.getCol()).setPiece(pawn);
     }
 
@@ -41,7 +41,7 @@ public class PawnTest {
     public void testCalculateMovementEnPassant() {
         // Simuliamo una situazione di en passant
         Position p = new Position(5, 5);
-        Pawn enemyPawn = new Pawn(p, ColorChessboard.BLACK, chessboard, 'P');
+        Pawn enemyPawn = new Pawn(p, ColorChessboardEnum.BLACK, chessboard, 'P');
         chessboard.getSquare(p.getRow(), p.getCol()).setPiece(enemyPawn);
 
         pawn.switchFirstMove();

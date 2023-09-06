@@ -6,7 +6,7 @@ package model.gameEnvironment.impl;
 
 import model.gameEnvironment.api.MatchInt;
 import model.functionality.impl.ChessTimer;
-import model.functionality.impl.ColorChessboard;
+import model.enumerations.ColorChessboardEnum;
 import model.functionality.impl.Position;
 import model.pieces.impl.Pawn;
 import model.pieces.impl.Piece;
@@ -32,8 +32,8 @@ public class Match implements MatchInt {
         return chessboard;
     }
 
-    public Player getPlayer(ColorChessboard color){
-        return (color == ColorChessboard.WHITE)? this.whiteP : this.blackP;
+    public Player getPlayer(ColorChessboardEnum color){
+        return (color == ColorChessboardEnum.WHITE)? this.whiteP : this.blackP;
     }
     
     public ChessTimer getTimer(){
@@ -99,9 +99,9 @@ public class Match implements MatchInt {
     public Position turnHandler(Piece p, int row, int col){
         // Update en passant status based on the current player's turn.
         if(this.chessboard.getTurn() == 0)
-            this.chessboard.changeEnPassant(ColorChessboard.WHITE);
+            this.chessboard.changeEnPassant(ColorChessboardEnum.WHITE);
         else
-            this.chessboard.changeEnPassant(ColorChessboard.BLACK);
+            this.chessboard.changeEnPassant(ColorChessboardEnum.BLACK);
 
         boolean isEnPassant = false;
 
@@ -142,11 +142,11 @@ public class Match implements MatchInt {
      */
     public void checkHandler(){
         String checkString;
-        if(this.chessboard.isCheck(ColorChessboard.BLACK)){
+        if(this.chessboard.isCheck(ColorChessboardEnum.BLACK)){
             checkString = this.whiteP.getHistory().get(this.whiteP.getHistory().size() - 1).concat("+");
             this.whiteP.removeLastString();
             this.whiteP.addToHistory(checkString);
-        }else if(this.chessboard.isCheck(ColorChessboard.WHITE)){
+        }else if(this.chessboard.isCheck(ColorChessboardEnum.WHITE)){
             checkString = this.blackP.getHistory().get(this.blackP.getHistory().size() - 1).concat("+");
             this.blackP.removeLastString();
             this.blackP.addToHistory(checkString);

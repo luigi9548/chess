@@ -3,11 +3,11 @@ package model.pieces.impl;
 import model.functionality.impl.Position;
 import model.gameEnvironment.impl.Chessboard;
 import java.util.ArrayList;
-import model.functionality.impl.ColorChessboard;
+import model.enumerations.ColorChessboardEnum;
 import model.gameEnvironment.impl.Square;
 
 public class Rook extends Piece {
-    public Rook(Position position,final ColorChessboard color, Chessboard chessboard, char pieceSign){
+    public Rook(Position position,final ColorChessboardEnum color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
     }
     

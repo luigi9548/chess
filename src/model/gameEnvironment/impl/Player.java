@@ -2,16 +2,16 @@ package model.gameEnvironment.impl;
 
 import model.gameEnvironment.api.PlayerInt;
 import java.util.ArrayList;
-import model.functionality.impl.ColorChessboard;
+import model.enumerations.ColorChessboardEnum;
 import model.pieces.impl.Piece;
 
 public class Player implements PlayerInt {
     
-    private final ColorChessboard color; 
+    private final ColorChessboardEnum color; 
     private final ArrayList<Piece> cemetery;
     private final ArrayList<String> history;
     
-    public Player(final ColorChessboard color){
+    public Player(final ColorChessboardEnum color){
         this.color = color;
         this.cemetery = new ArrayList<>();
         this.history = new ArrayList<>();
@@ -42,7 +42,7 @@ public class Player implements PlayerInt {
         return this.cemetery;
     }
 
-    public ColorChessboard getColor() {
+    public ColorChessboardEnum getColor() {
         return color;
     }
 }

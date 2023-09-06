@@ -4,17 +4,17 @@ import model.pieces.api.PieceInterface;
 import model.functionality.impl.Position;
 import model.gameEnvironment.impl.Chessboard;
 import java.util.ArrayList;
-import model.functionality.impl.ColorChessboard;
+import model.enumerations.ColorChessboardEnum;
 
 public abstract class Piece implements PieceInterface {
     private final char pieceSign;        // The character representing the type of chess piece (e.g., 'K' for King, 'Q' for Queen).
     private Position position;
-    private final ColorChessboard color;
+    private final ColorChessboardEnum color;
     private final Chessboard chessboard;
     private String icon;
     private boolean inAction = false;
     
-    public Piece(Position position,final ColorChessboard color,final Chessboard chessboard,final char pieceSign){
+    public Piece(Position position,final ColorChessboardEnum color,final Chessboard chessboard,final char pieceSign){
         this.position = position;
         this.color = color;
         this.chessboard = chessboard;
@@ -53,7 +53,7 @@ public abstract class Piece implements PieceInterface {
         return this.chessboard;
     }
     
-    public ColorChessboard getColor(){
+    public ColorChessboardEnum getColor(){
         return this.color;
     }
     

@@ -1,7 +1,7 @@
 package pieces;
 
 import java.util.ArrayList;
-import model.functionality.impl.ColorChessboard;
+import model.enumerations.ColorChessboardEnum;
 import model.functionality.impl.Position;
 import model.gameEnvironment.impl.Chessboard;
 import model.pieces.impl.Queen;
@@ -17,8 +17,8 @@ public class QueenTest {
     @Before
     public void setUp() {
         Position p = new Position(4,4);
-        chessboard = new Chessboard(p);
-        queen = new Queen(p, ColorChessboard.WHITE, chessboard, 'q');
+        chessboard = Chessboard.getIstanceForTest();
+        queen = new Queen(p, ColorChessboardEnum.WHITE, chessboard, 'q');
         chessboard.getSquare(p.getRow(), p.getCol()).setPiece(queen);
     }
 

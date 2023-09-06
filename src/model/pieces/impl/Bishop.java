@@ -4,11 +4,11 @@ import model.functionality.impl.Position;
 import model.gameEnvironment.impl.Chessboard;
 import java.util.*;
 import java.util.stream.IntStream;
-import model.functionality.impl.ColorChessboard;
+import model.enumerations.ColorChessboardEnum;
 import model.gameEnvironment.impl.Square;
 
 public class Bishop extends Piece {
-    public Bishop(Position position,final ColorChessboard color, Chessboard chessboard, char pieceSign){
+    public Bishop(Position position,final ColorChessboardEnum color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
     }
 

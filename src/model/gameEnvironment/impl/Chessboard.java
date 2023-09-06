@@ -5,13 +5,16 @@ import java.util.*;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import model.functionality.impl.ColorChessboard;
+import model.enumerations.ColorChessboardEnum;
+import model.enumerations.IconEnum;
 import model.functionality.impl.Position;
 import model.pieces.impl.Bishop;
 import model.pieces.impl.King;
 import model.pieces.impl.Knight;
 import model.pieces.impl.Pawn;
 import model.pieces.impl.Piece;
+import static model.enumerations.PieceEnum.*;
+import model.pieces.impl.PieceFactory;
 import model.pieces.impl.Queen;
 import model.pieces.impl.Rook;
 
@@ -20,18 +23,34 @@ public class Chessboard implements ChessboardInt {
     
     private Square[][] squares; 
     private int turn; // 0 represents the white player's turn and 1 represents the black player's turn.
+    private static Chessboard chessboard;
     public static final int ROW_UPPER_LIMIT = 7;
     public static final int ROW_LOWER_LIMIT = 0;
     public static final int COL_UPPER_LIMIT = 7;
     public static final int COL_LOWER_LIMIT = 0;
     
-    public Chessboard(){
+    
+    // Application of Singleton Pattern
+    public static Chessboard getIstance(){
+        return chessboard == null ? 
+               chessboard = new Chessboard() : 
+               chessboard;
+    }
+    
+    // Application of Singleton Pattern (test using)
+    public static Chessboard getIstanceForTest(){
+        return chessboard == null ? 
+               chessboard = new Chessboard(new Position(0,0)) : 
+               chessboard;
+    }
+    
+    private Chessboard(){
         this.initializeChessboard();
         this.turn = 0; // Start with the white player's turn    
     }
     
     // Constructor used for testing purposes.
-    public Chessboard(Position p){
+    private Chessboard(Position p){
         // Create an empty chessboard with the appropriate dimensions.
         this.squares = new Square[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
         for(int i = ROW_LOWER_LIMIT; i <= ROW_UPPER_LIMIT; i++){ 
@@ -46,7 +65,7 @@ public class Chessboard implements ChessboardInt {
      */
     private void initializeChessboard(){
         this.squares = new Square[Chessboard.ROW_UPPER_LIMIT + 1][Chessboard.COL_UPPER_LIMIT + 1];
-        
+        PieceFactory factory = new PieceFactory();
         // Place chess pieces in the first and last rows
         for(int i = 0; i <= Chessboard.COL_UPPER_LIMIT; i++){
             Position pW = new Position(Chessboard.ROW_LOWER_LIMIT, Chessboard.COL_LOWER_LIMIT + i);
@@ -54,54 +73,55 @@ public class Chessboard implements ChessboardInt {
             switch (i) {
                 case 0, 7 -> {
                     // Create rooks at the corners of the chessboard.
-                    Rook roW = new Rook(pW,ColorChessboard.WHITE, this, 'r');
-                    roW.setIcon(".\\src\\images\\whiteRook.png");
+                    Rook roW = (Rook) factory.getPiece(ROOK,pW,ColorChessboardEnum.WHITE, this, 'r');
+                    roW.setIcon(IconEnum.WROOK_ICON.getIcon());
                     squares[pW.getRow()][pW.getCol()] = new Square(roW);
                     
-                    Rook roB = new Rook(pB,ColorChessboard.BLACK, this, 'R');
-                    roB.setIcon(".\\src\\images\\blackRook.png");
+                    Rook roB = (Rook) factory.getPiece(ROOK,pB,ColorChessboardEnum.BLACK, this, 'R');
+                    roB.setIcon(IconEnum.BROOK_ICON.getIcon());
                     squares[pB.getRow()][pB.getCol()] = new Square(roB);
                 }
                 case 1, 6 -> {
                     // Create knights on the second and second-to-last columns.
-                    Knight knW = new Knight(pW,ColorChessboard.WHITE, this, 'h');
-                    knW.setIcon(".\\src\\images\\whiteKnight.png");
+                    Knight knW = (Knight) factory.getPiece(KNIGHT,pW,ColorChessboardEnum.WHITE, this, 'h');
+                    knW.setIcon(IconEnum.WKNIGHT_ICON.getIcon());
                     squares[pW.getRow()][pW.getCol()] = new Square(knW);
                     
-                    Knight knB = new Knight(pB,ColorChessboard.BLACK, this, 'H');
-                    knB.setIcon(".\\src\\images\\blackKnight.png");
+                    Knight knB = (Knight) factory.getPiece(KNIGHT,pB,ColorChessboardEnum.BLACK, this, 'H');
+                    knB.setIcon(IconEnum.BKNIGHT_ICON.getIcon());
                     squares[pB.getRow()][pB.getCol()] = new Square(knB);
                 }
                 case 2, 5 -> {
                     // Create bishops on the third and third-to-last columns.
-                    Bishop biW = new Bishop(pW,ColorChessboard.WHITE, this, 'b');
-                    biW.setIcon(".\\src\\images\\whiteBishop.png");
+                    Bishop biW = (Bishop) factory.getPiece(BISHOP,pW,ColorChessboardEnum.WHITE, this, 'b');
+                    biW.setIcon(IconEnum.WBISHOP_ICON.getIcon());
                     
                     squares[pW.getRow()][pW.getCol()] = new Square(biW);
-                    Bishop biB = new Bishop(pB,ColorChessboard.BLACK, this, 'B');
-                    biB.setIcon(".\\src\\images\\blackBishop.png");
+                    Bishop biB = (Bishop) factory.getPiece(BISHOP,pB,ColorChessboardEnum.BLACK, this, 'B');
+                    biB.setIcon(IconEnum.BBISHOP_ICON.getIcon());
                     squares[pB.getRow()][pB.getCol()] = new Square(biB);
                 }
                 case 4 -> {
                     // Create queens in the center.
-                    Queen quW = new Queen(pW,ColorChessboard.WHITE, this, 'q');
-                    quW.setIcon(".\\src\\images\\whiteQueen.png");
+                    Queen quW = (Queen) factory.getPiece(QUEEN,pW,ColorChessboardEnum.WHITE, this, 'q');
+                    quW.setIcon(IconEnum.WQUEEN_ICON.getIcon());
                     squares[pW.getRow()][pW.getCol()] = new Square(quW);
                     
-                    Queen quB = new Queen(pB,ColorChessboard.BLACK, this, 'Q');
-                    quB.setIcon(".\\src\\images\\blackQueen.png");
+                    Queen quB = (Queen) factory.getPiece(QUEEN,pB,ColorChessboardEnum.BLACK, this, 'Q');
+                    quB.setIcon(IconEnum.BQUEEN_ICON.getIcon());
                     squares[pB.getRow()][pB.getCol()] = new Square(quB);
                 }
                 case 3 -> {
                     // Create kings.
-                    King kiW = new King(pW,ColorChessboard.WHITE, this, 'k');
-                    kiW.setIcon(".\\src\\images\\whiteKing.png");
+                    King kiW = (King) factory.getPiece(KING,pW,ColorChessboardEnum.WHITE, this, 'k');
+                    kiW.setIcon(IconEnum.WKING_ICON.getIcon());
                     
                     squares[pW.getRow()][pW.getCol()] = new Square(kiW);
-                    King kiB = new King(pB,ColorChessboard.BLACK, this, 'K');
-                    kiB.setIcon(".\\src\\images\\blackKing.png");
+                    King kiB = (King) factory.getPiece(KING,pB,ColorChessboardEnum.BLACK, this, 'K');
+                    kiB.setIcon(IconEnum.BKING_ICON.getIcon());
                     squares[pB.getRow()][pB.getCol()] = new Square(kiB);
                 }
+
             }
         } 
         
@@ -110,12 +130,12 @@ public class Chessboard implements ChessboardInt {
                 Position pW = new Position(Chessboard.ROW_LOWER_LIMIT + 1,Chessboard.COL_LOWER_LIMIT + i);
                 Position pB = new Position(Chessboard.ROW_UPPER_LIMIT - 1,Chessboard.COL_LOWER_LIMIT + i);
                 
-                Pawn paW    = new Pawn(pW,ColorChessboard.WHITE,this, 'p');
-                paW.setIcon(".\\src\\images\\whitePawn.png");
+                Pawn paW    = (Pawn) factory.getPiece(PAWN,pW,ColorChessboardEnum.WHITE,this, 'p');
+                paW.setIcon(IconEnum.WPAWN_ICON.getIcon());
                 squares[pW.getRow()][pW.getCol()] = new Square(paW);
 
-                Pawn paB    = new Pawn(pB,ColorChessboard.BLACK,this, 'P');
-                paB.setIcon(".\\src\\images\\blackPawn.png");
+                Pawn paB    = (Pawn) factory.getPiece(PAWN,pB,ColorChessboardEnum.BLACK,this, 'P');
+                paB.setIcon(IconEnum.WKNIGHT_ICON.getIcon());
                 squares[pB.getRow()][pB.getCol()] = new Square(paB);
         }
         
@@ -148,7 +168,7 @@ public class Chessboard implements ChessboardInt {
     * @param color The color of pieces to retrieve.
     * @return An ArrayList containing all pieces of the specified color.
     */
-    public ArrayList<Piece> getPiecesByColor(ColorChessboard color){
+    public ArrayList<Piece> getPiecesByColor(ColorChessboardEnum color){
         ArrayList<Piece> pieces = new ArrayList<>();
 
         Arrays.stream(squares)
@@ -168,13 +188,13 @@ public class Chessboard implements ChessboardInt {
     }
     
     @Override
-    public Position canCastling(ColorChessboard color) {
+    public Position canCastling(ColorChessboardEnum color) {
         // Create a list to store opposing pieces.
         ArrayList<Piece> opposingPieces;
-        opposingPieces = getPiecesByColor((color == ColorChessboard.WHITE) ? ColorChessboard.BLACK : ColorChessboard.WHITE);
+        opposingPieces = getPiecesByColor((color == ColorChessboardEnum.WHITE) ? ColorChessboardEnum.BLACK : ColorChessboardEnum.WHITE);
 
         // Initialize king's row and column.
-        int kingRow = (color == ColorChessboard.WHITE) ? 0 : 7;
+        int kingRow = (color == ColorChessboardEnum.WHITE) ? 0 : 7;
         int kingCol = 3;
 
         Position castling = null;
@@ -243,8 +263,8 @@ public class Chessboard implements ChessboardInt {
         // Handle first move and en passant flag
         if (pawn.isFirstMove()){
             pawn.switchFirstMove();
-            if((pawn.getColor() == ColorChessboard.WHITE && row == 3) ||
-               (pawn.getColor() == ColorChessboard.BLACK && row == 4) ){
+            if((pawn.getColor() == ColorChessboardEnum.WHITE && row == 3) ||
+               (pawn.getColor() == ColorChessboardEnum.BLACK && row == 4) ){
                 pawn.setEnPassant(true);
             }
         }
@@ -293,8 +313,8 @@ public class Chessboard implements ChessboardInt {
     @Override
     public boolean promotion(Pawn p) {
     int row = p.getPosition().getRow();
-    return (p.getColor() == ColorChessboard.WHITE && row == Chessboard.ROW_UPPER_LIMIT) ||
-           (p.getColor() == ColorChessboard.BLACK && row == Chessboard.ROW_LOWER_LIMIT);
+    return (p.getColor() == ColorChessboardEnum.WHITE && row == Chessboard.ROW_UPPER_LIMIT) ||
+           (p.getColor() == ColorChessboardEnum.BLACK && row == Chessboard.ROW_LOWER_LIMIT);
     }
     
     /**
@@ -303,7 +323,7 @@ public class Chessboard implements ChessboardInt {
     * @param color The color of the king to locate.
     * @return The position of the king if found, or null if not present.
     */
-    private Position kingPosition(ColorChessboard color){
+    private Position kingPosition(ColorChessboardEnum color){
         for(int i = 0; i <= Chessboard.ROW_UPPER_LIMIT; i++){
             for(int j = 0; j <= Chessboard.COL_UPPER_LIMIT; j++){
                 if(this.squares[i][j].getPiece().isPresent() && this.squares[i][j].getPiece().get().getColor() == color && this.squares[i][j].getPiece().get() instanceof King)
@@ -314,13 +334,13 @@ public class Chessboard implements ChessboardInt {
     }
    
     @Override
-    public boolean isCheck(ColorChessboard color) {
+    public boolean isCheck(ColorChessboardEnum color) {
         // Get the position of the player's king
         Position king = kingPosition(color);
         
         // Get the pieces of the opposing player
         ArrayList<Piece> avvPieces;
-        avvPieces = getPiecesByColor((color == ColorChessboard.WHITE) ? ColorChessboard.BLACK : ColorChessboard.WHITE);
+        avvPieces = getPiecesByColor((color == ColorChessboardEnum.WHITE) ? ColorChessboardEnum.BLACK : ColorChessboardEnum.WHITE);
 
         // Check if any of the opposing player's pieces can attack the king
         return avvPieces.stream().anyMatch(piece -> attachedPosition(piece, king));
@@ -362,10 +382,10 @@ public class Chessboard implements ChessboardInt {
     }
 
     @Override
-    public int isCheckmateOrFlap(ColorChessboard color) {
+    public int isCheckmateOrFlap(ColorChessboardEnum color) {
         ArrayList<Piece> myPieces = getPiecesByColor(color);
         ArrayList<Piece> avvPieces;
-        avvPieces = getPiecesByColor((color == ColorChessboard.WHITE) ? ColorChessboard.BLACK : ColorChessboard.WHITE);
+        avvPieces = getPiecesByColor((color == ColorChessboardEnum.WHITE) ? ColorChessboardEnum.BLACK : ColorChessboardEnum.WHITE);
 
         // Check if the current player is in checkmate (no legal moves for any piece)
         boolean checkmate = myPieces.stream().allMatch(p -> this.legalMovements(p).isEmpty());
@@ -401,7 +421,7 @@ public class Chessboard implements ChessboardInt {
     *
     * @param color The color of the pawns whose en passant state will be changed.
     */
-    public void changeEnPassant(ColorChessboard color){
+    public void changeEnPassant(ColorChessboardEnum color){
         ArrayList<Piece> p = this.getPiecesByColor(color);
         for(Piece pa : p){
             if(pa instanceof Pawn pawn)

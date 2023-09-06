@@ -1,7 +1,7 @@
 package pieces;
 
 import java.util.ArrayList;
-import model.functionality.impl.ColorChessboard;
+import model.enumerations.ColorChessboardEnum;
 import model.functionality.impl.Position;
 import model.gameEnvironment.impl.Chessboard;
 import model.pieces.impl.King;
@@ -17,8 +17,8 @@ public class KingTest {
     @Before
     public void setUp() {
         Position p = new Position(4,4);
-        chessboard = new Chessboard(p);
-        king = new King(p, ColorChessboard.WHITE, chessboard, 'k');
+        chessboard = Chessboard.getIstanceForTest();;
+        king = new King(p, ColorChessboardEnum.WHITE, chessboard, 'k');
         chessboard.getSquare(p.getRow(), p.getCol()).setPiece(king);
     }
 

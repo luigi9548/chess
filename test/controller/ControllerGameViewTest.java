@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.JButton;
-import model.functionality.impl.ColorChessboard;
+import model.enumerations.ColorChessboardEnum;
 import model.functionality.impl.Position;
 import model.gameEnvironment.impl.Chessboard;
 import model.pieces.impl.Pawn;
@@ -75,7 +75,7 @@ public class ControllerGameViewTest {
     
     @Test
     public void testShowMovement() {   
-        Pawn pawn = new Pawn(new Position(1,1), ColorChessboard.WHITE ,controller.getMatch().getChessboard(), 'p');
+        Pawn pawn = new Pawn(new Position(1,1), ColorChessboardEnum.WHITE ,controller.getMatch().getChessboard(), 'p');
         var button = gameView.getButtonGrid(pawn.getPosition().getRow(), pawn.getPosition().getCol());
         ActionEvent mockEvent = new ActionEvent(button, ActionEvent.ACTION_PERFORMED, button.getActionCommand());
         ArrayList<Position> expectedLegalMoves = controller.getMatch().getChessboard().legalMovements(pawn);

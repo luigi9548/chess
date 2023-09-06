@@ -14,7 +14,7 @@ import model.pieces.impl.Rook;
 import view.GameView;
 import view.GameConclusion;
 import view.impl.Promotion;
-import model.functionality.impl.ColorChessboard;
+import model.enumerations.ColorChessboardEnum;
 import model.gameEnvironment.impl.Chessboard;
 import model.gameEnvironment.impl.Match;
 import model.gameEnvironment.impl.Player;
@@ -35,7 +35,8 @@ public class ControllerGameView {
     private boolean castlingCalled     = false;
            
     public ControllerGameView(final GameView gameView){
-        this.match = new Match(new Chessboard(),new Player(ColorChessboard.WHITE),new Player(ColorChessboard.BLACK), new ChessTimer(600 * 1000));
+        Chessboard chessboard = Chessboard.getIstance();
+        this.match = new Match(chessboard,new Player(ColorChessboardEnum.WHITE),new Player(ColorChessboardEnum.BLACK), new ChessTimer(600 * 1000));
         this.startTimer();
         this.gameView = gameView;
     }
@@ -127,20 +128,20 @@ public class ControllerGameView {
         String castling;        
         
         // Determine which player is performing castling (white or black).
-        if(rook.getColor() == ColorChessboard.WHITE){
+        if(rook.getColor() == ColorChessboardEnum.WHITE){
            kingIcon = new ImageIcon(this.match.getChessboard().getSquare(0, 3).getPiece().get().getIcon()); 
            castling = (rook.getPosition().equals(new Position(0,0))) ? "0 - 0" : "0 - 0 - 0";
            newColKing = (rook.getPosition().equals(new Position(0,0))) ? 1 : 5;
            newColRook = (rook.getPosition().equals(new Position(0,0))) ? 2 : 4;
            row = 0;
-           this.match.getPlayer(ColorChessboard.WHITE).addToHistory(castling);
+           this.match.getPlayer(ColorChessboardEnum.WHITE).addToHistory(castling);
         }else{
             kingIcon = new ImageIcon(this.match.getChessboard().getSquare(7, 3).getPiece().get().getIcon());
             castling = (rook.getPosition().equals(new Position(7,0))) ? "0 - 0" : "0 - 0 - 0";
             newColKing = (rook.getPosition().equals(new Position(7,0))) ? 1 : 5;
             newColRook = (rook.getPosition().equals(new Position(7,0))) ? 2 : 4;
             row = 7;
-            this.match.getPlayer(ColorChessboard.BLACK).addToHistory(castling);            
+            this.match.getPlayer(ColorChessboardEnum.BLACK).addToHistory(castling);            
         }
         
         // Configure castling by moving the king and rook icons.
@@ -205,16 +206,16 @@ public class ControllerGameView {
                         }
             
                         // Switch turns and update the cemetery.
-                        this.updateCemetery((this.match.getChessboard().getTurn() == 0) ? this.match.getPlayer(ColorChessboard.BLACK) :
-                                                                                          this.match.getPlayer(ColorChessboard.WHITE));
+                        this.updateCemetery((this.match.getChessboard().getTurn() == 0) ? this.match.getPlayer(ColorChessboardEnum.BLACK) :
+                                                                                          this.match.getPlayer(ColorChessboardEnum.WHITE));
                         this.handlerSwitchTurn();
                     }
                     
                     // Check for victory or draw conditions.
-                    if(p.getColor() == ColorChessboard.WHITE)
-                        handleVictoryOrDraw(ColorChessboard.BLACK);
+                    if(p.getColor() == ColorChessboardEnum.WHITE)
+                        handleVictoryOrDraw(ColorChessboardEnum.BLACK);
                     else
-                        handleVictoryOrDraw(ColorChessboard.WHITE);     
+                        handleVictoryOrDraw(ColorChessboardEnum.WHITE);     
                 }
             }
         }
@@ -250,12 +251,12 @@ public class ControllerGameView {
      *
      * @param color The color of the player to check for victory or draw.
      */
-    private void handleVictoryOrDraw(ColorChessboard color) {
+    private void handleVictoryOrDraw(ColorChessboardEnum color) {
         int checkmateOrFlapResult = this.match.getChessboard().isCheckmateOrFlap(color);
         String message;
 
         switch (checkmateOrFlapResult) {
-            case 0 -> message = (color == ColorChessboard.WHITE) ? "Black player wins by checkmate" :
+            case 0 -> message = (color == ColorChessboardEnum.WHITE) ? "Black player wins by checkmate" :
                                                                    "White player wins by checkmate";
             case 1 -> message = "Draw";
             default -> {
@@ -316,7 +317,7 @@ public class ControllerGameView {
         for (int i = 0; i < pCemetery.size(); i++) {
             str += pCemetery.get(i).pieceSwap();
         }
-        if(p.getColor() == ColorChessboard.WHITE)
+        if(p.getColor() == ColorChessboardEnum.WHITE)
             gameView.getjLabelCemeteryWhite().setText(str);
         else
             gameView.getjLabelCemeteryBlack().setText(str);
@@ -331,17 +332,17 @@ public class ControllerGameView {
         int it = 0;
         while (true){
             this.gameView.getHistory().append("\n"+it+". ");
-            if(it < this.match.getPlayer(ColorChessboard.WHITE).getHistory().size())
-                this.gameView.getHistory().append(this.match.getPlayer(ColorChessboard.WHITE).getHistory().get(it)+"\t\t     ");
+            if(it < this.match.getPlayer(ColorChessboardEnum.WHITE).getHistory().size())
+                this.gameView.getHistory().append(this.match.getPlayer(ColorChessboardEnum.WHITE).getHistory().get(it)+"\t\t     ");
             else 
                 this.gameView.getHistory().append("        "+"\t");
             
-            if(it < this.match.getPlayer(ColorChessboard.BLACK).getHistory().size())
-                this.gameView.getHistory().append(this.match.getPlayer(ColorChessboard.BLACK).getHistory().get(it));
+            if(it < this.match.getPlayer(ColorChessboardEnum.BLACK).getHistory().size())
+                this.gameView.getHistory().append(this.match.getPlayer(ColorChessboardEnum.BLACK).getHistory().get(it));
             else 
                 this.gameView.getHistory().append("        ");
             
-            if(it >= this.match.getPlayer(ColorChessboard.WHITE).getHistory().size() && it >= this.match.getPlayer(ColorChessboard.WHITE).getHistory().size()){
+            if(it >= this.match.getPlayer(ColorChessboardEnum.WHITE).getHistory().size() && it >= this.match.getPlayer(ColorChessboardEnum.WHITE).getHistory().size()){
                 break;
             }
             it++;

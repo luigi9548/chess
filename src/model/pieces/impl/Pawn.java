@@ -3,14 +3,14 @@ package model.pieces.impl;
 import model.functionality.impl.Position;
 import model.gameEnvironment.impl.Chessboard;
 import java.util.ArrayList;
-import model.functionality.impl.ColorChessboard;
+import model.enumerations.ColorChessboardEnum;
 import model.gameEnvironment.impl.Square;
 
 public class Pawn extends Piece {
     private boolean firstMove;
     private boolean enPassant;
     
-    public Pawn(Position position,final ColorChessboard color, Chessboard chessboard, char pieceSign){
+    public Pawn(Position position,final ColorChessboardEnum color, Chessboard chessboard, char pieceSign){
         super(position, color, chessboard, pieceSign);
         this.firstMove = true;
     }
@@ -39,7 +39,7 @@ public class Pawn extends Piece {
         int row = this.getPosition().getRow();
         int col = this.getPosition().getCol();
 
-        int direction = (this.getColor() == ColorChessboard.WHITE) ? 1 : -1;
+        int direction = (this.getColor() == ColorChessboardEnum.WHITE) ? 1 : -1;
 
         // Forward movement by one square
         Position forwardOne = new Position(row + direction, col);
@@ -99,7 +99,7 @@ public class Pawn extends Piece {
     private boolean canForwardTwo(Position position){
         int row = position.getRow();
         int col = position.getCol();
-        int direction = (this.getColor() == ColorChessboard.WHITE) ? -1 : 1;
+        int direction = (this.getColor() == ColorChessboardEnum.WHITE) ? -1 : 1;
         
         return getChessboard().getSquare(row + direction, col).getPiece().isEmpty();
     }
