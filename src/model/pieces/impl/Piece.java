@@ -75,11 +75,13 @@ public abstract class Piece implements PieceInterface {
         char swapUpperCase[]={'♟','♚','♛','♝','♞','♜'};
         if(Character.isLowerCase(pieceSign)){
             for (int i = 0; i < 6; i++)
-                if(pieceSign == piecesLowerCase[i])str += swapLowerCase[i];
+                if(pieceSign == piecesLowerCase[i])
+                    str += swapLowerCase[i];
         }else{
             char lowercased = Character.toLowerCase(pieceSign);
             for (int i = 0; i < 6; i++) 
-                if(lowercased == piecesLowerCase[i])str += swapUpperCase[i];
+                if(lowercased == piecesLowerCase[i])
+                    str += swapUpperCase[i];
         }
         return str;
     }

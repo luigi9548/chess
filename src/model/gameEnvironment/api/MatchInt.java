@@ -11,7 +11,7 @@ public interface MatchInt {
      * @param p           The piece making the move.
      * @param row         The row of the destination position.
      * @param col         The column of the destination position.
-     * @return A string representing the move in standard algebraic notation.
+     * @return            A string representing the move in standard algebraic notation.
      */
     String calculateHistory(boolean isEnPassant, Piece p, int row, int col);
     

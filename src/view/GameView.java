@@ -154,7 +154,6 @@ public final class GameView extends JFrame {
                 buttonGrid[i][j] = b;
                 b.addActionListener((java.awt.event.ActionEvent evt) -> {
                     controller.actions(evt, b.getBackground().getRGB());
-                    System.out.println(b.getBackground().getRGB());
                 });
                 this.chessboard.add(b);
             }

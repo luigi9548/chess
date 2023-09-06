@@ -13,7 +13,7 @@ import model.pieces.impl.Piece;
 import model.pieces.impl.Rook;
 import view.GameView;
 import view.GameConclusion;
-import view.impl.Promotion;
+import view.Promotion;
 import model.functionality.impl.ColorChessboard;
 import model.gameEnvironment.impl.Chessboard;
 import model.gameEnvironment.impl.Match;

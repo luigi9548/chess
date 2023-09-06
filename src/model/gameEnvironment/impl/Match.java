@@ -47,7 +47,6 @@ public class Match implements MatchInt {
         
         // Check if there is an en passant capture.
         if(isEnPassant){
-            hasEaten = true;
             history = p.getPosition().numToLetterBySubstr() + "x" + new Position(row,col).getStringPosition() + " e. p.";
         }else{
             // Check if a regolar capture has occured.
