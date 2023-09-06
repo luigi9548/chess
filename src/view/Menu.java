@@ -1,10 +1,10 @@
-package view.impl;
+package view;
 import controller.impl.ControllerMenu;
 import java.awt.*;
 import javax.swing.*;
 
 public class Menu extends JFrame{
-    private final ControllerMenu controller = new ControllerMenu(this);
+    private final ControllerMenu controller = ControllerMenu.getInstance(this);
     private final JLabel title = new JLabel(new ImageIcon(".\\src\\images\\title1.png"));
     private final JPanel jPanelW = new JPanel();
     private final JLabel jLabelW = new JLabel("Enter the name of the white player");

@@ -135,7 +135,7 @@ public class Chessboard implements ChessboardInt {
                 squares[pW.getRow()][pW.getCol()] = new Square(paW);
 
                 Pawn paB    = (Pawn) factory.getPiece(PAWN,pB,ColorChessboardEnum.BLACK,this, 'P');
-                paB.setIcon(IconEnum.WKNIGHT_ICON.getIcon());
+                paB.setIcon(IconEnum.BPAWN_ICON.getIcon());
                 squares[pB.getRow()][pB.getCol()] = new Square(paB);
         }
         

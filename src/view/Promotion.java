@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package view.impl;
+package view;
 
 import controller.impl.ControllerGameView;
 import controller.impl.ControllerPromotion;
@@ -183,5 +183,21 @@ public class Promotion extends JFrame {
         jButtonKnight.setCursor(new Cursor(java.awt.Cursor.HAND_CURSOR));
                         
     }
+
+    // Test methods.
+    public JButton getQueen(){
+        return this.jButtonQueen;
+    }
     
+    public JButton getRook(){
+        return this.jButtonRook;
+    }
+    
+    public JButton getBishop(){
+        return this.jButtonBishop;
+    }
+    
+    public JButton getKnight(){
+        return this.jButtonKnight;
+    }
 }

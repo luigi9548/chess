@@ -2,13 +2,19 @@ package controller.impl;
 
 import java.awt.event.ActionEvent;
 import view.GameConclusion;
-import view.impl.Menu;
+import view.Menu;
 
 public class ControllerGameConclusion {
+    
+    private static ControllerGameConclusion controllerGameConclusion;
     private final GameConclusion gameConclusion;
     private final Menu menu = new Menu();
     
-    public ControllerGameConclusion(final GameConclusion gameConclusion){
+    public static ControllerGameConclusion getInstance(GameConclusion gameConclusion) {
+        return controllerGameConclusion == null ? controllerGameConclusion = new ControllerGameConclusion(gameConclusion) : controllerGameConclusion;
+    }
+    
+    private ControllerGameConclusion(final GameConclusion gameConclusion){
         this.gameConclusion = gameConclusion;
     }
 

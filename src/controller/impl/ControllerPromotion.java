@@ -11,14 +11,19 @@ import model.pieces.impl.Bishop;
 import model.pieces.impl.Knight;
 import model.pieces.impl.Queen;
 import model.pieces.impl.Rook;
-import view.impl.Promotion;
+import view.Promotion;
 
 public class ControllerPromotion {
+    private static ControllerPromotion controllerPromotion;
     private final Promotion promotion;
     private Position position;
     private ControllerGameView gameView;
     private Match match;
     private Icon icon;
+    
+    public static ControllerPromotion getInstance(Promotion promotion){
+        return controllerPromotion == null ? controllerPromotion = new ControllerPromotion(promotion) : controllerPromotion;
+    }
     
     public ControllerPromotion(final Promotion promotion){
         this.promotion = promotion;

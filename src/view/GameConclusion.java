@@ -6,7 +6,7 @@ import java.awt.Cursor;
 import javax.swing.*;
 
 public class GameConclusion extends JFrame {
-    private final ControllerGameConclusion controller = new ControllerGameConclusion(this);
+    private final ControllerGameConclusion controller = ControllerGameConclusion.getInstance(this);
     private final String message;
     private final GameView gameView;
     private JLabel title;
