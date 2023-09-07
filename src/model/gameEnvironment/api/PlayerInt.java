@@ -6,10 +6,6 @@ package model.gameEnvironment.api;
 
 import model.pieces.impl.Piece;
 
-/**
- *
- * @author luigi
- */
 public interface PlayerInt {
 
     /**

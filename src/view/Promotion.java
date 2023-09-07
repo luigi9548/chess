@@ -13,10 +13,6 @@ import model.enumerations.ColorChessboardEnum;
 import model.gameEnvironment.impl.Match;
 import model.pieces.impl.Pawn;
 
-/**
- *
- * @author Elena
- */
 public class Promotion extends JFrame {
     private final Pawn pawn;
     private final ControllerPromotion controller = ControllerPromotion.getInstance(this);

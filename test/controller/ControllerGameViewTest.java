@@ -19,10 +19,6 @@ import org.junit.Before;
 import org.junit.Test;
 import view.GameView;
 
-/**
- *
- * @author Elena
- */
 public class ControllerGameViewTest {
     
     private GameView gameView; 

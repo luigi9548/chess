@@ -11,10 +11,6 @@ import model.functionality.impl.Position;
 import model.pieces.impl.Pawn;
 import model.pieces.impl.Piece;
 
-/**
- *
- * @author Elena
- */
 public class Match implements MatchInt {
     private final Chessboard chessboard;  
     private final Player whiteP;

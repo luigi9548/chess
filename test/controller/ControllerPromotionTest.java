@@ -23,10 +23,6 @@ import org.junit.Test;
 import view.GameView;
 import view.Promotion;
 
-/**
- *
- * @author Elena
- */
 public class ControllerPromotionTest {
     
     private GameView gameView;

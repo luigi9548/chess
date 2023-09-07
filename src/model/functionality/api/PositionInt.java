@@ -4,10 +4,6 @@
  */
 package model.functionality.api;
 
-/**
- *
- * @author luigi
- */
 public interface PositionInt {
     
     /**
