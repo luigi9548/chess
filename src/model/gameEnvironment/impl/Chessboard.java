@@ -6,7 +6,6 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import model.enumerations.ColorChessboardEnum;
-import model.enumerations.IconEnum;
 import model.functionality.impl.Position;
 import model.pieces.impl.Bishop;
 import model.pieces.impl.King;

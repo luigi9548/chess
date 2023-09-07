@@ -41,7 +41,7 @@ public class ControllerPromotionTest {
         controllerGameView = ControllerGameView.getInstance(gameView);
         pawn = new Pawn(new Position(7,7), ColorChessboardEnum.WHITE,controllerGameView.getMatch().getChessboard(), 'p');
         this.promotion = new Promotion(pawn, controllerGameView, controllerGameView.getMatch());
-        this.controller = new ControllerPromotion(promotion);
+        this.controller = ControllerPromotion.getInstance(promotion);
     }
     
     @Test

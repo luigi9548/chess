@@ -19,7 +19,7 @@ import model.pieces.impl.Pawn;
  */
 public class Promotion extends JFrame {
     private final Pawn pawn;
-    private final ControllerPromotion controller = new ControllerPromotion(this);
+    private final ControllerPromotion controller = ControllerPromotion.getInstance(this);
     private final ControllerGameView controllerGameView;
     private final Match match;
     

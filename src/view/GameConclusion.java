@@ -1,12 +1,11 @@
 package view;
 
-import controller.impl.ControllerGameConclusion;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 public class GameConclusion extends JFrame {
-    private final ControllerGameConclusion controller = ControllerGameConclusion.getInstance(this);
     private final String message;
     private final GameView gameView;
     private JLabel title;
@@ -71,15 +70,27 @@ public class GameConclusion extends JFrame {
         );
         
         quit.addActionListener((java.awt.event.ActionEvent evt) -> {
-            controller.quitActionPerformed(evt);
+            this.quitActionPerformed(evt);
         });
         
         newMatch.addActionListener((java.awt.event.ActionEvent evt) -> {
-            controller.newMatchActionPerformed(evt);
+            this.newMatchActionPerformed(evt);
         });     
         
         setTitle("Game Conclusion");
         pack();
     }
 
+    public void quitActionPerformed(ActionEvent evt) {
+        System.exit(0);
+    }
+
+    public void newMatchActionPerformed(ActionEvent evt) {
+        this.getGameView().setVisible(false);
+        this.setVisible(false);
+        
+        Menu menu = new Menu();
+        menu.setVisible(true);
+        
+    }
 }

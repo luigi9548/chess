@@ -1,10 +1,8 @@
 package view;
-import controller.impl.ControllerMenu;
 import java.awt.*;
 import javax.swing.*;
 
 public class Menu extends JFrame{
-    private final ControllerMenu controller = ControllerMenu.getInstance(this);
     private final JLabel title = new JLabel(new ImageIcon(".\\src\\images\\title1.png"));
     private final JPanel jPanelW = new JPanel();
     private final JLabel jLabelW = new JLabel("Enter the name of the white player");
@@ -129,11 +127,11 @@ public class Menu extends JFrame{
         );
        
         play.addActionListener((java.awt.event.ActionEvent evt) -> {
-            controller.playActionPerformed(evt);
+            this.playActionPerformed(evt);
         });
         
         quit.addActionListener((java.awt.event.ActionEvent evt) -> {
-            controller.quitActionPerformed(evt);
+            this.quitActionPerformed(evt);
         });
 
         getContentPane().setBackground(new Color(255,247,218));
@@ -145,5 +143,17 @@ public class Menu extends JFrame{
         Menu menu = new Menu();
         menu.setVisible(true);
         
+    }
+    
+    public void playActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        String whiteN = this.getjTextFieldW().getText();
+        String blackN = this.getjTextFieldB().getText();
+        
+        this.setVisible(false);
+        GameView gameView = new GameView(whiteN, blackN);
+    } 
+    
+    public void quitActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        System.exit(0);
     }
 }

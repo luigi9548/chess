@@ -17,7 +17,7 @@ public class ControllerPromotion {
     private static ControllerPromotion controllerPromotion;
     private final Promotion promotion;
     private Position position;
-    private ControllerGameView gameView;
+    private ControllerGameView controllerGameView;
     private Match match;
     private Icon icon;
     
@@ -25,13 +25,13 @@ public class ControllerPromotion {
         return controllerPromotion == null ? controllerPromotion = new ControllerPromotion(promotion) : controllerPromotion;
     }
     
-    public ControllerPromotion(final Promotion promotion){
+    private ControllerPromotion(final Promotion promotion){
         this.promotion = promotion;
     }
     
     private void init(String s){
         position = promotion.getPawn().getPosition();
-        gameView = promotion.getControllerGameView();
+        controllerGameView = promotion.getControllerGameView();
         match = promotion.getMatch();
 
         switch(s){
@@ -72,7 +72,7 @@ public class ControllerPromotion {
         init("QUEEN");
     
         // Set the icon in the view
-        gameView.getGameView().getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
+        controllerGameView.getGameView().getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
 
         // Set the piece at the model level
     if(promotion.getPawn().getColor() == ColorChessboardEnum.WHITE){
@@ -89,7 +89,7 @@ public class ControllerPromotion {
             this.match.getPlayer(ColorChessboardEnum.BLACK).addToHistory(position.getStringPosition() + Character.toUpperCase(queenB.getPieceSign()));
         }
         
-        this.gameView.updateHistory();
+        this.controllerGameView.updateHistory();
         this.match.getTimer().switchTurn();
         promotion.setVisible(false);
     }
@@ -103,7 +103,7 @@ public class ControllerPromotion {
         init("ROOK");
         
         // Set the icon in the view
-        gameView.getGameView().getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
+        controllerGameView.getGameView().getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
         
         // Set the piece at the model level
         if(promotion.getPawn().getColor() == ColorChessboardEnum.WHITE){
@@ -120,7 +120,7 @@ public class ControllerPromotion {
             this.match.getPlayer(ColorChessboardEnum.BLACK).addToHistory(position.getStringPosition() + Character.toUpperCase(rookB.getPieceSign()));
         }
         
-        this.gameView.updateHistory();
+        this.controllerGameView.updateHistory();
         this.match.getTimer().switchTurn();
         promotion.setVisible(false);
     }
@@ -135,7 +135,7 @@ public class ControllerPromotion {
            init("BISHOP");
         
         // Set the icon in the view
-        gameView.getGameView().getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
+        controllerGameView.getGameView().getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
            
         // Set the piece at the model level
         if(promotion.getPawn().getColor() == ColorChessboardEnum.WHITE){
@@ -152,7 +152,7 @@ public class ControllerPromotion {
             this.match.getPlayer(ColorChessboardEnum.BLACK).addToHistory(position.getStringPosition() + Character.toUpperCase(bishopB.getPieceSign()));
         }
         
-        this.gameView.updateHistory();
+        this.controllerGameView.updateHistory();
         this.match.getTimer().switchTurn();
         promotion.setVisible(false);
     }
@@ -166,7 +166,7 @@ public class ControllerPromotion {
         init("KNIGHT");
            
         // Set the icon in the view
-        gameView.getGameView().getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
+        controllerGameView.getGameView().getButtonGrid(position.getRow(), position.getCol()).setIcon(icon);
            
         // Set the piece at the model level
         if(promotion.getPawn().getColor() == ColorChessboardEnum.WHITE){
@@ -183,7 +183,7 @@ public class ControllerPromotion {
             this.match.getPlayer(ColorChessboardEnum.BLACK).addToHistory(position.getStringPosition() + Character.toUpperCase(knightB.getPieceSign()));
         }
         
-        this.gameView.updateHistory();
+        this.controllerGameView.updateHistory();
         this.match.getTimer().switchTurn();
         promotion.setVisible(false);
     }
