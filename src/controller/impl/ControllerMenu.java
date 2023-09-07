@@ -7,7 +7,7 @@ public class ControllerMenu {
     private static ControllerMenu controllerMenu;
     private final Menu menu;
     
-    public static ControllerMenu getInstance(Menu menu){
+    public static ControllerMenu getInstance(final Menu menu){
         return controllerMenu == null ? controllerMenu = new ControllerMenu(menu) : controllerMenu;
     }
     

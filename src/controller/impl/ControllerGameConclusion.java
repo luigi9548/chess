@@ -10,7 +10,7 @@ public class ControllerGameConclusion {
     private final GameConclusion gameConclusion;
     private final Menu menu = new Menu();
     
-    public static ControllerGameConclusion getInstance(GameConclusion gameConclusion) {
+    public static ControllerGameConclusion getInstance(final GameConclusion gameConclusion) {
         return controllerGameConclusion == null ? controllerGameConclusion = new ControllerGameConclusion(gameConclusion) : controllerGameConclusion;
     }
     

@@ -21,7 +21,7 @@ public class ControllerPromotion {
     private Match match;
     private Icon icon;
     
-    public static ControllerPromotion getInstance(Promotion promotion){
+    public static ControllerPromotion getInstance(final Promotion promotion){
         return controllerPromotion == null ? controllerPromotion = new ControllerPromotion(promotion) : controllerPromotion;
     }
     

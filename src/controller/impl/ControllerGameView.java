@@ -38,7 +38,7 @@ public class ControllerGameView {
     private boolean moveCalled         = false;
     private boolean castlingCalled     = false;
 
-    public static ControllerGameView getInstance(GameView gameView){
+    public static ControllerGameView getInstance(final GameView gameView){
         return controllerGameView == null ? controllerGameView = new ControllerGameView(gameView) : controllerGameView;
     }
 
