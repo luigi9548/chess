@@ -89,4 +89,29 @@ public interface ChessboardInt {
      * Switches the turn between players. If it's Player 1's turn, it changes to Player 2's turn, and vice versa.
      */
     void switchTurn();
+    
+    /**
+    * Retrieves all pieces on the chessboard that match the specified color.
+    *
+    * @param color The color of pieces to retrieve.
+    * @return An ArrayList containing all pieces of the specified color.
+    */
+    ArrayList<Piece> getPiecesByColor(ColorChessboardEnum color);
+    
+    /**
+    * Updates the position of a piece from its current location to a new location.
+    *
+    * @param row    The current row of the piece.
+    * @param col    The current column of the piece.
+    * @param newRow The new row where the piece will be placed.
+    * @param newCol The new column where the piece will be placed.
+    */
+    void updatePosition(int row, int col, int newRow, int newCol);
+    
+    /**
+    * Changes the en passant state of all pawns of a given color to false.
+    *
+    * @param color The color of the pawns whose en passant state will be changed.
+    */
+    void changeEnPassant(ColorChessboardEnum color);
 }

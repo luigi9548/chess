@@ -16,10 +16,10 @@ public enum IconEnum {
     
     private final String icon;
     
+    private IconEnum(String icon){
+        this.icon = icon;
+    }
     public String getIcon(){
         return this.icon;
     }
-    private IconEnum(String icon){
-            this.icon = icon;
-        }
 }

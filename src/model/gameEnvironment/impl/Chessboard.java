@@ -149,12 +149,8 @@ public class Chessboard implements ChessboardInt {
         return this.turn;
     }
     
-    /**
-    * Retrieves all pieces on the chessboard that match the specified color.
-    *
-    * @param color The color of pieces to retrieve.
-    * @return An ArrayList containing all pieces of the specified color.
-    */
+    
+    @Override
     public ArrayList<Piece> getPiecesByColor(ColorChessboardEnum color){
         ArrayList<Piece> pieces = new ArrayList<>();
 
@@ -389,25 +385,15 @@ public class Chessboard implements ChessboardInt {
         }
     }
     
-    /**
-    * Updates the position of a piece from its current location to a new location.
-    *
-    * @param row    The current row of the piece.
-    * @param col    The current column of the piece.
-    * @param newRow The new row where the piece will be placed.
-    * @param newCol The new column where the piece will be placed.
-    */
+    
+    @Override
     public void updatePosition(int row, int col, int newRow, int newCol){     
         this.getSquare(newRow, newCol).setPiece(this.getSquare(row, col).getPiece().get());
         this.getSquare(newRow, newCol).getPiece().get().setPosition(new Position(newRow, newCol));
         this.getSquare(row, col).setPiece(null);
     }
     
-    /**
-    * Changes the en passant state of all pawns of a given color to false.
-    *
-    * @param color The color of the pawns whose en passant state will be changed.
-    */
+    @Override
     public void changeEnPassant(ColorChessboardEnum color){
         ArrayList<Piece> p = this.getPiecesByColor(color);
         for(Piece pa : p){

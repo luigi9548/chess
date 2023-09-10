@@ -4,6 +4,7 @@ import java.util.Objects;
 import model.functionality.api.PositionInt;
 
 public class Position implements PositionInt {
+    
     int row;
     int col;
     

@@ -4,6 +4,7 @@ import model.functionality.api.ChessTimerInt;
 import java.util.Timer;
 
 public class ChessTimer implements ChessTimerInt{
+    
     private final Timer timer;
     private boolean isPlayerWTurn;      // Boolean indicating the turn of the white player (true for player white's turn, false for player black's turn)
     private long playerWRemainingTime;  // Remaining time in minutes and seconds for the white player

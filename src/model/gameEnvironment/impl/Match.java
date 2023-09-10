@@ -36,15 +36,8 @@ public class Match implements MatchInt {
         return this.timer;
     }
     
-    /**
-     * Calculates the string representation of a move for use in the move history.
-     *
-     * @param isEnPassant True if the move is an en passant capture, false otherwise.
-     * @param p           The piece making the move.
-     * @param row         The row of the destination position.
-     * @param col         The column of the destination position.
-     * @return            A string representing the move in standard algebraic notation.
-     */
+    
+    @Override
     public String calculateHistory(boolean isEnPassant, Piece p, int row, int col){
         boolean hasEaten = false;
         String history;
